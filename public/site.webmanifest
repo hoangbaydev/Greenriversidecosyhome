@@ -1,0 +1,15 @@
+{
+  "name": "Green Riverside Cosy Home",
+  "short_name": "Green Riverside",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "theme_color": "#1f6f43",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}

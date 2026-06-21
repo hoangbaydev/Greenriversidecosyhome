@@ -1,0 +1,478 @@
+{
+  "meta": {
+    "siteName": "Green Riverside Cosy Home",
+    "tagline": "Đến như khách, về như người thân.",
+    "description": "Lưu trú gia đình tại Phong Nha, Việt Nam. Nghỉ dưỡng, ẩm thực, khám phá và kết nối. Đặt phòng trực tiếp qua WhatsApp để tiết kiệm."
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "ourStory": "Câu chuyện",
+    "stay": "Lưu trú",
+    "eatDrink": "Ẩm thực",
+    "socialActivities": "Hoạt động cộng đồng",
+    "explore": "Khám phá",
+    "explorePhongNha": "Khám phá Phong Nha",
+    "transport": "Di chuyển",
+    "otherServices": "Dịch vụ khác",
+    "usefulInfo": "Thông tin hữu ích",
+    "tours": "Tour",
+    "transportation": "Di chuyển",
+    "activities": "Hoạt động",
+    "gallery": "Thư viện ảnh",
+    "blog": "Tin tức",
+    "faq": "Hỏi đáp",
+    "contact": "Liên hệ",
+    "bookNow": "Đặt phòng",
+    "menu": "Menu",
+    "closeMenu": "Đóng menu",
+    "language": "Ngôn ngữ",
+    "exploreDesc": {
+      "explorePhongNha": "Bong Lai, hang động & mạo hiểm",
+      "tours": "Hang động & tour khám phá",
+      "socialActivities": "Hoạt động cộng đồng",
+      "transport": "Di chuyển & đưa đón",
+      "gallery": "Hình ảnh & khoảnh khắc"
+    }
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "PHONG NHA, VIỆT NAM",
+      "fallbackTitle": "Hòa mình cùng thiên nhiên.\nKết nối cùng mọi người.",
+      "fallbackSubtitle": "Trải nghiệm lòng hiếu khách bản địa chân thành, các hoạt động cộng đồng và những chuyến phiêu lưu khó quên tại trái tim Phong Nha.",
+      "primaryCta": "Đặt phòng ngay",
+      "secondaryCta": "Khám phá trải nghiệm",
+      "scrollHint": "Khám phá thêm",
+      "pillars": {
+        "stay": "Nghỉ dưỡng",
+        "eat": "Ẩm thực",
+        "explore": "Khám phá",
+        "connect": "Kết nối"
+      }
+    },
+    "story": {
+      "title": "Câu chuyện của chúng tôi",
+      "subtitle": "Hơn cả chỗ ở — ngôi nhà được nuôi dưỡng bởi thiên nhiên, gia đình và cộng đồng.",
+      "excerpt": "Green Riverside Cosy Home bắt đầu từ giấc mơ gia đình bên sông Son. Hôm nay chúng tôi đón du khách khắp thế giới với lòng hiếu khách ấm áp, bữa ăn nhà nấu và những chuyến phiêu lưu khám phá linh hồn Phong Nha.",
+      "cta": "Đọc câu chuyện"
+    },
+    "whyStay": {
+      "title": "Vì sao chọn chúng tôi",
+      "subtitle": "Lòng hiếu khách chân thật, không khí sôi động và thiên nhiên ngay trước cửa.",
+      "items": [
+        {
+          "title": "Vị trí bên sông",
+          "description": "Thức dậy bên sông Son với dãy núi đá vôi phía chân trời — thiên nhiên ngay ngoài cửa.",
+          "icon": "waves"
+        },
+        {
+          "title": "Cộng đồng sôi động",
+          "description": "Bữa tối gia đình, happy hour sân thượng và sự kiện hàng tuần — khách solo cũng cảm thấy như nhà.",
+          "icon": "users"
+        },
+        {
+          "title": "Lòng hiếu khách gia đình",
+          "description": "Được điều hành bởi gia đình Việt Nam với gợi ý chân thật, món nhà nấu và sự quan tâm thật lòng.",
+          "icon": "heart"
+        },
+        {
+          "title": "Trung tâm phiêu lưu",
+          "description": "Đặt hang động, tour và di chuyển trực tiếp — không phí đặt phòng, không qua trung gian.",
+          "icon": "compass"
+        },
+        {
+          "title": "Quán café sân thượng",
+          "description": "Cà phê buổi sáng, bữa sáng Việt Nam và cocktail hoàng hôn view sông và núi.",
+          "icon": "coffee"
+        },
+        {
+          "title": "Đặt trực tiếp & tiết kiệm",
+          "description": "Nhắn WhatsApp để có giá tốt nhất, lịch trình linh hoạt và hỗ trợ lên kế hoạch chuyến đi.",
+          "icon": "message"
+        }
+      ]
+    },
+    "trust": {
+      "title": "Được du khách trên thế giới tin tưởng",
+      "subtitle": "Ngôi nhà gia đình — nơi mỗi vị khách đều trở thành một phần câu chuyện của chúng tôi.",
+      "years": "Năm kinh nghiệm",
+      "guests": "Khách hài lòng",
+      "countries": "Quốc gia đã đón tiếp",
+      "rating": "Đánh giá trung bình"
+    },
+    "accommodation": {
+      "title": "Phòng dành cho bạn",
+      "subtitle": "Không gian thoải mái để nghỉ ngơi, kết nối và tận hưởng nhịp sống bên sông.",
+      "viewAll": "Xem tất cả phòng",
+      "from": "Từ",
+      "perNight": "/ đêm",
+      "details": "Chi tiết",
+      "bookStay": "Đặt phòng",
+      "guests": "Tối đa {count} khách",
+      "empty": "Thông tin phòng đang cập nhật. Nhắn WhatsApp để hỏi phòng trống và giá."
+    },
+    "stay": {
+      "rateNote": "* Giá phòng thay đổi theo thời gian lưu trú. Vui lòng nhắn WhatsApp để biết chi tiết."
+    },
+    "cafe": {
+      "reserveTable": "Đặt bàn"
+    },
+    "eatDrinkTeaser": {
+      "title": "Ẩm thực & Đồ uống",
+      "subtitle": "Quán café sân thượng view sông và hương vị Việt Nam nhà nấu.",
+      "body": "Bắt đầu ngày mới với bữa sáng miễn phí, thưởng thức cà phê specialty lúc hoàng hôn và cùng ăn tối kiểu gia đình với du khách khắp thế giới — trên sân thượng bên sông Son.",
+      "reserveTable": "Đặt bàn",
+      "learnMore": "Xem thực đơn"
+    },
+    "tours": {
+      "title": "Khám phá Phong Nha",
+      "subtitle": "Hang động nổi tiếng thế giới và những chuyến phiêu lưu khó quên.",
+      "allTours": "Tất cả tour",
+      "bookTour": "Đặt tour",
+      "from": "Từ",
+      "empty": "Tour đang cập nhật. Nhắn WhatsApp để đặt tour hang động và trải nghiệm địa phương."
+    },
+    "activities": {
+      "title": "Hoạt động cộng đồng",
+      "subtitle": "Nơi người lạ trở thành bạn — sự kiện miễn phí mỗi tuần.",
+      "join": "Tham gia hoạt động",
+      "viewAll": "Xem lịch đầy đủ",
+      "highlights": [
+        { "name": "Bữa tối gia đình", "desc": "Cùng bàn ăn, món nhà nấu và câu chuyện khắp thế giới." },
+        { "name": "Happy Hour", "desc": "Đồ uống hoàng hôn trên sân thượng khi sông vàng óng." },
+        { "name": "Lớp nấu ăn", "desc": "Học món Việt cùng gia đình chúng tôi trong bếp." },
+        { "name": "Beer Pong", "desc": "Thi đấu vui vẻ và tiếng cười sau khi trời tối." },
+        { "name": "Music Bingo", "desc": "Hát theo, đoán bài hát và nhận quà nhỏ." },
+        { "name": "Karaoke", "desc": "Đêm karaoke kinh điển — ai cũng là ngôi sao." },
+        { "name": "Giao lưu ngôn ngữ", "desc": "Luyện ngoại ngữ qua cà phê và cuộc trò chuyện." },
+        { "name": "Game Night", "desc": "Board game, bài và bạn mới bên dòng sông." }
+      ],
+      "calendar": "Lịch hàng tuần"
+    },
+    "gallery": {
+      "title": "Thư viện ảnh",
+      "subtitle": "Buổi sáng sông Son, hoàng hôn sân thượng, hang động và khoảnh khắc gia đình.",
+      "viewAll": "Xem tất cả ảnh"
+    },
+    "blog": {
+      "title": "Hướng dẫn & câu chuyện du lịch",
+      "subtitle": "Mẹo khám phá Phong Nha như người địa phương.",
+      "viewAll": "Xem tất cả tin tức",
+      "readArticle": "Đọc bài viết"
+    },
+    "contact": {
+      "title": "Lên kế hoạch chuyến đi",
+      "subtitle": "Nhắn WhatsApp — chúng tôi phản hồi nhanh và hỗ trợ mọi thứ.",
+      "cta": "Chat WhatsApp",
+      "directions": "Chỉ đường"
+    },
+    "reviews": {
+      "title": "Đánh giá từ khách",
+      "subtitle": "Lắng nghe những câu chuyện từ du khách đã trở thành người thân.",
+      "basedOn": "Dựa trên {count} đánh giá",
+      "excellent": "Xuất sắc"
+    },
+    "faq": {
+      "title": "Câu hỏi thường gặp",
+      "subtitle": "Thông tin hữu ích trước chuyến đi của bạn.",
+      "items": [
+        {
+          "question": "Làm sao để đặt phòng?",
+          "answer": "Nhắn tin WhatsApp cho chúng tôi để được phản hồi nhanh nhất. Chúng tôi xác nhận phòng trống và giá trực tiếp — không qua trung gian, không phí ẩn."
+        },
+        {
+          "question": "Có bao gồm bữa sáng không?",
+          "answer": "Có. Mỗi sáng, khách được thưởng thức bữa sáng miễn phí tại quán café sân thượng với món Việt Nam và quốc tế."
+        },
+        {
+          "question": "Có hỗ trợ đặt tour không?",
+          "answer": "Tất nhiên. Chúng tôi đặt tour hang động và trải nghiệm tại Phong Nha. Bạn chỉ cần cho biết ngày và sở thích — phần còn lại để chúng tôi lo."
+        },
+        {
+          "question": "Đi Phong Nha bằng cách nào?",
+          "answer": "Chúng tôi đón sân bay và ga tàu tại Đồng Hới. Xe giường nằm từ Hà Nội, Huế, Đà Nẵng cũng có sẵn — cứ hỏi chúng tôi."
+        },
+        {
+          "question": "Green Riverside có phù hợp khách đi một mình?",
+          "answer": "Đây là một trong những chỗ ở sôi động nhất Phong Nha. Hoạt động hàng ngày, bữa tối gia đình và cộng đồng thân thiện giúp bạn dễ kết bạn."
+        }
+      ]
+    },
+    "map": {
+      "title": "Vị trí tại Phong Nha",
+      "subtitle": "Bên dòng sông, giữa thiên nhiên xanh mát.",
+      "getDirections": "Chỉ đường"
+    },
+    "cta": {
+      "bookWhatsApp": "Đặt qua WhatsApp",
+      "fallbackTitle": "Sẵn sàng khám phá Phong Nha?",
+      "fallbackSubtitle": "Đặt trực tiếp và tiết kiệm."
+    },
+    "empty": "Nội dung trang chủ đang được cập nhật. Vui lòng quay lại sau hoặc liên hệ qua WhatsApp."
+  },
+  "pages": {
+    "ourStory": {
+      "metaTitle": "Câu chuyện | Green Riverside Cosy Home",
+      "metaDescription": "Khám phá hành trình gia đình đằng sau Green Riverside — triết lý thiên nhiên, gia đình và cộng đồng tại Phong Nha.",
+      "title": "Câu chuyện của chúng tôi",
+      "empty": "Câu chuyện đang được viết. Hãy quay lại sau nhé.",
+      "founderStory": "Câu chuyện người sáng lập",
+      "familyJourney": "Hành trình gia đình",
+      "philosophy": "Triết lý của chúng tôi",
+      "natureFamilyCommunity": "Thiên nhiên • Gia đình • Cộng đồng",
+      "lifeAtGreenRiverside": "Cuộc sống tại Green Riverside",
+      "timeline": "Dòng thời gian"
+    },
+    "stay": {
+      "metaTitle": "Lưu trú | Green Riverside Cosy Home",
+      "metaDescription": "Khám phá phòng và dormitory tại Phong Nha. Từ phòng riêng cao cấp đến dorm sôi động — đặt trực tiếp qua WhatsApp và tiết kiệm.",
+      "title": "Lưu trú cùng chúng tôi",
+      "subtitle": "Phòng thoải mái và dormitory thân thiện giữa lòng Phong Nha.",
+      "bookWhatsApp": "Đặt phòng qua WhatsApp",
+      "startingFrom": "Giá từ",
+      "amenities": "Tiện nghi",
+      "bookRoom": "Đặt qua WhatsApp",
+      "upToGuests": "Tối đa {count} khách",
+      "whyStayTitle": "Vì sao chọn chúng tôi",
+      "whyStaySubtitle": "Đến như khách, về như người thân."
+    },
+    "tours": {
+      "metaTitle": "Tour | Khám phá hang động Phong Nha",
+      "metaDescription": "Đặt tour hang động, trekking rừng và trải nghiệm nông thôn tại Phong Nha. Hang Thiên Đường, Hang Tối, Hang Én và nhiều hơn nữa.",
+      "title": "Khám phá Phong Nha",
+      "subtitle": "Hang động nổi tiếng thế giới và những chuyến phiêu lưu khó quên.",
+      "bookWhatsApp": "Đặt tour qua WhatsApp",
+      "startingFrom": "Giá từ",
+      "highlights": "Điểm nổi bật",
+      "bookTour": "Đặt tour này",
+      "viewDetails": "Xem chi tiết"
+    },
+    "explore": {
+      "metaTitle": "Khám phá Phong Nha | Bong Lai, hang động & mạo hiểm",
+      "metaDescription": "Khám phá vì sao Phong Nha là thủ phủ mạo hiểm Việt Nam — thung lũng Bong Lai, tour hang động kinh điển, xe máy và trải nghiệm địa phương.",
+      "title": "Khám phá Phong Nha",
+      "subtitle": "Núi đá vôi, thung lũng ẩn và hang động nổi tiếng thế giới — cửa ngõ tới Quảng Bình chân thực.",
+      "whyPhongNha": "Vì sao Phong Nha?",
+      "bongLaiValley": "Thung lũng Bong Lai",
+      "motorbike": "Phiêu lưu xe máy",
+      "classicTours": "Tour hang động kinh điển",
+      "adventureTours": "Tour hang động mạo hiểm",
+      "localExperiences": "Trải nghiệm địa phương"
+    },
+    "tourDetail": {
+      "experienceLabel": "Trải nghiệm Phong Nha",
+      "duration": "Thời gian",
+      "departure": "Khởi hành",
+      "return": "Về",
+      "price": "Giá",
+      "from": "Từ",
+      "bookWhatsApp": "Đặt qua WhatsApp",
+      "viewItinerary": "Xem lịch trình",
+      "highlightsTitle": "Điểm nổi bật",
+      "overviewTitle": "Vì sao bạn sẽ yêu thích",
+      "timelineTitle": "Lịch trình trong ngày",
+      "galleryTitle": "Thư viện ảnh",
+      "includedTitle": "Bao gồm",
+      "excludedTitle": "Không bao gồm",
+      "whatToBringTitle": "Nên mang theo",
+      "pricingTitle": "Giá tour",
+      "reserveWhatsApp": "Đặt chỗ qua WhatsApp",
+      "childDiscount": "Trẻ dưới 1,2m",
+      "childDiscountDefault": "Giảm 50%",
+      "packageTitle": "Bao gồm & không bao gồm",
+      "faqTitle": "Câu hỏi thường gặp",
+      "ctaTitle": "Sẵn sàng khám phá Phong Nha?",
+      "ctaSubtitle": "Đặt chỗ ngay hôm nay để trải nghiệm kỳ quan thiên nhiên Phong Nha.",
+      "ctaButton": "Đặt qua WhatsApp",
+      "approxUsd": "≈ {amount} USD"
+    },
+    "eatDrink": {
+      "metaTitle": "Ẩm thực | Quán café sân thượng",
+      "metaDescription": "Thưởng thức ẩm thực Việt Nam, cà phê specialty và cocktail hoàng hôn tại quán café sân thượng view núi và sông Phong Nha.",
+      "title": "Ẩm thực & Đồ uống",
+      "atmosphereTitle": "Cozy Cafe Rooftop",
+      "atmosphereSubtitle": "Không gian trước, thực đơn sau — cà phê bình minh, ẩm thực lành mạnh, cocktail hoàng hôn và cộng đồng trên tầng 4.",
+      "menuHighlights": "Thực đơn nổi bật",
+      "empty": "Nội dung quán café đang cập nhật. Liên hệ WhatsApp để đặt bàn.",
+      "reserveTable": "Đặt bàn qua WhatsApp"
+    },
+    "transportation": {
+      "metaTitle": "Di chuyển | Đón sân bay, ga tàu & xe địa phương",
+      "metaDescription": "Đặt đón sân bay, ga tàu, vé xe, thuê xe máy và xe riêng tại Phong Nha.",
+      "title": "Di chuyển",
+      "subtitle": "Đến và khám phá Phong Nha thật dễ dàng.",
+      "servicesTitle": "Dịch vụ di chuyển",
+      "servicesSubtitle": "Chúng tôi sắp xếp mọi nhu cầu di chuyển — chỉ cần nhắn WhatsApp.",
+      "from": "Từ",
+      "inquire": "Tư vấn"
+    },
+    "otherServices": {
+      "metaTitle": "Dịch vụ khác | Green Riverside Cosy Home",
+      "metaDescription": "Giặt ủi, thuê xe, đưa đón, massage, giữ hành lý, nước uống miễn phí, khu sinh hoạt chung và các dịch vụ tiện ích tại Phong Nha.",
+      "title": "Dịch vụ khác",
+      "subtitle": "Những tiện ích nhỏ giúp kỳ nghỉ của bạn ở Phong Nha dễ dàng và thoải mái hơn.",
+      "intro": "Bạn có thể hỏi lễ tân hoặc nhắn WhatsApp cho chúng tôi. Đội ngũ Green Riverside luôn sẵn sàng hỗ trợ sắp xếp các dịch vụ cần thiết trong thời gian lưu trú.",
+      "ctaLabel": "Hỏi về dịch vụ",
+      "items": [
+        "Dịch vụ giặt ủi",
+        "Thuê xe đạp",
+        "Thuê xe máy",
+        "Taxi & xe riêng đưa đón",
+        "Tour Easy Rider",
+        "Dịch vụ massage",
+        "Nước lọc miễn phí",
+        "Khu sinh hoạt chung với võng & ghế lười",
+        "Giữ hành lý, phòng tắm & nhà vệ sinh trước giờ check-in / sau giờ check-out",
+        "Thuê kayak"
+      ]
+    },
+    "usefulInfo": {
+      "metaTitle": "Thông tin hữu ích | Green Riverside Cosy Home",
+      "metaDescription": "Thông tin du lịch Phong Nha về ăn uống, cafe, nightlife, điểm bơi, điểm tham quan, di chuyển, thời tiết, visa, SIM, tiền tệ và hành lý cần chuẩn bị.",
+      "title": "Thông tin hữu ích",
+      "subtitle": "Những câu hỏi nhanh giúp bạn chuẩn bị chuyến đi Phong Nha và Việt Nam dễ dàng hơn.",
+      "intro": "Bạn có thể dùng các chủ đề này để tham khảo trước khi đi. Nếu cần thông tin mới nhất, hãy hỏi lễ tân hoặc nhắn WhatsApp cho chúng tôi.",
+      "ctaLabel": "Hỏi chúng tôi",
+      "items": [
+        "Ăn ở đâu ngon nhất tại Phong Nha?",
+        "Tìm món chay và thuần chay ở đâu tại Phong Nha?",
+        "Những quán cafe nào đáng ghé nhất ở Phong Nha?",
+        "Uống bia, cocktail hoặc nightlife ở đâu tại Phong Nha?",
+        "Địa điểm ngắm bình minh và hoàng hôn đẹp nhất ở đâu?",
+        "Những điểm bơi đẹp nhất ở Phong Nha ở đâu?",
+        "Những điểm tham quan không nên bỏ lỡ ở Phong Nha là gì?",
+        "Những cung đường đạp xe đẹp quanh Phong Nha là gì?",
+        "Thuê xe máy uy tín ở đâu tại Phong Nha?",
+        "Có phòng gym tốt ở Phong Nha không?",
+        "Có thể rút tiền ATM hoặc đổi tiền ở đâu?",
+        "Mua đồ tạp hóa, quà lưu niệm hoặc đồ dùng hằng ngày ở đâu?",
+        "Nếu bị ốm thì nên làm gì?",
+        "Nhà thuốc, phòng khám và bệnh viện gần nhất ở đâu?",
+        "Thời tiết ở Phong Nha như thế nào?",
+        "Mùa mưa và mùa lũ ở Phong Nha là khi nào?",
+        "Có cần visa để đến Việt Nam không?",
+        "Di chuyển đến Việt Nam như thế nào?",
+        "Nên dùng SIM hoặc eSIM nào ở Việt Nam?",
+        "Có thể thanh toán bằng thẻ tín dụng ở Phong Nha không?",
+        "Di chuyển quanh Phong Nha bằng cách nào?",
+        "Nên chuẩn bị gì khi đến Phong Nha?"
+      ]
+    },
+    "activities": {
+      "metaTitle": "Hoạt động cộng đồng | Sự kiện hàng tuần",
+      "metaDescription": "Tham gia hoạt động miễn phí — bữa tối gia đình, lớp nấu ăn, trivia, karaoke và nhiều hơn tại Green Riverside.",
+      "title": "Hoạt động cộng đồng",
+      "subtitle": "Kết nối, cười và tạo kỷ niệm cùng cộng đồng.",
+      "communityTitle": "Sự kiện cộng đồng",
+      "communitySubtitle": "Hơn cả hostel — nơi bạn thuộc về.",
+      "communityBody": "Mỗi tuần chúng tôi gắn kết khách qua bữa ăn chung, trò chơi, âm nhạc và giao lưu văn hóa. Tất cả hoạt động miễn phí cho khách lưu trú. Khách vãng lai cũng được chào đón tại sự kiện café — hỏi lễ tân nhé!",
+      "join": "Tham gia hoạt động"
+    },
+    "gallery": {
+      "metaTitle": "Thư viện ảnh | Green Riverside Cosy Home",
+      "metaDescription": "Xem ảnh phòng, quán café, tour, hoạt động và hoàng hôn Phong Nha tuyệt đẹp.",
+      "title": "Thư viện ảnh",
+      "subtitle": "Lưu giữ khoảnh khắc tại Green Riverside.",
+      "photoGallery": "Bộ sưu tập ảnh",
+      "filterByCategory": "Lọc theo danh mục",
+      "loadMore": "Xem thêm",
+      "categories": {
+        "all": "Tất cả",
+        "rooms": "Phòng",
+        "cafe": "Quán café",
+        "food": "Ẩm thực",
+        "tours": "Tour",
+        "activities": "Hoạt động",
+        "nature": "Thiên nhiên",
+        "sunset": "Hoàng hôn",
+        "community": "Cộng đồng"
+      }
+    },
+    "blog": {
+      "metaTitle": "Blog | Mẹo du lịch & hướng dẫn Phong Nha",
+      "metaDescription": "Đọc hướng dẫn du lịch, mẹo khám phá hang động và góc nhìn địa phương từ đội ngũ Green Riverside tại Phong Nha.",
+      "title": "Blog",
+      "subtitle": "Mẹo du lịch, hướng dẫn và câu chuyện từ Phong Nha.",
+      "latestArticles": "Bài viết mới nhất",
+      "searchPlaceholder": "Tìm bài viết...",
+      "noResults": "Không tìm thấy bài viết.",
+      "relatedPosts": "Bài viết liên quan",
+      "readingTime": "{count} phút đọc",
+      "readingTimeLabel": "Thời gian đọc",
+      "tableOfContents": "Trong bài viết",
+      "allCategories": "Tất cả"
+    },
+    "contact": {
+      "metaTitle": "Liên hệ | Green Riverside Cosy Home",
+      "metaDescription": "Liên hệ Green Riverside qua WhatsApp, điện thoại hoặc email. Tìm chúng tôi tại Phong Nha, Quảng Bình, Việt Nam.",
+      "title": "Liên hệ",
+      "subtitle": "Chúng tôi rất mong được lắng nghe bạn.",
+      "getInTouch": "Liên hệ với chúng tôi",
+      "phone": "Điện thoại",
+      "email": "Email",
+      "address": "Địa chỉ",
+      "hours": "Giờ mở cửa",
+      "chatWhatsApp": "Chat WhatsApp",
+      "mapDirections": "Mở Google Maps qua WhatsApp để chỉ đường →",
+      "mapTitle": "Vị trí Green Riverside",
+      "social": {
+        "followUs": "Theo dõi chúng tôi",
+        "maps": "Google Maps",
+        "facebook": "Facebook",
+        "instagram": "Instagram",
+        "tiktok": "TikTok",
+        "youtube": "YouTube",
+        "tripadvisor": "TripAdvisor"
+      }
+    },
+    "terms": {
+      "metaTitle": "Điều khoản | Green Riverside Cosy Home",
+      "metaDescription": "Điều khoản đặt phòng và lưu trú tại Green Riverside Cosy Home, Phong Nha.",
+      "title": "Điều khoản & Điều kiện",
+      "body": "Khi đặt phòng tại Green Riverside Cosy Home, bạn đồng ý với nội quy, chính sách hủy và điều khoản thanh toán được thông báo khi xác nhận đặt chỗ. Giá, tình trạng phòng và các dịch vụ đi kèm có thể thay đổi cho đến khi đặt phòng được xác nhận. Chúng tôi có quyền từ chối phục vụ trong trường hợp hành vi không an toàn hoặc gây rối. Mọi thắc mắc về điều khoản, vui lòng liên hệ trước khi lưu trú."
+    },
+    "privacy": {
+      "metaTitle": "Chính sách bảo mật | Green Riverside Cosy Home",
+      "metaDescription": "Cách Green Riverside Cosy Home thu thập, sử dụng và bảo vệ thông tin cá nhân của bạn.",
+      "title": "Chính sách bảo mật",
+      "body": "Chúng tôi chỉ thu thập thông tin cần thiết để xử lý đặt phòng và trả lời yêu cầu, như tên, thông tin liên hệ và nhu cầu lưu trú. Chúng tôi không bán dữ liệu cá nhân của bạn. Thông tin có thể được chia sẻ với đối tác dịch vụ chỉ khi cần thiết để hoàn tất đặt chỗ. Bạn có thể yêu cầu truy cập hoặc chỉnh sửa dữ liệu bằng cách liên hệ trực tiếp với chúng tôi. Chúng tôi áp dụng các biện pháp hợp lý để bảo mật thông tin của bạn."
+    }
+  },
+  "footer": {
+    "followUs": "Theo dõi:",
+    "contactUs": "Liên hệ",
+    "salesHotline": "Hotline đặt phòng",
+    "reception": "Lễ tân",
+    "address": "Địa chỉ",
+    "paymentMethods": "Phương thức thanh toán",
+    "paymentOptions": ["Visa", "Mastercard", "Tiền mặt", "Chuyển khoản"],
+    "socialComingSoon": "Sắp kết nối trên mạng xã hội.",
+    "chatWhatsApp": "Chat WhatsApp",
+    "aboutUs": "Về chúng tôi",
+    "rooms": "Phòng",
+    "activities": "Hoạt động",
+    "news": "Tin tức",
+    "contact": "Liên hệ",
+    "terms": "Điều khoản",
+    "privacy": "Chính sách bảo mật",
+    "legalNav": "Liên kết pháp lý",
+    "allRightsReserved": "Bảo lưu mọi quyền.",
+    "rights": "Bảo lưu mọi quyền."
+  },
+  "common": {
+    "learnMore": "Tìm hiểu thêm",
+    "viewDetails": "Xem chi tiết",
+    "skipToContent": "Chuyển tới nội dung",
+    "loading": "Đang tải...",
+    "notFound": "Không tìm thấy trang",
+    "notFoundDesc": "Trang bạn tìm không tồn tại hoặc đã được chuyển đi.",
+    "goHome": "Về trang chủ",
+    "contactUs": "Liên hệ",
+    "contentNotPublished": "Nội dung cho mục này chưa được đăng. Vui lòng quay lại sau hoặc liên hệ qua WhatsApp.",
+    "viewOnMap": "Xem trên Google Maps"
+  },
+  "whatsapp": {
+    "bookRoom": "Đặt phòng",
+    "bookTour": "Đặt tour",
+    "general": "Liên hệ"
+  }
+}

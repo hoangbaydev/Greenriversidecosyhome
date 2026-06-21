@@ -1,0 +1,478 @@
+{
+  "meta": {
+    "siteName": "Green Riverside Cosy Home",
+    "tagline": "Come as our guest, leave as our family.",
+    "description": "Family-run hospitality in Phong Nha, Vietnam. Stay, eat, explore and connect. Book direct via WhatsApp and save."
+  },
+  "nav": {
+    "home": "Home",
+    "ourStory": "Our Story",
+    "stay": "Stay",
+    "eatDrink": "Eat & Drink",
+    "socialActivities": "Social Activities",
+    "explore": "Explore",
+    "explorePhongNha": "Explore Phong Nha",
+    "transport": "Transport",
+    "otherServices": "Other Services",
+    "usefulInfo": "Useful Info",
+    "tours": "Tours",
+    "transportation": "Transportation",
+    "activities": "Activities",
+    "gallery": "Gallery",
+    "blog": "Blog",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "bookNow": "Book Now",
+    "menu": "Menu",
+    "closeMenu": "Close menu",
+    "language": "Language",
+    "exploreDesc": {
+      "explorePhongNha": "Bong Lai, caves & adventures",
+      "tours": "Caves & guided adventures",
+      "socialActivities": "Community & social events",
+      "transport": "Transfers & getting here",
+      "gallery": "Photos & moments"
+    }
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "PHONG NHA, VIETNAM",
+      "fallbackTitle": "Stay in Nature.\nConnect with People.",
+      "fallbackSubtitle": "Experience authentic local hospitality, community activities and unforgettable adventures in the heart of Phong Nha.",
+      "primaryCta": "Book Your Stay",
+      "secondaryCta": "Explore Experiences",
+      "scrollHint": "Discover more",
+      "pillars": {
+        "stay": "Stay",
+        "eat": "Eat",
+        "explore": "Explore",
+        "connect": "Connect"
+      }
+    },
+    "story": {
+      "title": "Our Story",
+      "subtitle": "More than a place to stay — a home shaped by nature, family, and community.",
+      "excerpt": "Green Riverside Cosy Home began as a family dream beside the Son River. Today we welcome travellers from around the world with warm hospitality, home-cooked meals, and adventures that reveal the soul of Phong Nha.",
+      "cta": "Read our story"
+    },
+    "whyStay": {
+      "title": "Why Stay With Us",
+      "subtitle": "Authentic hospitality, social energy, and nature at your doorstep.",
+      "items": [
+        {
+          "title": "Riverside Location",
+          "description": "Wake up beside the Son River with limestone peaks on the horizon — nature outside your door.",
+          "icon": "waves"
+        },
+        {
+          "title": "Social Community",
+          "description": "Family dinners, rooftop happy hours, and weekly events where solo travellers instantly feel at home.",
+          "icon": "users"
+        },
+        {
+          "title": "Local Family Hospitality",
+          "description": "Run by a Vietnamese family who share honest recommendations, home cooking, and genuine care.",
+          "icon": "heart"
+        },
+        {
+          "title": "Adventure Hub",
+          "description": "Book caves, tours, and transport directly with us — no booking fees, no middleman.",
+          "icon": "compass"
+        },
+        {
+          "title": "Rooftop Café",
+          "description": "Sunrise coffee, Vietnamese breakfast, and sunset cocktails with river and mountain views.",
+          "icon": "coffee"
+        },
+        {
+          "title": "Book Direct & Save",
+          "description": "WhatsApp us for the best rates, flexible plans, and personal help planning your Phong Nha stay.",
+          "icon": "message"
+        }
+      ]
+    },
+    "trust": {
+      "title": "Trusted by Travellers Worldwide",
+      "subtitle": "A family-run home where every guest becomes part of our story.",
+      "years": "Years of Hospitality",
+      "guests": "Happy Guests",
+      "countries": "Countries Welcomed",
+      "rating": "Average Rating"
+    },
+    "accommodation": {
+      "title": "Best Rooms For You",
+      "subtitle": "Comfortable spaces designed for rest, connection, and the rhythm of riverside life.",
+      "viewAll": "View all rooms",
+      "from": "From",
+      "perNight": "/ night",
+      "details": "Details",
+      "bookStay": "Book Your Stay",
+      "guests": "Up to {count} guests",
+      "empty": "Our rooms are being updated. Message us on WhatsApp for availability and rates."
+    },
+    "stay": {
+      "rateNote": "* Room rates vary depending on the stay period. Please check with us on WhatsApp for details."
+    },
+    "cafe": {
+      "reserveTable": "Reserve a Table"
+    },
+    "eatDrinkTeaser": {
+      "title": "Eat & Drink",
+      "subtitle": "Rooftop café with river views and home-cooked Vietnamese flavours.",
+      "body": "Start your day with complimentary breakfast, sip specialty coffee at sunset, and share family-style dinners with travellers from around the world — all on our rooftop above the Son River.",
+      "reserveTable": "Reserve a Table",
+      "learnMore": "See our menu"
+    },
+    "tours": {
+      "title": "Explore Phong Nha",
+      "subtitle": "World-famous caves and unforgettable adventures await.",
+      "allTours": "All Tours",
+      "bookTour": "Book a Tour",
+      "from": "From",
+      "empty": "Tours are being updated. WhatsApp us to book cave adventures and local experiences."
+    },
+    "activities": {
+      "title": "Social Activities",
+      "subtitle": "Where strangers become friends — free community events every week.",
+      "join": "Join an Activity",
+      "viewAll": "See full schedule",
+      "highlights": [
+        { "name": "Family Dinner", "desc": "Shared tables, home cooking, stories from around the world." },
+        { "name": "Happy Hour", "desc": "Sunset drinks on the rooftop as the river turns gold." },
+        { "name": "Cooking Class", "desc": "Learn Vietnamese recipes with our family in the kitchen." },
+        { "name": "Beer Pong", "desc": "Friendly competition and laughter after dark." },
+        { "name": "Music Bingo", "desc": "Sing along, guess the tune, win small prizes." },
+        { "name": "Karaoke", "desc": "Classic hostel nights — everyone's a star." },
+        { "name": "Language Exchange", "desc": "Practice languages over coffee and good company." },
+        { "name": "Game Nights", "desc": "Board games, cards, and new friends by the river." }
+      ],
+      "calendar": "Weekly Calendar"
+    },
+    "gallery": {
+      "title": "Gallery",
+      "subtitle": "Son River mornings, rooftop sunsets, cave adventures, and family moments.",
+      "viewAll": "View all photos"
+    },
+    "blog": {
+      "title": "Travel Guides & Stories",
+      "subtitle": "Insider tips for exploring Phong Nha like a local.",
+      "viewAll": "View all news",
+      "readArticle": "Read article"
+    },
+    "contact": {
+      "title": "Plan Your Stay",
+      "subtitle": "Message us on WhatsApp — we reply fast and help with everything.",
+      "cta": "Chat on WhatsApp",
+      "directions": "Get directions"
+    },
+    "reviews": {
+      "title": "Guest Reviews",
+      "subtitle": "Hear from travellers who became family.",
+      "basedOn": "Based on {count} reviews",
+      "excellent": "Excellent"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know before your stay.",
+      "items": [
+        {
+          "question": "How do I book a room?",
+          "answer": "Message us on WhatsApp for the fastest response. We confirm availability and rates directly — no booking fees, no middleman."
+        },
+        {
+          "question": "Is breakfast included?",
+          "answer": "Yes. Every guest enjoys complimentary breakfast each morning at our rooftop café, with Vietnamese and international options."
+        },
+        {
+          "question": "Can you help arrange tours?",
+          "answer": "Absolutely. We book all major Phong Nha cave tours and adventures. Tell us your dates and interests — we handle the rest."
+        },
+        {
+          "question": "How do I get to Phong Nha?",
+          "answer": "We offer airport and train station transfers from Dong Hoi. Sleeper buses from Hanoi, Hue, and Da Nang are also available — just ask."
+        },
+        {
+          "question": "Is Green Riverside good for solo travellers?",
+          "answer": "We're one of Phong Nha's most social stays. Daily activities, family dinners, and a welcoming community make it easy to meet people."
+        }
+      ]
+    },
+    "map": {
+      "title": "Find Us in Phong Nha",
+      "subtitle": "Nestled by the river, surrounded by nature.",
+      "getDirections": "Get Directions"
+    },
+    "cta": {
+      "bookWhatsApp": "Book on WhatsApp",
+      "fallbackTitle": "Ready To Experience Phong Nha?",
+      "fallbackSubtitle": "Book direct and save."
+    },
+    "empty": "Homepage content is being prepared. Please check back soon or contact us on WhatsApp."
+  },
+  "pages": {
+    "ourStory": {
+      "metaTitle": "Our Story | Green Riverside Cosy Home",
+      "metaDescription": "Discover the family journey behind Green Riverside Cosy Home — our philosophy of nature, family, and community in Phong Nha.",
+      "title": "Our Story",
+      "empty": "Our story is being written. Check back soon.",
+      "founderStory": "Founder Story",
+      "familyJourney": "Family Journey",
+      "philosophy": "Our Philosophy",
+      "natureFamilyCommunity": "Nature • Family • Community",
+      "lifeAtGreenRiverside": "Life At Green Riverside",
+      "timeline": "Our Timeline"
+    },
+    "stay": {
+      "metaTitle": "Stay | Green Riverside Cosy Home",
+      "metaDescription": "Browse our rooms and dorms in Phong Nha. From deluxe private rooms to social dorms — book direct via WhatsApp and save.",
+      "title": "Stay With Us",
+      "subtitle": "Comfortable rooms and social dorms in the heart of Phong Nha.",
+      "bookWhatsApp": "Book Your Stay on WhatsApp",
+      "startingFrom": "Starting from",
+      "amenities": "Amenities",
+      "bookRoom": "Book on WhatsApp",
+      "upToGuests": "Up to {count} guests",
+      "whyStayTitle": "Why Stay With Us",
+      "whyStaySubtitle": "Come as our guest, leave as our family."
+    },
+    "tours": {
+      "metaTitle": "Tours | Explore Phong Nha Caves & Adventures",
+      "metaDescription": "Book cave tours, jungle treks, and countryside adventures in Phong Nha. Paradise Cave, Dark Cave, Hang En, and more.",
+      "title": "Explore Phong Nha",
+      "subtitle": "World-famous caves and unforgettable adventures await.",
+      "bookWhatsApp": "Book a Tour on WhatsApp",
+      "startingFrom": "Starting from",
+      "highlights": "Highlights",
+      "bookTour": "Book This Tour",
+      "viewDetails": "View details"
+    },
+    "explore": {
+      "metaTitle": "Explore Phong Nha | Bong Lai Valley, Caves & Adventures",
+      "metaDescription": "Discover why Phong Nha is Vietnam's adventure capital — Bong Lai Valley, classic cave tours, motorbike rides, and local experiences.",
+      "title": "Explore Phong Nha",
+      "subtitle": "Limestone mountains, hidden valleys, and world-famous caves — your gateway to authentic Quang Binh.",
+      "whyPhongNha": "Why Phong Nha?",
+      "bongLaiValley": "Bong Lai Valley",
+      "motorbike": "Motorbike Adventures",
+      "classicTours": "Classic Cave Tours",
+      "adventureTours": "Adventure Cave Tours",
+      "localExperiences": "Local Experiences"
+    },
+    "tourDetail": {
+      "experienceLabel": "Phong Nha Experience",
+      "duration": "Duration",
+      "departure": "Departure",
+      "return": "Return",
+      "price": "Price",
+      "from": "From",
+      "bookWhatsApp": "Book via WhatsApp",
+      "viewItinerary": "View Itinerary",
+      "highlightsTitle": "Tour Highlights",
+      "overviewTitle": "Why You'll Love This Experience",
+      "timelineTitle": "Your Day",
+      "galleryTitle": "Gallery",
+      "includedTitle": "Included",
+      "excludedTitle": "Not Included",
+      "whatToBringTitle": "What To Bring",
+      "pricingTitle": "Pricing",
+      "reserveWhatsApp": "Reserve via WhatsApp",
+      "childDiscount": "Child under 1.2m",
+      "childDiscountDefault": "50% discount",
+      "packageTitle": "What's Included",
+      "faqTitle": "Frequently Asked Questions",
+      "ctaTitle": "Ready to Explore Phong Nha?",
+      "ctaSubtitle": "Reserve your spot today and experience the natural wonders of Phong Nha.",
+      "ctaButton": "Book on WhatsApp",
+      "approxUsd": "≈ {amount} USD"
+    },
+    "eatDrink": {
+      "metaTitle": "Eat & Drink | Cozy Cafe Rooftop",
+      "metaDescription": "Enjoy Vietnamese cuisine, specialty coffee, and sunset cocktails at our rooftop café with mountain and river views in Phong Nha.",
+      "title": "Eat & Drink",
+      "atmosphereTitle": "Cozy Cafe Rooftop",
+      "atmosphereSubtitle": "Atmosphere first — sunrise coffee, healthy food, sunset cocktails, and community on the 4th floor.",
+      "menuHighlights": "Menu Highlights",
+      "empty": "Café content is being updated. Contact us on WhatsApp to reserve a table.",
+      "reserveTable": "Reserve a Table on WhatsApp"
+    },
+    "transportation": {
+      "metaTitle": "Transportation | Airport, Train & Local Transfers",
+      "metaDescription": "Book airport transfers, train pick-ups, bus tickets, motorbike rentals, and private cars in Phong Nha.",
+      "title": "Transportation",
+      "subtitle": "Getting to and around Phong Nha made easy.",
+      "servicesTitle": "Travel Services",
+      "servicesSubtitle": "We arrange all your transport needs — just message us on WhatsApp.",
+      "from": "From",
+      "inquire": "Inquire"
+    },
+    "otherServices": {
+      "metaTitle": "Other Services | Green Riverside Cosy Home",
+      "metaDescription": "Laundry, rentals, transfers, massage, luggage storage, drinking water, common areas, and other helpful guest services in Phong Nha.",
+      "title": "Other Services",
+      "subtitle": "Small comforts and practical help for an easier stay in Phong Nha.",
+      "intro": "Ask our team at reception or message us on WhatsApp. We are happy to help arrange convenient services during your stay.",
+      "ctaLabel": "Ask About Services",
+      "items": [
+        "Laundry Service",
+        "Bicycle Rental",
+        "Motorbike Rental",
+        "Taxi & Private Transfers",
+        "Easy Rider Tours",
+        "Massage Service",
+        "Free Filtered Drinking Water",
+        "Common Areas with Hammocks & Bean Bag Sofas",
+        "Luggage Storage, Shower & Toilet Facilities Before Check-in / After Check-out",
+        "Kayak Rental"
+      ]
+    },
+    "usefulInfo": {
+      "metaTitle": "Useful Information | Green Riverside Cosy Home",
+      "metaDescription": "Helpful Phong Nha travel information covering food, cafes, nightlife, swimming spots, attractions, transport, weather, visa, SIM cards, money, and packing tips.",
+      "title": "Useful Information",
+      "subtitle": "Quick answers for planning a smoother stay in Phong Nha and Vietnam.",
+      "intro": "Use these topics as a starting point for local recommendations. For the latest details, ask our team at reception or message us on WhatsApp.",
+      "ctaLabel": "Ask Us Anything",
+      "items": [
+        "Where Are the Best Places to Eat in Phong Nha?",
+        "Where Can I Find Vegan & Vegetarian Food in Phong Nha?",
+        "What Are the Best Cafes in Phong Nha?",
+        "Where Can I Enjoy a Drink or Nightlife in Phong Nha?",
+        "Where Are the Best Places to Watch Sunrise & Sunset?",
+        "Where Are the Best Swimming Spots in Phong Nha?",
+        "What Are the Must-Visit Attractions in Phong Nha?",
+        "What Are the Best Cycling Routes Around Phong Nha?",
+        "Where Can I Rent a Reliable Motorbike in Phong Nha?",
+        "Is There a Good Gym in Phong Nha?",
+        "Where Can I Find ATMs or Exchange Money?",
+        "Where Can I Shop for Groceries, Souvenirs, or Daily Essentials?",
+        "What Should I Do If I Get Sick?",
+        "Where Are the Nearest Pharmacy, Clinic, and Hospital?",
+        "What Is the Weather Like in Phong Nha?",
+        "When Is the Rainy Season and Flooding Season in Phong Nha?",
+        "Do I Need a Visa to Visit Vietnam?",
+        "How Do I Travel to Vietnam?",
+        "What SIM Card or eSIM Should I Use in Vietnam?",
+        "Can I Pay by Credit Card in Phong Nha?",
+        "How Can I Get Around Phong Nha?",
+        "What Should I Pack for Visiting Phong Nha?"
+      ]
+    },
+    "activities": {
+      "metaTitle": "Social Activities | Weekly Events at Green Riverside",
+      "metaDescription": "Join free social activities — family dinners, cooking classes, trivia nights, karaoke, and more at Green Riverside Cosy Home.",
+      "title": "Social Activities",
+      "subtitle": "Connect, laugh, and make memories with our community.",
+      "communityTitle": "Community Events",
+      "communitySubtitle": "More than a hostel — a place to belong.",
+      "communityBody": "Every week we bring our guests together through shared meals, games, music, and cultural exchange. All activities are free for guests staying at Green Riverside. Walk-ins welcome for café events — just ask at reception!",
+      "join": "Join an Activity"
+    },
+    "gallery": {
+      "metaTitle": "Gallery | Green Riverside Cosy Home",
+      "metaDescription": "Browse photos of our rooms, rooftop café, tours, activities, and stunning Phong Nha sunsets.",
+      "title": "Gallery",
+      "subtitle": "Capturing moments at Green Riverside.",
+      "photoGallery": "Photo Gallery",
+      "filterByCategory": "Filter by category",
+      "loadMore": "Load More",
+      "categories": {
+        "all": "All",
+        "rooms": "Rooms",
+        "cafe": "Cafe",
+        "food": "Food",
+        "tours": "Tours",
+        "activities": "Activities",
+        "nature": "Nature",
+        "sunset": "Sunset",
+        "community": "Community"
+      }
+    },
+    "blog": {
+      "metaTitle": "Blog | Travel Tips & Phong Nha Guides",
+      "metaDescription": "Read travel guides, cave adventure tips, and local insights from the Green Riverside team in Phong Nha, Vietnam.",
+      "title": "Blog",
+      "subtitle": "Travel tips, guides, and stories from Phong Nha.",
+      "latestArticles": "Latest Articles",
+      "searchPlaceholder": "Search articles...",
+      "noResults": "No articles found.",
+      "relatedPosts": "Related Posts",
+      "readingTime": "{count} min read",
+      "readingTimeLabel": "Reading time",
+      "tableOfContents": "In this article",
+      "allCategories": "All"
+    },
+    "contact": {
+      "metaTitle": "Contact | Green Riverside Cosy Home",
+      "metaDescription": "Contact Green Riverside Cosy Home via WhatsApp, phone, or email. Find us in Phong Nha, Quang Binh, Vietnam.",
+      "title": "Contact Us",
+      "subtitle": "We would love to hear from you.",
+      "getInTouch": "Get In Touch",
+      "phone": "Phone",
+      "email": "Email",
+      "address": "Address",
+      "hours": "Hours",
+      "chatWhatsApp": "Chat on WhatsApp",
+      "mapDirections": "Open in Google Maps via WhatsApp for directions →",
+      "mapTitle": "Green Riverside location",
+      "social": {
+        "followUs": "Follow us",
+        "maps": "Google Maps",
+        "facebook": "Facebook",
+        "instagram": "Instagram",
+        "tiktok": "TikTok",
+        "youtube": "YouTube",
+        "tripadvisor": "TripAdvisor"
+      }
+    },
+    "terms": {
+      "metaTitle": "Terms & Conditions | Green Riverside Cosy Home",
+      "metaDescription": "Terms and conditions for booking and staying at Green Riverside Cosy Home in Phong Nha, Vietnam.",
+      "title": "Terms & Conditions",
+      "body": "By booking with Green Riverside Cosy Home, you agree to our house rules, cancellation policy, and payment terms provided at the time of reservation. Rates, availability, and inclusions may change without prior notice until a booking is confirmed. We reserve the right to refuse service in cases of unsafe or disruptive behaviour. For questions about these terms, please contact us before your stay."
+    },
+    "privacy": {
+      "metaTitle": "Privacy Policy | Green Riverside Cosy Home",
+      "metaDescription": "How Green Riverside Cosy Home collects, uses, and protects your personal information.",
+      "title": "Privacy Policy",
+      "body": "We collect only the information needed to process bookings and respond to enquiries, such as your name, contact details, and stay preferences. We do not sell your personal data. Information may be shared with service partners only when necessary to fulfil your reservation. You may request access to or correction of your data by contacting us directly. We use reasonable measures to keep your information secure."
+    }
+  },
+  "footer": {
+    "followUs": "Follow us:",
+    "contactUs": "Contact Us",
+    "salesHotline": "Sales Hotline",
+    "reception": "Reception",
+    "address": "Address",
+    "paymentMethods": "Payment Methods",
+    "paymentOptions": ["Visa", "Mastercard", "Cash", "Bank Transfer"],
+    "socialComingSoon": "Connect with us on social media soon.",
+    "chatWhatsApp": "Chat on WhatsApp",
+    "aboutUs": "About Us",
+    "rooms": "Rooms",
+    "activities": "Activities",
+    "news": "News",
+    "contact": "Contact",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy",
+    "legalNav": "Legal and site links",
+    "allRightsReserved": "All Rights Reserved.",
+    "rights": "All rights reserved."
+  },
+  "common": {
+    "learnMore": "Learn more",
+    "viewDetails": "View details",
+    "skipToContent": "Skip to content",
+    "loading": "Loading...",
+    "notFound": "Page not found",
+    "notFoundDesc": "The page you are looking for does not exist or has been moved.",
+    "goHome": "Go Home",
+    "contactUs": "Contact Us",
+    "contentNotPublished": "Content for this section has not been published yet. Please check back soon or contact us on WhatsApp.",
+    "viewOnMap": "View on Google Maps"
+  },
+  "whatsapp": {
+    "bookRoom": "Book Room",
+    "bookTour": "Book Tour",
+    "general": "Contact Us"
+  }
+}

@@ -1,0 +1,47 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    function isAdmin() {
+      return request.auth != null &&
+        firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role in ['admin', 'editor'];
+    }
+
+    match /hero/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /rooms/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /tours/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /activities/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /gallery/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /cafe/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /blog/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /site/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /reviews/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

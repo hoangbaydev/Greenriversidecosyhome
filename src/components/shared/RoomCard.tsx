@@ -1,0 +1,219 @@
+"use client";
+
+import Link from "next/link";
+import { Users } from "lucide-react";
+import type { Room } from "@/types";
+import { getRoomTitle, getRoomPrice, getRoomCapacity } from "@/types";
+import { formatPrice } from "@/lib/utils";
+import { useLocale } from "@/components/providers/I18nProvider";
+import { localizedPath } from "@/lib/i18n/config";
+import { HomeSection } from "@/components/ui/home-section";
+import { SectionHeader } from "@/components/ui/section-header";
+import { SectionActions } from "@/components/ui/section-actions";
+import { OptimizedImage } from "@/components/ui/optimized-image";
+import { WhatsAppButton } from "@/components/whatsapp/WhatsAppButton";
+import { ListingGrid } from "@/components/motion";
+import { EmptyState } from "@/components/ui/empty-state";
+import { withSampleImages, SAMPLE_ROOM_IMAGES } from "@/lib/sample-media";
+
+
+function PremiumRoomCard({
+  room,
+  priceFromLabel,
+  perNightLabel,
+  viewDetailsLabel,
+  bookRoomLabel,
+  upToGuestsLabel,
+}: {
+  room: Room;
+  priceFromLabel?: string;
+  perNightLabel?: string;
+  viewDetailsLabel?: string;
+  bookRoomLabel?: string;
+  upToGuestsLabel?: string;
+}) {
+  const locale = useLocale();
+  const title = getRoomTitle(room);
+  const price = getRoomPrice(room);
+  const capacity = getRoomCapacity(room);
+  const description = room.shortDescription || room.description;
+  const images = withSampleImages(room.images ?? [], SAMPLE_ROOM_IMAGES);
+  const cover = images[0];
+  const guestsLabel = upToGuestsLabel?.replace("{count}", String(capacity));
+
+  return (
+    <article className="page-card page-card--lift group flex h-full flex-col">
+      <Link
+        href={localizedPath(locale, `/stay/${room.slug}`)}
+        className="relative block aspect-[4/3] overflow-hidden bg-soft"
+        tabIndex={-1}
+        aria-hidden
+      >
+        {cover ? (
+          <OptimizedImage
+            src={cover}
+            alt={title}
+            fill
+            sizes="(max-width: 768px) 100vw, 33vw"
+            className="img-hover object-cover"
+          />
+        ) : null}
+      </Link>
+      <div className="flex flex-1 flex-col p-6 md:p-7">
+        <h3 className="font-heading text-h4 text-text">
+          <Link
+            href={localizedPath(locale, `/stay/${room.slug}`)}
+            className="transition-colors hover:text-primary"
+          >
+            {title}
+          </Link>
+        </h3>
+        {description ? (
+          <p className="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-text-muted md:text-[0.9375rem]">
+            {description}
+          </p>
+        ) : null}
+        
+        {room.amenities && room.amenities.length > 0 ? (
+          <div className="mt-4 flex flex-wrap gap-3 text-xs text-text-muted">
+            {room.amenities.slice(0, 3).map((amenity) => (
+              <span key={amenity} className="meta-pill">
+                {amenity}
+              </span>
+            ))}
+          </div>
+        ) : null}
+
+        <p className="mt-5 text-lg font-semibold text-primary">
+          {price > 0 ? (
+            <>
+              <span className="text-sm font-normal text-text-muted">
+                {priceFromLabel || (locale === "vi" ? "Từ" : "From")}{" "}
+              </span>
+              {formatPrice(price, room.currency)}
+              <span className="ml-1 text-sm font-normal text-text-muted">
+                {perNightLabel || (locale === "vi" ? "/ đêm" : "/ night")}
+              </span>
+            </>
+          ) : (
+            <span className="text-sm font-normal text-text-muted">
+              {locale === "vi" ? "Liên hệ" : "Contact us"}
+            </span>
+          )}
+        </p>
+
+        <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          {viewDetailsLabel ? (
+            <Link
+              href={localizedPath(locale, `/stay/${room.slug}`)}
+              className="inline-flex min-h-10 w-full items-center justify-center rounded-lg border border-primary/30 px-5 text-sm font-semibold text-primary transition-colors hover:border-primary hover:bg-soft sm:w-auto"
+            >
+              {viewDetailsLabel}
+            </Link>
+          ) : null}
+          {bookRoomLabel ? (
+            <WhatsAppButton
+              messageType="book_room"
+              customMessage={`Hi Green Riverside! I'd like to book the ${title}. Could you please help me with availability and rates?`}
+              label={bookRoomLabel}
+              size="sm"
+              className="min-h-10 rounded-lg px-5 text-sm font-semibold sm:w-auto"
+            />
+          ) : null}
+        </div>
+      </div>
+    </article>
+  );
+}
+
+export function RoomCard({
+  room,
+  priceFromLabel,
+  perNightLabel,
+  viewDetailsLabel,
+  bookRoomLabel,
+  upToGuestsLabel,
+}: {
+  room: Room;
+  priceFromLabel?: string;
+  perNightLabel?: string;
+  viewDetailsLabel?: string;
+  bookRoomLabel?: string;
+  upToGuestsLabel?: string;
+}) {
+  return (
+    <PremiumRoomCard
+      room={room}
+      priceFromLabel={priceFromLabel}
+      perNightLabel={perNightLabel}
+      viewDetailsLabel={viewDetailsLabel}
+      bookRoomLabel={bookRoomLabel}
+      upToGuestsLabel={upToGuestsLabel}
+    />
+  );
+}
+
+export function AccommodationPreview({
+  rooms,
+  title,
+  subtitle,
+  bookLabel,
+  viewAllLabel,
+  emptyMessage,
+  priceFromLabel,
+  perNightLabel,
+  viewDetailsLabel,
+  rateNote,
+}: {
+  rooms: Room[];
+  title?: string;
+  subtitle?: string;
+  bookLabel?: string;
+  viewAllLabel?: string;
+  emptyMessage?: string;
+  priceFromLabel?: string;
+  perNightLabel?: string;
+  viewDetailsLabel?: string;
+  rateNote?: string;
+}) {
+  const locale = useLocale();
+
+  if (!title && !rooms.length) return null;
+
+  if (!rooms.length) {
+    return (
+      <HomeSection id="stay" background="soft" divider>
+        {title ? <SectionHeader eyebrow="Stay" title={title} subtitle={subtitle} /> : null}
+        {emptyMessage ? <EmptyState message={emptyMessage} /> : null}
+      </HomeSection>
+    );
+  }
+
+  return (
+    <HomeSection id="stay" background="soft" divider>
+      {title ? <SectionHeader eyebrow="Stay" title={title} subtitle={subtitle} /> : null}
+      {rateNote ? (
+        <p className="-mt-6 mb-10 text-center text-sm italic text-text-muted">{rateNote}</p>
+      ) : null}
+
+      <ListingGrid>
+        {rooms.slice(0, 3).map((room) => (
+          <PremiumRoomCard
+            key={room.id}
+            room={room}
+            priceFromLabel={priceFromLabel}
+            perNightLabel={perNightLabel}
+            viewDetailsLabel={viewDetailsLabel}
+          />
+        ))}
+      </ListingGrid>
+
+      <SectionActions
+        primaryLabel={bookLabel}
+        primaryMessageType="book_room"
+        secondaryLabel={viewAllLabel}
+        secondaryHref={viewAllLabel ? localizedPath(locale, "/stay") : undefined}
+      />
+    </HomeSection>
+  );
+}

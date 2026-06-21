@@ -1,0 +1,93 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null &&
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'editor'];
+    }
+
+    function isPublished() {
+      return resource.data.published == true;
+    }
+
+    function isBlogPublished() {
+      return resource.data.status == 'published' || resource.data.published == true;
+    }
+
+    match /rooms/{doc} {
+      allow read: if resource == null || isPublished() || isAdmin();
+      allow write: if isAdmin();
+    }
+    match /tours/{doc} {
+      allow read: if resource == null || isPublished() || isAdmin();
+      allow write: if isAdmin();
+    }
+    match /activities/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /transportation/{doc} {
+      allow read: if resource == null || isPublished() || isAdmin();
+      allow write: if isAdmin();
+    }
+    match /gallery/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /reviews/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /blog_posts/{doc} {
+      allow read: if resource == null || isBlogPublished() || isAdmin();
+      allow write: if isAdmin();
+    }
+    match /homepage_content/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /site_settings/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /contact_information/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /story_content/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /cafe_content/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /faq_content/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /faqs/{doc} {
+      allow read: if resource == null || isPublished() || isAdmin();
+      allow write: if isAdmin();
+    }
+    match /page_content/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    function isBootstrapAdminCreate(userId) {
+      return request.auth != null &&
+        request.auth.uid == userId &&
+        request.auth.token.email == 'admin@greenriversidecosyhome.com' &&
+        request.resource.data.role == 'admin' &&
+        request.resource.data.email == 'admin@greenriversidecosyhome.com';
+    }
+
+    match /users/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow create: if isBootstrapAdminCreate(userId);
+      allow update, delete: if isAdmin();
+    }
+  }
+}
