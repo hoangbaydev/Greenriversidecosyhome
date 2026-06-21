@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useDictionary, useLocale } from "@/components/providers/I18nProvider";
 import { useSiteData } from "@/components/providers/SiteDataProvider";
 import { localizedPath, stripLocale } from "@/lib/i18n/config";
@@ -13,19 +13,13 @@ import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { SiteBrand } from "@/components/layout/SiteBrand";
 import { WhatsAppButton } from "@/components/whatsapp/WhatsAppButton";
 
-type NavItemLink = {
-  href: string;
-  key: string;
-  label: string;
-};
-
 function isNavActive(path: string, href: string) {
   return path === href || (href !== "/" && path.startsWith(href));
 }
 
 function navLinkClass(active: boolean) {
   return cn(
-    "inline-flex min-h-9 items-center rounded-md px-3 py-1.5 text-sm font-medium transition-colors cursor-pointer",
+    "inline-flex min-h-9 items-center rounded-md px-2.5 py-1.5 text-[13px] xl:text-sm font-medium transition-colors cursor-pointer whitespace-nowrap",
     active
       ? "bg-soft text-primary font-semibold"
       : "text-[var(--color-body)] hover:bg-soft/70 hover:text-primary"
@@ -39,10 +33,6 @@ export function Navbar() {
   const { settings } = useSiteData();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  
-  // Mobile accordion states
-  const [mobileExploreOpen, setMobileExploreOpen] = useState(false);
 
   const siteName = settings?.siteName || dict.meta.siteName;
   const tagline = settings?.tagline || dict.meta.tagline;
@@ -70,10 +60,15 @@ export function Navbar() {
     });
   }, [pathname]);
 
-  const exploreItems: NavItemLink[] = [
-    { href: "/explore-phong-nha", key: "explorePhongNha", label: dict.nav.explorePhongNha },
-    { href: "/tours", key: "tours", label: dict.nav.tours },
-    { href: "/social-activities", key: "socialActivities", label: dict.nav.socialActivities },
+  const navItems = [
+    { href: "/our-story", label: dict.nav.ourStory },
+    { href: "/stay", label: dict.nav.stay },
+    { href: "/eat-drink", label: dict.nav.eatDrink },
+    { href: "/explore-phong-nha", label: dict.nav.explore },
+    { href: "/social-activities", label: dict.nav.activities },
+    { href: "/transportation", label: dict.nav.transport },
+    { href: "/gallery", label: dict.nav.gallery },
+    { href: "/contact", label: dict.nav.contact },
   ];
 
   return (
@@ -101,88 +96,15 @@ export function Navbar() {
             className="hidden items-center gap-0.5 lg:flex"
             aria-label="Main navigation"
           >
-            {/* 1. Our Story */}
-            <Link
-              href={localizedPath(locale, "/our-story")}
-              className={navLinkClass(isNavActive(pathWithoutLocale, "/our-story"))}
-            >
-              {dict.nav.ourStory}
-            </Link>
-
-            {/* 2. Stay */}
-            <Link
-              href={localizedPath(locale, "/stay")}
-              className={navLinkClass(isNavActive(pathWithoutLocale, "/stay"))}
-            >
-              {dict.nav.stay}
-            </Link>
-
-            {/* 3. Eat & Drink */}
-            <Link
-              href={localizedPath(locale, "/eat-drink")}
-              className={navLinkClass(isNavActive(pathWithoutLocale, "/eat-drink"))}
-            >
-              {dict.nav.eatDrink}
-            </Link>
-
-            {/* 4. Explore Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setOpenDropdown("explore")}
-              onMouseLeave={() => setOpenDropdown(null)}
-            >
-              <button
-                type="button"
-                className={cn(
-                  navLinkClass(exploreItems.some(i => isNavActive(pathWithoutLocale, i.href))),
-                  "flex items-center gap-1 cursor-pointer"
-                )}
-                aria-expanded={openDropdown === "explore"}
-                aria-haspopup="true"
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={localizedPath(locale, item.href)}
+                className={navLinkClass(isNavActive(pathWithoutLocale, item.href))}
               >
-                {dict.nav.explore}
-                <ChevronDown className={cn("h-4 w-4 opacity-60 transition-transform duration-300", openDropdown === "explore" && "rotate-180")} />
-              </button>
-              <AnimatePresence>
-                {openDropdown === "explore" && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.2, ease: [0.25, 1, 0.5, 1] }}
-                    className="absolute top-full left-1/2 z-50 mt-1 w-56 -translate-x-1/2 border border-border bg-white p-2.5 shadow-[0_15px_30px_rgba(0,0,0,0.06)]"
-                    style={{ borderRadius: "var(--radius-card, 0px)" }}
-                  >
-                    {exploreItems.map((sub) => {
-                      const href = localizedPath(locale, sub.href);
-                      const active = isNavActive(pathWithoutLocale, sub.href);
-                      return (
-                        <Link
-                          key={sub.key}
-                          href={href}
-                          className={cn(
-                            "block px-3.5 py-2.5 text-[14px] font-semibold tracking-[0.02em] transition-colors",
-                            active
-                              ? "bg-soft text-primary"
-                              : "text-[var(--color-body)] hover:bg-soft/60 hover:text-primary"
-                          )}
-                        >
-                          {sub.label}
-                        </Link>
-                      );
-                    })}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* 5. Contact */}
-            <Link
-              href={localizedPath(locale, "/contact")}
-              className={navLinkClass(isNavActive(pathWithoutLocale, "/contact"))}
-            >
-              {dict.nav.contact}
-            </Link>
+                {item.label}
+              </Link>
+            ))}
           </nav>
 
           <div className="flex shrink-0 items-center gap-3 md:gap-4">
@@ -247,105 +169,22 @@ export function Navbar() {
 
               <div className="flex-1 overflow-y-auto p-4">
                 <ul className="space-y-1">
-                  {/* 1. Our Story */}
-                  <li>
-                    <Link
-                      href={localizedPath(locale, "/our-story")}
-                      className={cn(
-                        "flex min-h-10 items-center rounded-md px-3 text-[14px] font-semibold uppercase tracking-[0.04em]",
-                        isNavActive(pathWithoutLocale, "/our-story") ? "bg-soft text-primary" : "text-[var(--color-body)] hover:bg-soft/80"
-                      )}
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      {dict.nav.ourStory}
-                    </Link>
-                  </li>
-
-                  {/* 2. Stay */}
-                  <li>
-                    <Link
-                      href={localizedPath(locale, "/stay")}
-                      className={cn(
-                        "flex min-h-10 items-center rounded-md px-3 text-[14px] font-semibold uppercase tracking-[0.04em]",
-                        isNavActive(pathWithoutLocale, "/stay") ? "bg-soft text-primary" : "text-[var(--color-body)] hover:bg-soft/80"
-                      )}
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      {dict.nav.stay}
-                    </Link>
-                  </li>
-
-                  {/* 3. Eat & Drink */}
-                  <li>
-                    <Link
-                      href={localizedPath(locale, "/eat-drink")}
-                      className={cn(
-                        "flex min-h-10 items-center rounded-md px-3 text-[14px] font-semibold uppercase tracking-[0.04em]",
-                        isNavActive(pathWithoutLocale, "/eat-drink") ? "bg-soft text-primary" : "text-[var(--color-body)] hover:bg-soft/80"
-                      )}
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      {dict.nav.eatDrink}
-                    </Link>
-                  </li>
-
-                  {/* 4. Explore Accordion */}
-                  <li>
-                    <button
-                      type="button"
-                      onClick={() => setMobileExploreOpen((o) => !o)}
-                      className={cn(
-                        "flex w-full min-h-10 items-center justify-between rounded-md px-3 text-[14px] font-semibold uppercase tracking-[0.04em] text-[var(--color-body)] hover:bg-soft/80",
-                        exploreItems.some(i => isNavActive(pathWithoutLocale, i.href)) && "text-primary"
-                      )}
-                    >
-                      {dict.nav.explore}
-                      <ChevronDown className={cn("h-4 w-4 transition-transform duration-200", mobileExploreOpen && "rotate-180")} />
-                    </button>
-                    <AnimatePresence initial={false}>
-                      {mobileExploreOpen && (
-                        <motion.ul
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          className="pl-4 mt-1 space-y-1 overflow-hidden"
-                        >
-                          {exploreItems.map((sub) => {
-                            const href = localizedPath(locale, sub.href);
-                            const active = isNavActive(pathWithoutLocale, sub.href);
-                            return (
-                              <li key={sub.key}>
-                                <Link
-                                  href={href}
-                                  className={cn(
-                                    "flex min-h-9 items-center rounded px-3.5 text-[13px] font-medium transition-colors",
-                                    active ? "bg-soft text-primary font-bold" : "text-[var(--color-body)] hover:text-primary"
-                                  )}
-                                  onClick={() => setMobileOpen(false)}
-                                >
-                                  {sub.label}
-                                </Link>
-                              </li>
-                            );
-                          })}
-                        </motion.ul>
-                      )}
-                    </AnimatePresence>
-                  </li>
-
-                  {/* 5. Contact */}
-                  <li>
-                    <Link
-                      href={localizedPath(locale, "/contact")}
-                      className={cn(
-                        "flex min-h-10 items-center rounded-md px-3 text-[14px] font-semibold uppercase tracking-[0.04em]",
-                        isNavActive(pathWithoutLocale, "/contact") ? "bg-soft text-primary" : "text-[var(--color-body)] hover:bg-soft/80"
-                      )}
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      {dict.nav.contact}
-                    </Link>
-                  </li>
+                  {navItems.map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={localizedPath(locale, item.href)}
+                        className={cn(
+                          "flex min-h-10 items-center rounded-md px-3 text-[14px] font-semibold uppercase tracking-[0.04em]",
+                          isNavActive(pathWithoutLocale, item.href)
+                            ? "bg-soft text-primary font-bold"
+                            : "text-[var(--color-body)] hover:bg-soft/80"
+                        )}
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
 
