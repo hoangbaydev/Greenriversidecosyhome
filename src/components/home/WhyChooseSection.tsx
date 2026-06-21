@@ -84,12 +84,12 @@ export function FinalCtaSection({ content }: { content: { finalCtaTitle?: string
   return (
     <section className="bg-primary py-16 md:py-20">
       <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
-        <p className="text-eyebrow text-white/70">Green Riverside Cosy Home</p>
-        <h2 className="font-heading mt-2 text-h1 text-white">
+        <p className="text-eyebrow !text-white/70">Green Riverside Cosy Home</p>
+        <h2 className="font-heading mt-2 text-h1 !text-white">
           {title}
         </h2>
         {subtitle ? (
-          <p className="mx-auto mt-3 max-w-lg text-base leading-relaxed text-white/85">
+          <p className="mx-auto mt-3 max-w-lg text-base leading-relaxed !text-white/85">
             {subtitle}
           </p>
         ) : null}

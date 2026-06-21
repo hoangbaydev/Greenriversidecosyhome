@@ -40,8 +40,8 @@ export function TourFinalCta({
           transition={defaultTransition}
           className="mx-auto max-w-2xl text-center"
         >
-          <h2 className="text-h1 text-white">{experience.ctaHeading}</h2>
-          <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-white/88">
+          <h2 className="text-h1 !text-white">{experience.ctaHeading}</h2>
+          <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed !text-white/88">
             {experience.ctaSubheading}
           </p>
           <WhatsAppButton

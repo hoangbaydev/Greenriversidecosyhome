@@ -17,7 +17,7 @@ import { normalizeHomepage } from "@/types";
 import { HeroSection } from "@/components/home/HeroSection";
 import { OurStoryPreview } from "@/components/home/OurStoryPreview";
 import { AccommodationPreview } from "@/components/shared/RoomCard";
-import { WhyChooseSection, FinalCtaSection } from "@/components/home/WhyChooseSection";
+import { WhyChooseSection } from "@/components/home/WhyChooseSection";
 import { CafeSection } from "@/components/home/CafeSection";
 import { ExplorePreview } from "@/components/explore/ExploreSections";
 import { SocialActivitiesShowcase } from "@/components/home/SocialActivitiesShowcase";
@@ -167,8 +167,6 @@ async function HomeContent({ locale }: { locale: Locale }) {
         contactLinkLabel={dict.home.contact.directions}
         viewOnMapLabel={dict.home.contact.directions}
       />
-
-      {homepage ? <FinalCtaSection content={homepage} /> : null}
     </>
   );
 }
