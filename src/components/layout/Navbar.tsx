@@ -64,11 +64,11 @@ export function Navbar() {
     { href: "/our-story", label: dict.nav.ourStory },
     { href: "/stay", label: dict.nav.stay },
     { href: "/eat-drink", label: dict.nav.eatDrink },
+    { href: "/social-activities", label: dict.nav.socialActivities },
     { href: "/explore-phong-nha", label: dict.nav.explore },
-    { href: "/social-activities", label: dict.nav.activities },
     { href: "/transportation", label: dict.nav.transport },
-    { href: "/gallery", label: dict.nav.gallery },
-    { href: "/contact", label: dict.nav.contact },
+    { href: "/other-services", label: dict.nav.otherServices },
+    { href: "/useful-info", label: dict.nav.usefulInfo },
   ];
 
   return (
