@@ -140,7 +140,7 @@ export function Navbar() {
                 aria-expanded={openDropdown === "explore"}
                 aria-haspopup="true"
               >
-                {locale === "vi" ? "Khám phá" : "Explore"}
+                {dict.nav.explore}
                 <ChevronDown className={cn("h-4 w-4 opacity-60 transition-transform duration-300", openDropdown === "explore" && "rotate-180")} />
               </button>
               <AnimatePresence>
@@ -299,7 +299,7 @@ export function Navbar() {
                         exploreItems.some(i => isNavActive(pathWithoutLocale, i.href)) && "text-primary"
                       )}
                     >
-                      {locale === "vi" ? "Khám phá" : "Explore"}
+                      {dict.nav.explore}
                       <ChevronDown className={cn("h-4 w-4 transition-transform duration-200", mobileExploreOpen && "rotate-180")} />
                     </button>
                     <AnimatePresence initial={false}>
