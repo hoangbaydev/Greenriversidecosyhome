@@ -26,6 +26,9 @@
     "menu": "Menu",
     "closeMenu": "Close menu",
     "language": "Language",
+    "exploreBicycleMotorbike": "Bicycle/Motorbike Tour",
+    "exploreClassic": "Classic Tour",
+    "exploreAdventure": "Adventure Tour",
     "exploreDesc": {
       "explorePhongNha": "Bong Lai, caves & adventures",
       "tours": "Caves & guided adventures",
