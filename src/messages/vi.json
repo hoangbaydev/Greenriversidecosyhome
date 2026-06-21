@@ -29,6 +29,9 @@
     "exploreBicycleMotorbike": "Tour xe đạp / xe máy",
     "exploreClassic": "Tour kinh điển",
     "exploreAdventure": "Tour mạo hiểm",
+    "transportBus": "Xe khách (Bus)",
+    "transportTrainFlight": "Tàu hỏa & Máy bay",
+    "transportPrivate": "Xe riêng đưa đón",
     "exploreDesc": {
       "explorePhongNha": "Bong Lai, hang động & mạo hiểm",
       "tours": "Hang động & tour khám phá",

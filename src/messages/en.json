@@ -29,6 +29,9 @@
     "exploreBicycleMotorbike": "Bicycle/Motorbike Tour",
     "exploreClassic": "Classic Tour",
     "exploreAdventure": "Adventure Tour",
+    "transportBus": "Bus",
+    "transportTrainFlight": "Train & Flight",
+    "transportPrivate": "Private Transfer",
     "exploreDesc": {
       "explorePhongNha": "Bong Lai, caves & adventures",
       "tours": "Caves & guided adventures",

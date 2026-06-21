@@ -692,7 +692,7 @@ function OfficialTransportationGuide({ locale }: { locale: Locale }) {
 
       <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
         <div className="space-y-6">
-          <section className="border border-border bg-white p-5 shadow-sm md:p-6">
+          <section id="train-flight" className="border border-border bg-white p-5 shadow-sm md:p-6">
             <div className="flex items-start gap-4">
               <span className="flex h-11 w-11 shrink-0 items-center justify-center bg-primary text-white">
                 <Train className="h-5 w-5" aria-hidden />
@@ -734,7 +734,7 @@ function OfficialTransportationGuide({ locale }: { locale: Locale }) {
             </div>
           </section>
 
-          <section className="border border-primary/20 bg-primary p-5 text-white shadow-sm md:p-6">
+          <section id="private-transfer" className="border border-primary/20 bg-primary p-5 text-white shadow-sm md:p-6">
             <div className="flex items-start gap-4">
               <div className="flex h-11 w-11 shrink-0 items-center justify-center bg-white/15">
                 <Car className="h-5 w-5" aria-hidden />
@@ -983,7 +983,7 @@ export default async function TransportationPage({ params }: { params: Promise<{
         <OfficialTransportationGuide locale={loc} />
       </Section>
 
-      <Section>
+      <Section id="bus">
         <SectionHeader title={busLabels.title} subtitle={busLabels.subtitle} showAccent />
         <div className="mb-8 rounded-lg border border-primary/15 bg-white p-5 shadow-sm md:flex md:items-center md:justify-between md:gap-6">
           <div className="flex gap-4">

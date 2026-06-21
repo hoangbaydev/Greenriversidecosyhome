@@ -35,6 +35,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileExploreOpen, setMobileExploreOpen] = useState(false);
+  const [mobileTransportOpen, setMobileTransportOpen] = useState(false);
 
   const siteName = settings?.siteName || dict.meta.siteName;
   const tagline = settings?.tagline || dict.meta.tagline;
@@ -66,6 +67,12 @@ export function Navbar() {
     { href: "/explore-phong-nha#motorbike", label: dict.nav.exploreBicycleMotorbike },
     { href: "/explore-phong-nha#classic-tours", label: dict.nav.exploreClassic },
     { href: "/explore-phong-nha#adventure", label: dict.nav.exploreAdventure },
+  ];
+
+  const subTransportItems = [
+    { href: "/transportation#bus", label: dict.nav.transportBus },
+    { href: "/transportation#train-flight", label: dict.nav.transportTrainFlight },
+    { href: "/transportation#private-transfer", label: dict.nav.transportPrivate },
   ];
 
   return (
@@ -176,13 +183,56 @@ export function Navbar() {
               </AnimatePresence>
             </div>
 
-            {/* 6. Transport */}
-            <Link
-              href={localizedPath(locale, "/transportation")}
-              className={navLinkClass(isNavActive(pathWithoutLocale, "/transportation"))}
+            {/* 6. Transport Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setOpenDropdown("transport")}
+              onMouseLeave={() => setOpenDropdown(null)}
             >
-              {dict.nav.transport}
-            </Link>
+              <Link
+                href={localizedPath(locale, "/transportation")}
+                className={cn(
+                  navLinkClass(isNavActive(pathWithoutLocale, "/transportation")),
+                  "flex items-center gap-1 cursor-pointer"
+                )}
+                aria-expanded={openDropdown === "transport"}
+                aria-haspopup="true"
+              >
+                {dict.nav.transport}
+                <ChevronDown className={cn("h-4 w-4 opacity-60 transition-transform duration-300", openDropdown === "transport" && "rotate-180")} />
+              </Link>
+              <AnimatePresence>
+                {openDropdown === "transport" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.2, ease: [0.25, 1, 0.5, 1] }}
+                    className="absolute top-full left-1/2 z-50 mt-1 w-56 -translate-x-1/2 border border-border bg-white p-2.5 shadow-[0_15px_30px_rgba(0,0,0,0.06)]"
+                    style={{ borderRadius: "var(--radius-card, 0px)" }}
+                  >
+                    {subTransportItems.map((sub) => {
+                      const href = localizedPath(locale, sub.href);
+                      const active = pathname.endsWith(sub.href);
+                      return (
+                        <Link
+                          key={sub.href}
+                          href={href}
+                          className={cn(
+                            "block px-3.5 py-2.5 text-[14px] font-semibold tracking-[0.02em] transition-colors whitespace-nowrap",
+                            active
+                              ? "bg-soft text-primary"
+                              : "text-[var(--color-body)] hover:bg-soft/60 hover:text-primary"
+                          )}
+                        >
+                          {sub.label}
+                        </Link>
+                      );
+                    })}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
 
             {/* 7. Other Services */}
             <Link
@@ -363,18 +413,48 @@ export function Navbar() {
                     </AnimatePresence>
                   </li>
 
-                  {/* 6. Transport */}
+                  {/* 6. Transport Dropdown Accordion */}
                   <li>
-                    <Link
-                      href={localizedPath(locale, "/transportation")}
+                    <button
+                      type="button"
+                      onClick={() => setMobileTransportOpen((o) => !o)}
                       className={cn(
-                        "flex min-h-10 items-center rounded-md px-3 text-[14px] font-semibold uppercase tracking-[0.04em]",
-                        isNavActive(pathWithoutLocale, "/transportation") ? "bg-soft text-primary" : "text-[var(--color-body)] hover:bg-soft/80"
+                        "flex w-full min-h-10 items-center justify-between rounded-md px-3 text-[14px] font-semibold uppercase tracking-[0.04em] text-[var(--color-body)] hover:bg-soft/80",
+                        isNavActive(pathWithoutLocale, "/transportation") && "text-primary"
                       )}
-                      onClick={() => setMobileOpen(false)}
                     >
                       {dict.nav.transport}
-                    </Link>
+                      <ChevronDown className={cn("h-4 w-4 transition-transform duration-200", mobileTransportOpen && "rotate-180")} />
+                    </button>
+                    <AnimatePresence initial={false}>
+                      {mobileTransportOpen && (
+                        <motion.ul
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          className="pl-4 mt-1 space-y-1 overflow-hidden"
+                        >
+                          {subTransportItems.map((sub) => {
+                            const href = localizedPath(locale, sub.href);
+                            const active = pathname.endsWith(sub.href);
+                            return (
+                              <li key={sub.href}>
+                                <Link
+                                  href={href}
+                                  className={cn(
+                                    "flex min-h-9 items-center rounded px-3.5 text-[13px] font-medium transition-colors",
+                                    active ? "bg-soft text-primary font-bold" : "text-[var(--color-body)] hover:text-primary"
+                                  )}
+                                  onClick={() => setMobileOpen(false)}
+                                >
+                                  {sub.label}
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </motion.ul>
+                      )}
+                    </AnimatePresence>
                   </li>
 
                   {/* 7. Other Services */}
