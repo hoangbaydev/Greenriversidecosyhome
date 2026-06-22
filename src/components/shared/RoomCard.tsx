@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Users } from "lucide-react";
 import type { Room } from "@/types";
-import { getRoomTitle, getRoomPrice, getRoomCapacity } from "@/types";
+import { getRoomTitle, getRoomPrice } from "@/types";
 import { formatPrice } from "@/lib/utils";
 import { useLocale } from "@/components/providers/I18nProvider";
 import { localizedPath } from "@/lib/i18n/config";
@@ -14,8 +13,23 @@ import { OptimizedImage } from "@/components/ui/optimized-image";
 import { WhatsAppButton } from "@/components/whatsapp/WhatsAppButton";
 import { ListingGrid } from "@/components/motion";
 import { EmptyState } from "@/components/ui/empty-state";
-import { withSampleImages, SAMPLE_ROOM_IMAGES } from "@/lib/sample-media";
 
+function getRoomDisplayImages(room: Room): string[] {
+  const metadataImages = room.roomImages
+    ?.filter((image) => image.imageUrl)
+    .sort((a, b) => {
+      if (a.isCover && !b.isCover) return -1;
+      if (!a.isCover && b.isCover) return 1;
+      return (a.sortOrder ?? 0) - (b.sortOrder ?? 0);
+    })
+    .map((image) => image.imageUrl);
+
+  return room.images?.length ? room.images : metadataImages ?? [];
+}
+
+function isDormRoom(room: Room): boolean {
+  return room.category?.toLowerCase().includes("dorm") || room.title?.toLowerCase().includes("dorm");
+}
 
 function PremiumRoomCard({
   room,
@@ -23,23 +37,24 @@ function PremiumRoomCard({
   perNightLabel,
   viewDetailsLabel,
   bookRoomLabel,
-  upToGuestsLabel,
 }: {
   room: Room;
   priceFromLabel?: string;
   perNightLabel?: string;
   viewDetailsLabel?: string;
   bookRoomLabel?: string;
-  upToGuestsLabel?: string;
 }) {
   const locale = useLocale();
   const title = getRoomTitle(room);
   const price = getRoomPrice(room);
-  const capacity = getRoomCapacity(room);
   const description = room.shortDescription || room.description;
-  const images = withSampleImages(room.images ?? [], SAMPLE_ROOM_IMAGES);
+  const images = getRoomDisplayImages(room);
   const cover = images[0];
-  const guestsLabel = upToGuestsLabel?.replace("{count}", String(capacity));
+  const unitLabel = isDormRoom(room)
+    ? locale === "vi"
+      ? "/ giường"
+      : "/ bed"
+    : perNightLabel || (locale === "vi" ? "/ đêm" : "/ night");
 
   return (
     <article className="page-card page-card--lift group flex h-full flex-col">
@@ -92,7 +107,7 @@ function PremiumRoomCard({
               </span>
               {formatPrice(price, room.currency)}
               <span className="ml-1 text-sm font-normal text-text-muted">
-                {perNightLabel || (locale === "vi" ? "/ đêm" : "/ night")}
+                {unitLabel}
               </span>
             </>
           ) : (
@@ -132,7 +147,6 @@ export function RoomCard({
   perNightLabel,
   viewDetailsLabel,
   bookRoomLabel,
-  upToGuestsLabel,
 }: {
   room: Room;
   priceFromLabel?: string;
@@ -148,7 +162,6 @@ export function RoomCard({
       perNightLabel={perNightLabel}
       viewDetailsLabel={viewDetailsLabel}
       bookRoomLabel={bookRoomLabel}
-      upToGuestsLabel={upToGuestsLabel}
     />
   );
 }

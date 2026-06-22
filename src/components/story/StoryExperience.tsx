@@ -126,11 +126,9 @@ export function StoryExperience({ story }: { story: StoryContent }) {
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {values.map((v) => (
               <article key={v.title} className="experience-card p-8 text-center">
-                {v.emoji ? (
-                  <span className="text-3xl" aria-hidden>
-                    {v.emoji}
-                  </span>
-                ) : null}
+                <p className="text-eyebrow" aria-hidden>
+                  {v.marker}
+                </p>
                 <h3 className="font-heading mt-4 text-h4 text-text">{v.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-text-muted">{v.body}</p>
               </article>

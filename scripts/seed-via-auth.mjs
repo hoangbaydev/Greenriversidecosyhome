@@ -418,12 +418,11 @@ async function main() {
   });
 
   // ——— Rooms (from content doc) ———
-  const roomImages = [IMG.room, IMG.roomAlt, IMG.garden, IMG.homestay, IMG.river, IMG.sunset, IMG.community];
   for (const room of ROOMS) {
-    const idx = room.order - 1;
     await upsert("rooms", room.id, {
       ...room,
-      images: [roomImages[idx % roomImages.length], IMG.river, IMG.homestay],
+      images: [],
+      roomImages: [],
       featured: room.order <= 4,
       published: true,
       createdAt: ts(),
@@ -624,7 +623,7 @@ async function main() {
   console.log("✓ transportation (sample)");
 
   await set("homepage_content/main", {
-    featuredRoomIds: ["deluxe-mountain-view", "family-suite", "deluxe-double-twin-mountain"],
+    featuredRoomIds: ["deluxe-single-double", "deluxe-double-twin", "superior-double-twin"],
     featuredTourIds: ["phong-nha-cave-half-day", "dark-cave-half-day", "son-river-kayak"],
   });
 

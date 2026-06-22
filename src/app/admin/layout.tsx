@@ -35,6 +35,7 @@ import { logoutAdmin } from "@/lib/firebase/auth";
 import { cn } from "@/lib/utils";
 import { AdminPageSkeleton } from "@/components/ui/skeleton";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 type NavKey =
   | "dashboard"
@@ -203,20 +204,26 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
                       : pathname === link.href || pathname.startsWith(`${link.href}/`);
 
                   return (
-                    <Link
+                    <motion.div
                       key={link.href}
-                      href={link.href}
-                      onClick={() => setSidebarOpen(false)}
-                      className={cn(
-                        "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors",
-                        active
-                          ? "bg-primary text-white shadow-sm"
-                          : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
-                      )}
+                      whileHover={{ x: 4 }}
+                      whileTap={{ scale: 0.98 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
                     >
-                      <Icon className="h-4 w-4" />
-                      {dict.nav[link.key]}
-                    </Link>
+                      <Link
+                        href={link.href}
+                        onClick={() => setSidebarOpen(false)}
+                        className={cn(
+                          "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors",
+                          active
+                            ? "bg-primary text-white shadow-sm"
+                            : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+                        )}
+                      >
+                        <Icon className="h-4 w-4" />
+                        {dict.nav[link.key]}
+                      </Link>
+                    </motion.div>
                   );
                 })}
               </div>
@@ -284,7 +291,16 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
             <ThemeToggle toggleLabel={dict.layout.toggleTheme} />
           </div>
         </div>
-        <div className="p-4 md:p-8">{children}</div>
+        <div className="p-4 md:p-8">
+          <motion.div
+            key={pathname}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+          >
+            {children}
+          </motion.div>
+        </div>
       </main>
       <Toaster richColors position="top-right" />
     </div>

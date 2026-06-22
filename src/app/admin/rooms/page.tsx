@@ -12,14 +12,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ImageUploader } from "@/components/admin/ImageUploader";
+import { RoomImageManager } from "@/components/admin/RoomImageManager";
 import { TableSkeleton } from "@/components/ui/skeleton";
 import { useAdminLoader } from "@/hooks/use-admin-loader";
 import { useAdminDict } from "@/components/admin/AdminI18nProvider";
 import { useAdminToast } from "@/hooks/use-admin-toast";
-import type { Room } from "@/types";
-import { slugify, cn } from "@/lib/utils";
+import type { Room, RoomImage } from "@/types";
+import { slugify, cn, formatPrice } from "@/lib/utils";
 import { getRoomTitle, getRoomPrice } from "@/types";
+import { extractStoragePathFromUrl } from "@/lib/firebase/storage";
 
 const emptyRoom: Partial<Room> = {
   title: "",
@@ -29,8 +30,9 @@ const emptyRoom: Partial<Room> = {
   amenities: [],
   capacity: 2,
   price: 0,
-  currency: "USD",
+  currency: "VND",
   images: [],
+  roomImages: [],
   featured: false,
   order: 0,
   published: true,
@@ -39,6 +41,58 @@ const emptyRoom: Partial<Room> = {
 };
 
 type TabType = "basics" | "amenities" | "media" | "seo";
+
+const CURRENT_ROOM_IDS = new Set([
+  "deluxe-single-double",
+  "deluxe-double-twin",
+  "superior-double-twin",
+  "deluxe-triple-room",
+  "deluxe-4-bed-dorm",
+  "deluxe-6-bed-dorm",
+  "deluxe-6-bed-female-dorm",
+  "deluxe-8-bed-dorm",
+]);
+
+function roomStorageId(room: Partial<Room>): string {
+  const existingId = room.id || "";
+  if (existingId && !existingId.startsWith("room-temp-")) return existingId;
+  return room.slug || (room.title ? slugify(room.title) : "");
+}
+
+function isCurrentCatalogRoom(room: Partial<Room>): boolean {
+  return CURRENT_ROOM_IDS.has(room.id || "") || CURRENT_ROOM_IDS.has(room.slug || "");
+}
+
+function isDormRoom(room: Partial<Room>): boolean {
+  const value = `${room.title || ""} ${room.category || ""} ${room.slug || ""}`.toLowerCase();
+  return value.includes("dorm") || value.includes("bed dorm") || value.includes("mixed") || value.includes("female");
+}
+
+function normalizeRoomImages(room: Partial<Room>): RoomImage[] {
+  if (room.roomImages?.length) {
+    return room.roomImages
+      .map((img, index) => ({
+        ...img,
+        roomId: roomStorageId(room),
+        sortOrder: img.sortOrder ?? index,
+        isCover: img.isCover ?? index === 0,
+      }))
+      .sort((a, b) => a.sortOrder - b.sortOrder);
+  }
+
+  return (room.images || []).map((url, index) => ({
+    id: `legacy-${index}-${slugify(url).slice(0, 24)}`,
+    imageUrl: url,
+    imagePath: extractStoragePathFromUrl(url) || "",
+    roomId: roomStorageId(room),
+    sortOrder: index,
+    isCover: index === 0,
+    altText: `${room.title || "Room"} at Green Riverside Cosy Home`,
+    title: room.title || "Room",
+    description: `${room.title || "Room"} accommodation preview`,
+    uploadedAt: new Date().toISOString(),
+  }));
+}
 
 export default function AdminRoomsPage() {
   const dict = useAdminDict();
@@ -56,9 +110,11 @@ export default function AdminRoomsPage() {
   const [editing, setEditing] = useState<Partial<Room> | null>(null);
   const [activeTab, setActiveTab] = useState<TabType>("basics");
   const [saving, setSaving] = useState(false);
+  const [showAllRooms, setShowAllRooms] = useState(false);
+  const [showAdvancedBasics, setShowAdvancedBasics] = useState(false);
 
   const startEditing = (room: Partial<Room> | null) => {
-    setEditing(room);
+    setEditing(room ? { ...room, roomImages: normalizeRoomImages(room) } : null);
     setActiveTab("basics");
   };
 
@@ -69,7 +125,17 @@ export default function AdminRoomsPage() {
     }
     setSaving(true);
     try {
-      const id = editing.id || slugify(editing.title);
+      // Use existing ID unless it was a temporary ID
+      const originalId = editing.id || "";
+      const isTemp = originalId.startsWith("room-temp-");
+      const id = !originalId || isTemp ? slugify(editing.slug || editing.title) : originalId;
+
+      // Update roomImages roomId fields if they had a temporary ID
+      const roomImages = (editing.roomImages || []).map((img) => ({
+        ...img,
+        roomId: id,
+      }));
+
       const room: Omit<Room, "id"> = {
         slug: editing.slug || slugify(editing.title),
         title: editing.title,
@@ -82,8 +148,9 @@ export default function AdminRoomsPage() {
         occupancy: editing.capacity ?? 2,
         price: editing.price ?? 0,
         priceFrom: editing.price ?? 0,
-        currency: editing.currency || "USD",
-        images: editing.images || [],
+        currency: editing.currency || "VND",
+        images: roomImages.map((img) => img.imageUrl),
+        roomImages,
         featured: editing.featured ?? false,
         order: editing.order ?? rooms.length + 1,
         published: editing.published ?? true,
@@ -96,7 +163,8 @@ export default function AdminRoomsPage() {
       t.saved();
       startEditing(null);
       reload();
-    } catch {
+    } catch (error) {
+      console.error("Failed to save room", error);
       t.failedToSave();
     } finally {
       setSaving(false);
@@ -109,7 +177,8 @@ export default function AdminRoomsPage() {
       await deleteRoom(id);
       t.deleted();
       reload();
-    } catch {
+    } catch (error) {
+      console.error("Failed to delete room", error);
       t.failedToDelete();
     }
   };
@@ -119,19 +188,23 @@ export default function AdminRoomsPage() {
   // Derived variables for SEO tab
   const seoTitlePreview = editing?.seoTitle || editing?.title || "";
   const seoDescPreview = editing?.seoDescription || editing?.shortDescription || "";
+  const currentRooms = rooms.filter(isCurrentCatalogRoom);
+  const archivedRooms = rooms.filter((room) => !isCurrentCatalogRoom(room));
+  const displayedRooms = showAllRooms || currentRooms.length === 0 ? rooms : currentRooms;
+  const roomDict = dict.crud.rooms;
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between border-b border-gray-200 pb-4 dark:border-gray-800">
         <div>
           <h1 className="font-heading text-3xl font-bold text-gray-900 dark:text-white">
-            {dict.crud.rooms.title}
+            {roomDict.title}
           </h1>
-          <p className="mt-1 text-sm text-gray-500">Manage overnight accommodations, configure categories, pricing, features, and meta SEO parameters.</p>
+          <p className="mt-1 text-sm text-gray-500">{roomDict.subtitle}</p>
         </div>
         {!editing && (
           <Button onClick={() => startEditing({ ...emptyRoom, order: rooms.length + 1 })} size="default" className="gap-2">
-            <Plus className="h-4 w-4" /> {dict.crud.rooms.new}
+            <Plus className="h-4 w-4" /> {roomDict.new}
           </Button>
         )}
       </div>
@@ -139,93 +212,61 @@ export default function AdminRoomsPage() {
       {editing && (
         <div className="rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900 overflow-hidden">
           {/* Tab Navigation Header */}
-          <div className="flex flex-wrap border-b border-gray-200 bg-gray-50/50 px-4 pt-3 dark:border-gray-800 dark:bg-gray-950/20">
+          <div className="flex flex-wrap border-b border-gray-200 bg-gray-50/50 px-4 pt-2 dark:border-gray-800 dark:bg-gray-950/20">
             {(["basics", "amenities", "media", "seo"] as TabType[]).map((tab) => (
               <button
                 key={tab}
                 type="button"
                 onClick={() => setActiveTab(tab)}
                 className={cn(
-                  "border-b-2 px-4 py-2.5 text-sm font-semibold capitalize transition-all focus:outline-none focus:ring-0",
+                  "border-b-2 px-3 py-2 text-xs font-bold uppercase tracking-wide transition-all focus:outline-none focus:ring-0",
                   activeTab === tab
                     ? "border-primary text-primary dark:border-primary-dark"
                     : "border-transparent text-gray-500 hover:text-gray-750 dark:text-gray-400 dark:hover:text-gray-250"
                 )}
               >
-                {tab === "basics" ? "1. Room Basics" : tab === "amenities" ? "2. Amenities" : tab === "media" ? "3. Media Upload" : "4. SEO Controls"}
+                {tab === "basics" ? roomDict.tabs.basics : tab === "amenities" ? roomDict.tabs.amenities : tab === "media" ? roomDict.tabs.media : roomDict.tabs.seo}
               </button>
             ))}
           </div>
 
-          <div className="p-6 space-y-6">
+          <div className="p-4 md:p-5 space-y-5">
             {/* 1. Basics Tab */}
             {activeTab === "basics" && (
-              <div className="grid gap-6 sm:grid-cols-2">
-                <div>
-                  <Label htmlFor="room-title">Room Title</Label>
+              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-6">
+                <div className="xl:col-span-3">
+                  <Label htmlFor="room-title">{roomDict.form.title}</Label>
                   <Input
                     id="room-title"
-                    placeholder="e.g. Deluxe River View Room"
+                    placeholder={roomDict.form.titlePlaceholder}
                     value={editing.title || ""}
                     onChange={(e) => setEditing({ ...editing, title: e.target.value, slug: slugify(e.target.value) })}
                     className="mt-1.5"
                   />
                 </div>
-                <div>
-                  <Label htmlFor="room-slug">URL Slug</Label>
+                <div className="xl:col-span-1">
+                  <Label htmlFor="room-price">{roomDict.form.price}</Label>
                   <Input
-                    id="room-slug"
-                    placeholder="e.g. deluxe-river-view"
-                    value={editing.slug || ""}
-                    onChange={(e) => setEditing({ ...editing, slug: e.target.value })}
-                    className="mt-1.5"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="room-cat">Category</Label>
-                  <Input
-                    id="room-cat"
-                    placeholder="e.g. Private Room or Dormitory"
-                    value={editing.category || ""}
-                    onChange={(e) => setEditing({ ...editing, category: e.target.value })}
-                    className="mt-1.5"
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="room-price">Price Per Night (USD)</Label>
-                    <Input
-                      id="room-price"
-                      type="number"
-                      placeholder="e.g. 35"
-                      value={editing.price ?? ""}
-                      onChange={(e) => setEditing({ ...editing, price: Number(e.target.value) })}
-                      className="mt-1.5"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="room-cap">Adult Capacity</Label>
-                    <Input
-                      id="room-cap"
-                      type="number"
-                      placeholder="e.g. 2"
-                      value={editing.capacity ?? ""}
-                      onChange={(e) => setEditing({ ...editing, capacity: Number(e.target.value) })}
-                      className="mt-1.5"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <Label htmlFor="room-order">Display Order</Label>
-                  <Input
-                    id="room-order"
+                    id="room-price"
                     type="number"
-                    value={editing.order ?? ""}
-                    onChange={(e) => setEditing({ ...editing, order: Number(e.target.value) })}
+                    placeholder={roomDict.form.pricePlaceholder}
+                    value={editing.price ?? ""}
+                    onChange={(e) => setEditing({ ...editing, price: Number(e.target.value), currency: "VND" })}
                     className="mt-1.5"
                   />
                 </div>
-                <div className="flex items-center gap-6 mt-8 sm:col-span-2">
+                <div className="xl:col-span-1">
+                  <Label htmlFor="room-cap">{roomDict.form.capacity}</Label>
+                  <Input
+                    id="room-cap"
+                    type="number"
+                    placeholder={roomDict.form.capacityPlaceholder}
+                    value={editing.capacity ?? ""}
+                    onChange={(e) => setEditing({ ...editing, capacity: Number(e.target.value) })}
+                    className="mt-1.5"
+                  />
+                </div>
+                <div className="flex items-end gap-5 xl:col-span-1">
                   <label className="flex items-center gap-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer">
                     <input
                       type="checkbox"
@@ -233,7 +274,7 @@ export default function AdminRoomsPage() {
                       checked={editing.featured ?? false}
                       onChange={(e) => setEditing({ ...editing, featured: e.target.checked })}
                     />
-                    Feature on Homepage
+                    {roomDict.form.featured}
                   </label>
                   <label className="flex items-center gap-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer">
                     <input
@@ -242,29 +283,75 @@ export default function AdminRoomsPage() {
                       checked={editing.published ?? true}
                       onChange={(e) => setEditing({ ...editing, published: e.target.checked })}
                     />
-                    Publish Live
+                    {roomDict.form.published}
                   </label>
                 </div>
-                <div className="sm:col-span-2">
-                  <Label htmlFor="room-short">Short Description (for listings / hero cards)</Label>
+                <div className="md:col-span-2 xl:col-span-3">
+                  <Label htmlFor="room-short">{roomDict.form.shortDescription}</Label>
                   <Input
                     id="room-short"
-                    placeholder="Short highlight hook summary..."
+                    placeholder={roomDict.form.shortDescriptionPlaceholder}
                     value={editing.shortDescription || ""}
                     onChange={(e) => setEditing({ ...editing, shortDescription: e.target.value })}
                     className="mt-1.5"
                   />
                 </div>
-                <div className="sm:col-span-2">
-                  <Label htmlFor="room-desc">Long Description</Label>
+                <div className="md:col-span-2 xl:col-span-3">
+                  <Label htmlFor="room-desc">{roomDict.form.longDescription}</Label>
                   <Textarea
                     id="room-desc"
-                    placeholder="Detailed explanation of the room layouts, beds, and views..."
+                    placeholder={roomDict.form.longDescriptionPlaceholder}
                     value={editing.description || ""}
                     onChange={(e) => setEditing({ ...editing, description: e.target.value })}
                     className="mt-1.5"
-                    rows={4}
+                    rows={3}
                   />
+                </div>
+                <div className="md:col-span-2 xl:col-span-6 rounded-xl border border-dashed border-gray-200 bg-gray-50/70 p-3 dark:border-gray-800 dark:bg-gray-950/30">
+                  <button
+                    type="button"
+                    className="text-sm font-semibold text-primary hover:underline"
+                    onClick={() => setShowAdvancedBasics((value) => !value)}
+                  >
+                    {showAdvancedBasics ? roomDict.form.hideAdvanced : roomDict.form.showAdvanced}
+                  </button>
+                  <p className="mt-1 text-xs text-gray-500">
+                    {roomDict.form.advancedHelp}
+                  </p>
+                  {showAdvancedBasics && (
+                    <div className="mt-3 grid gap-4 md:grid-cols-3">
+                      <div>
+                        <Label htmlFor="room-slug">{roomDict.form.slug}</Label>
+                        <Input
+                          id="room-slug"
+                          placeholder={roomDict.form.slugPlaceholder}
+                          value={editing.slug || ""}
+                          onChange={(e) => setEditing({ ...editing, slug: e.target.value })}
+                          className="mt-1.5"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="room-cat">{roomDict.form.category}</Label>
+                        <Input
+                          id="room-cat"
+                          placeholder={roomDict.form.categoryPlaceholder}
+                          value={editing.category || ""}
+                          onChange={(e) => setEditing({ ...editing, category: e.target.value })}
+                          className="mt-1.5"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="room-order">{roomDict.form.order}</Label>
+                        <Input
+                          id="room-order"
+                          type="number"
+                          value={editing.order ?? ""}
+                          onChange={(e) => setEditing({ ...editing, order: Number(e.target.value) })}
+                          className="mt-1.5"
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -297,12 +384,18 @@ export default function AdminRoomsPage() {
             {activeTab === "media" && (
               <div>
                 <Label className="text-base font-bold text-gray-800 dark:text-gray-200">Room Media Gallery</Label>
-                <p className="text-xs text-gray-400 mb-2">Upload visual assets. The first asset serves as the primary room card cover.</p>
-                <ImageUploader
-                  folder="rooms"
-                  images={editing.images || []}
-                  onChange={(images) => setEditing({ ...editing, images })}
-                  className="mt-2"
+                <p className="text-xs text-gray-450 mb-4">Manage room visuals: upload high-quality room photos, drag to set order, define a cover image, and optimize search visibility with SEO tags.</p>
+                <RoomImageManager
+                  roomId={roomStorageId(editing)}
+                  roomTitle={editing.title || ""}
+                  roomImages={editing.roomImages || []}
+                  onChange={(roomImages) =>
+                    setEditing({
+                      ...editing,
+                      roomImages,
+                      images: roomImages.map((img) => img.imageUrl),
+                    })
+                  }
                 />
               </div>
             )}
@@ -388,7 +481,7 @@ export default function AdminRoomsPage() {
                 const nextIdx = (tabs.indexOf(activeTab) + 1) % tabs.length;
                 setActiveTab(tabs[nextIdx]);
               }}>
-                Next Step &rarr;
+                {roomDict.form.next}
               </Button>
             )}
           </div>
@@ -397,9 +490,30 @@ export default function AdminRoomsPage() {
 
       {/* Grid of Rooms List */}
       <div className="mt-8 space-y-4">
-        <h2 className="font-heading text-xl font-bold text-gray-900 dark:text-white">Available Rooms ({rooms.length})</h2>
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 className="font-heading text-xl font-bold text-gray-900 dark:text-white">
+              {showAllRooms ? roomDict.list.allTitle : roomDict.list.currentTitle} ({displayedRooms.length})
+            </h2>
+            <p className="mt-1 text-xs text-gray-500">
+              {showAllRooms
+                ? roomDict.list.allHelp
+                : roomDict.list.currentHelp}
+            </p>
+          </div>
+          {archivedRooms.length > 0 && (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setShowAllRooms((value) => !value)}
+            >
+              {showAllRooms ? roomDict.list.hideArchived : roomDict.list.showArchived.replace("{count}", String(archivedRooms.length))}
+            </Button>
+          )}
+        </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {rooms.map((room) => (
+          {displayedRooms.map((room) => (
             <Card key={room.id} className="border border-gray-200 shadow-sm bg-white dark:border-gray-800 dark:bg-gray-900 overflow-hidden flex flex-col justify-between group">
               <div className="relative aspect-[16/9] w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
                 {room.images && room.images[0] ? (
@@ -425,12 +539,12 @@ export default function AdminRoomsPage() {
               <div className="p-5 flex-1 flex flex-col justify-between gap-4">
                 <div>
                   <h3 className="font-heading text-lg font-bold text-gray-900 dark:text-white leading-snug group-hover:text-primary transition-colors">{getRoomTitle(room)}</h3>
-                  <p className="mt-1 text-xs text-gray-400 uppercase tracking-wider font-semibold">{room.category} · Order: {room.order} · Max Guests: {room.capacity}</p>
+                  <p className="mt-1 text-xs text-gray-400 uppercase tracking-wider font-semibold">{room.category} · {roomDict.list.order}: {room.order} · {roomDict.list.capacity}: {room.capacity}</p>
                   <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 line-clamp-2">{room.shortDescription}</p>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-100 pt-4 dark:border-gray-800">
                   <span className="text-base font-extrabold text-primary dark:text-primary-dark">
-                    ${getRoomPrice(room)} <span className="text-xs text-gray-400 font-normal">/ night</span>
+                    {formatPrice(getRoomPrice(room), room.currency || "VND")} <span className="text-xs text-gray-400 font-normal">{isDormRoom(room) ? roomDict.list.perBed : roomDict.list.perNight}</span>
                   </span>
                   <div className="flex gap-1">
                     <Button variant="ghost" size="icon" onClick={() => startEditing(room)} title="Edit Room">
@@ -452,9 +566,9 @@ export default function AdminRoomsPage() {
               </div>
             </Card>
           ))}
-          {rooms.length === 0 && (
+          {displayedRooms.length === 0 && (
             <div className="col-span-full py-12 text-center text-gray-500">
-              No rooms yet. Add your first room to get started.
+              {roomDict.list.empty}
             </div>
           )}
         </div>

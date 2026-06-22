@@ -2,36 +2,24 @@ import { Suspense } from "react";
 import {
   getHomepageContent,
   getFeaturedRooms,
-  getFeaturedTours,
   getActivities,
   getCafeContent,
-  getBlogPosts,
-  getStoryContent,
   getPageContent,
-  getFeaturedGallery,
   getFeaturedReviews,
-  getFaqContent,
 } from "@/lib/data/services";
-import { fetchRoomsByIds, fetchToursByIds } from "@/lib/data/services";
+import { fetchRoomsByIds } from "@/lib/data/services";
 import { normalizeHomepage } from "@/types";
 import { HeroSection } from "@/components/home/HeroSection";
-import { OurStoryPreview } from "@/components/home/OurStoryPreview";
 import { AccommodationPreview } from "@/components/shared/RoomCard";
 import { WhyChooseSection } from "@/components/home/WhyChooseSection";
 import { CafeSection } from "@/components/home/CafeSection";
 import { ExplorePreview } from "@/components/explore/ExploreSections";
 import { SocialActivitiesShowcase } from "@/components/home/SocialActivitiesShowcase";
-import { GalleryPreview } from "@/components/home/GalleryPreview";
 import { ReviewsSection } from "@/components/home/ReviewsSection";
-import { BlogPreview } from "@/components/home/BlogPreview";
-import { FaqSection } from "@/components/home/FaqSection";
 import { ContactPreview } from "@/components/home/ContactPreview";
-import { FaqJsonLd } from "@/components/seo/FaqJsonLd";
 import { CardGridSkeleton } from "@/components/ui/skeleton";
 import { EmptyState } from "@/components/ui/empty-state";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
-import { SAMPLE_IMAGES } from "@/lib/sample-media";
-import { OptimizedImage } from "@/components/ui/optimized-image";
 import type { Locale } from "@/lib/i18n/config";
 
 async function HomeContent({ locale }: { locale: Locale }) {
@@ -40,45 +28,29 @@ async function HomeContent({ locale }: { locale: Locale }) {
     homepageRaw,
     activities,
     cafe,
-    blogPosts,
-    story,
     stayPage,
-    /* toursPage */,
-    galleryItems,
     reviews,
-    faq,
   ] = await Promise.all([
     getHomepageContent(),
     getActivities(),
     getCafeContent(locale),
-    getBlogPosts(),
-    getStoryContent(locale),
     getPageContent(locale, "stay"),
-    getPageContent(locale, "tours"),
-    getFeaturedGallery(8),
     getFeaturedReviews(4),
-    getFaqContent(locale),
   ]);
 
   const homepage = homepageRaw ? normalizeHomepage(homepageRaw) : null;
   const sections = homepage?.sections ?? {};
 
-  const rooms = homepage?.featuredRoomIds.length
-    ? await fetchRoomsByIds(homepage.featuredRoomIds)
-    : await getFeaturedRooms(3);
-
-  const tours = homepage?.featuredTourIds.length
-    ? await fetchToursByIds(homepage.featuredTourIds)
-    : await getFeaturedTours(3);
+  const selectedRooms = homepage?.featuredRoomIds.length
+    ? await fetchRoomsByIds(homepage.featuredRoomIds, locale)
+    : [];
+  const rooms = selectedRooms.length ? selectedRooms : await getFeaturedRooms(3, locale);
 
   const hasAnyContent =
     homepage?.heroTitle ||
-    story ||
     rooms.length ||
-    tours.length ||
     cafe ||
-    activities.length ||
-    blogPosts.length;
+    activities.length;
 
   if (!hasAnyContent) {
     return (
@@ -91,12 +63,6 @@ async function HomeContent({ locale }: { locale: Locale }) {
   return (
     <>
       {homepage ? <HeroSection content={homepage} /> : null}
-
-      <OurStoryPreview
-        story={story}
-        title={sections.story?.title}
-        subtitle={sections.story?.subtitle}
-      />
 
       {homepage ? <WhyChooseSection /> : null}
 
@@ -138,28 +104,6 @@ async function HomeContent({ locale }: { locale: Locale }) {
           String(reviews.length || 0)
         )}
       />
-
-      <GalleryPreview
-        items={galleryItems}
-        title={sections.gallery?.title}
-        subtitle={sections.gallery?.subtitle}
-        viewAllLabel={sections.gallery?.ctaLabel}
-      />
-
-      <BlogPreview
-        posts={blogPosts}
-        title={sections.blog?.title || dict.pages.blog.title}
-        subtitle={sections.blog?.subtitle}
-        viewAllLabel={sections.blog?.ctaLabel || dict.home.blog.viewAll}
-        readArticleLabel={dict.home.blog.readArticle}
-      />
-
-      {faq ? (
-        <>
-          <FaqJsonLd faq={faq} />
-          <FaqSection faq={faq} />
-        </>
-      ) : null}
 
       <ContactPreview
         heading={sections.contact}

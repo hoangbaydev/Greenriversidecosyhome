@@ -54,7 +54,7 @@ function displayPhone(value: string) {
 
 function FooterTitle({ children }: { children: ReactNode }) {
   return (
-    <h3 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/45">
+    <h3 className="text-sm font-semibold uppercase tracking-[0.15em] text-white/45">
       {children}
     </h3>
   );
@@ -201,7 +201,7 @@ export function Footer() {
             {salesLine ? (
               <WhatsAppLink
                 messageType="book_room"
-                className="mt-4 inline-flex min-h-9 items-center justify-center rounded-md bg-white px-4 text-xs font-semibold text-primary-dark transition-colors hover:bg-white/90"
+                className="mt-4 inline-flex min-h-11 items-center justify-center rounded-md bg-white px-5 text-base font-semibold text-primary-dark transition-colors hover:bg-white/90 shadow-xs"
               >
                 {dict.nav.bookNow}
               </WhatsAppLink>
@@ -212,7 +212,7 @@ export function Footer() {
 
       <div className="border-t border-white/[0.08]">
         <Container size="large" className="flex flex-col gap-3 py-4 md:flex-row md:items-center md:justify-between">
-          <p className="text-xs text-white/45">
+          <p className="text-sm text-white/45">
             &copy; {year} {siteName}. {dict.footer.allRightsReserved}
           </p>
           <nav aria-label={dict.footer.legalNav} className="flex flex-wrap gap-x-4 gap-y-1">

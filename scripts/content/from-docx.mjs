@@ -49,6 +49,426 @@ export const WHY_CHOOSE_ITEMS = [
   },
 ];
 
+export const ROOMS = [
+  {
+    id: "deluxe-single-double",
+    slug: "deluxe-single-double",
+    title: "Deluxe Single / Double Room",
+    category: "Private Room",
+    description:
+      "This comfortable private room is ideal for solo travelers or couples seeking a peaceful stay in Phong Nha. The room features two double beds (1.6m x 2m), air conditioning, fan, free WiFi, minibar, wardrobe, locker and a private ensuite bathroom with hot shower.\n\nGuests can enjoy stunning garden, river and mountain views while relaxing in a tranquil natural setting.",
+    shortDescription:
+      "Comfortable private room with ensuite bathroom, air conditioning, free WiFi and beautiful garden, river and mountain views.",
+    amenities: [
+      "Air Conditioning",
+      "Fan",
+      "Free WiFi",
+      "Private Ensuite Bathroom",
+      "Hot Shower",
+      "Wardrobe",
+      "Minibar",
+      "Personal Locker",
+      "Garden View",
+      "River View",
+      "Mountain View",
+    ],
+    capacity: 2,
+    price: 500000,
+    priceFrom: 500000,
+    currency: "VND",
+    order: 1,
+    seoTitle: "Deluxe Single / Double Room | Green Riverside Cosy Home",
+    seoDescription:
+      "Comfortable private ensuite room with air conditioning, free WiFi and beautiful garden, river and mountain views in Phong Nha.",
+  },
+  {
+    id: "superior-double-twin",
+    slug: "superior-double-twin",
+    title: "Superior Double / Twin Room",
+    category: "Private Room",
+    description:
+      "Designed for couples or friends, this spacious room offers comfort and convenience with modern amenities, private bathroom, air conditioning, free WiFi and beautiful views of the surrounding countryside.",
+    shortDescription:
+      "Spacious room with private bathroom, free WiFi and peaceful natural surroundings.",
+    amenities: [
+      "Air Conditioning",
+      "Free WiFi",
+      "Private Bathroom",
+      "Hot Shower",
+      "Wardrobe",
+      "Garden View",
+      "Mountain View",
+    ],
+    capacity: 2,
+    price: 650000,
+    priceFrom: 650000,
+    currency: "VND",
+    order: 2,
+    seoTitle: "Superior Double / Twin Room | Green Riverside Cosy Home",
+    seoDescription:
+      "Spacious and comfortable room for couples or friends with modern amenities and beautiful natural surroundings.",
+  },
+  {
+    id: "deluxe-double-twin",
+    slug: "deluxe-double-twin",
+    title: "Deluxe Double / Twin Room",
+    category: "Private Room",
+    description:
+      "Our spacious Deluxe Double/Twin Room is thoughtfully equipped for a relaxing stay, featuring comfortable beds, air conditioning, fan, free WiFi, minibar and private bathroom with hot shower.\n\nGuests can enjoy stunning mountain and countryside views directly from their private balcony.",
+    shortDescription:
+      "Private balcony, mountain views, air conditioning and ensuite bathroom.",
+    amenities: [
+      "Air Conditioning",
+      "Fan",
+      "Free WiFi",
+      "Private Balcony",
+      "Private Bathroom",
+      "Hot Shower",
+      "Minibar",
+      "Mountain View",
+      "Countryside View",
+    ],
+    capacity: 2,
+    price: 700000,
+    priceFrom: 700000,
+    currency: "VND",
+    order: 3,
+    seoTitle: "Deluxe Double / Twin Room | Green Riverside Cosy Home",
+    seoDescription:
+      "Enjoy mountain views, private balcony, modern amenities and a peaceful stay in the heart of Phong Nha.",
+  },
+  {
+    id: "deluxe-triple-room",
+    slug: "deluxe-triple-room",
+    title: "Deluxe Triple Room",
+    category: "Private Room",
+    description:
+      "This room is well-equipped with either one double bed and one bunk bed, two double beds, or three single beds. The room includes air conditioning, fan, free WiFi, minibar, wardrobe and private bathroom with hot shower.\n\nPerfect for families or small groups looking for a comfortable stay in Phong Nha.",
+    shortDescription:
+      "Spacious room for families and small groups with mountain views and private bathroom.",
+    amenities: [
+      "Air Conditioning",
+      "Fan",
+      "Free WiFi",
+      "Private Bathroom",
+      "Hot Shower",
+      "Wardrobe",
+      "Minibar",
+      "Mountain View",
+    ],
+    capacity: 3,
+    price: 700000,
+    priceFrom: 700000,
+    currency: "VND",
+    order: 4,
+    seoTitle: "Deluxe Triple Room | Green Riverside Cosy Home",
+    seoDescription:
+      "Spacious triple room with private bathroom, free WiFi and beautiful mountain views in Phong Nha.",
+  },
+  {
+    id: "deluxe-4-bed-dorm",
+    slug: "deluxe-4-bed-dorm",
+    title: "Deluxe 4 Bed Mixed Dorm Ensuite",
+    category: "Mixed Dormitory",
+    description:
+      "Our Deluxe 4-Bed Mixed Dorm Ensuite is a comfortable and social accommodation option featuring two bunk beds, air conditioning, fan, free WiFi and a private bathroom with hot shower.\n\nGuests can enjoy beautiful garden and mountain views while meeting fellow travelers.",
+    shortDescription:
+      "Comfortable 4-bed dormitory with ensuite bathroom, air conditioning and mountain views.",
+    amenities: [
+      "Air Conditioning",
+      "Fan",
+      "Free WiFi",
+      "Private Ensuite Bathroom",
+      "Hot Shower",
+      "Two Bunk Beds",
+      "Garden View",
+      "Mountain View",
+      "Personal Locker",
+    ],
+    capacity: 4,
+    price: 250000,
+    priceFrom: 250000,
+    currency: "VND",
+    order: 5,
+    seoTitle: "Deluxe 4 Bed Mixed Dorm Ensuite | Green Riverside Cosy Home",
+    seoDescription:
+      "Comfortable 4-bed mixed dorm with ensuite bathroom, free WiFi, air conditioning and beautiful garden and mountain views.",
+  },
+  {
+    id: "deluxe-6-bed-dorm",
+    slug: "deluxe-6-bed-dorm",
+    title: "Deluxe 6 Bed Mixed Dorm Ensuite",
+    category: "Mixed Dormitory",
+    description:
+      "Our Deluxe 6-Bed Mixed Dorm Ensuite features three bunk beds, air conditioning, fan, free WiFi and a private bathroom with hot shower.\n\nPerfect for backpackers and solo travelers seeking comfort and value in Phong Nha.",
+    shortDescription:
+      "Affordable 6-bed dormitory with ensuite bathroom and mountain views.",
+    amenities: [
+      "Air Conditioning",
+      "Fan",
+      "Free WiFi",
+      "Private Ensuite Bathroom",
+      "Hot Shower",
+      "Three Bunk Beds",
+      "Garden View",
+      "Mountain View",
+      "Personal Locker",
+    ],
+    capacity: 6,
+    price: 220000,
+    priceFrom: 220000,
+    currency: "VND",
+    order: 6,
+    seoTitle: "Deluxe 6 Bed Mixed Dorm Ensuite | Green Riverside Cosy Home",
+    seoDescription:
+      "Affordable 6-bed mixed dorm with free WiFi, air conditioning and mountain views in Phong Nha.",
+  },
+  {
+    id: "deluxe-6-bed-female-dorm",
+    slug: "deluxe-6-bed-female-dorm",
+    title: "Deluxe 6 Bed Female Dorm Ensuite",
+    category: "Female Only Dormitory",
+    description:
+      "Designed exclusively for women, this comfortable dormitory offers three bunk beds, air conditioning, fan, free WiFi and a private bathroom with hot shower.\n\nGuests can enjoy a safe, welcoming environment with beautiful garden and mountain views.",
+    shortDescription:
+      "Female-only dormitory with ensuite bathroom, free WiFi and mountain views.",
+    amenities: [
+      "Air Conditioning",
+      "Fan",
+      "Free WiFi",
+      "Private Ensuite Bathroom",
+      "Hot Shower",
+      "Three Bunk Beds",
+      "Female Only",
+      "Garden View",
+      "Mountain View",
+      "Personal Locker",
+    ],
+    capacity: 6,
+    price: 220000,
+    priceFrom: 220000,
+    currency: "VND",
+    order: 7,
+    seoTitle: "Deluxe 6 Bed Female Dorm Ensuite | Green Riverside Cosy Home",
+    seoDescription:
+      "Female-only 6-bed dorm with private bathroom, free WiFi and beautiful mountain views in Phong Nha.",
+  },
+  {
+    id: "deluxe-8-bed-dorm",
+    slug: "deluxe-8-bed-dorm",
+    title: "Deluxe 8 Bed Mixed Dorm Ensuite",
+    category: "Mixed Dormitory",
+    description:
+      "Our Deluxe 8-Bed Mixed Dorm Ensuite is ideal for backpackers seeking affordable accommodation in Phong Nha.\n\nThe room features four bunk beds, air conditioning, fan, free WiFi and two hot showers, providing comfort and convenience for larger groups of travelers.",
+    shortDescription:
+      "Budget-friendly 8-bed dormitory with two hot showers and mountain views.",
+    amenities: [
+      "Air Conditioning",
+      "Fan",
+      "Free WiFi",
+      "Ensuite Bathroom",
+      "Two Hot Showers",
+      "Four Bunk Beds",
+      "Garden View",
+      "Mountain View",
+      "Personal Locker",
+    ],
+    capacity: 8,
+    price: 200000,
+    priceFrom: 200000,
+    currency: "VND",
+    order: 8,
+    seoTitle: "Deluxe 8 Bed Mixed Dorm Ensuite | Green Riverside Cosy Home",
+    seoDescription:
+      "Affordable 8-bed mixed dorm with two hot showers, free WiFi, air conditioning and mountain views in Phong Nha.",
+  },
+];
+
+const ROOM_VI_TRANSLATIONS = {
+  "deluxe-single-double": {
+    title: "Deluxe Single / Double Room",
+    category: "Phòng riêng",
+    shortDescription:
+      "Phòng riêng thoải mái với phòng tắm riêng, điều hòa, Wi-Fi miễn phí và view sân vườn, sông, núi tuyệt đẹp.",
+    description:
+      "Phòng riêng thoải mái này phù hợp cho khách đi một mình hoặc các cặp đôi muốn có một kỳ nghỉ yên bình tại Phong Nha. Phòng có hai giường đôi 1,6m x 2m, điều hòa, quạt, Wi-Fi miễn phí, minibar, tủ quần áo, tủ khóa cá nhân và phòng tắm riêng với vòi sen nước nóng.\n\nKhách có thể thư giãn trong không gian thiên nhiên yên tĩnh với view sân vườn, sông và núi tuyệt đẹp.",
+    amenities: [
+      "Điều hòa",
+      "Quạt",
+      "Wi-Fi miễn phí",
+      "Phòng tắm riêng",
+      "Vòi sen nước nóng",
+      "Tủ quần áo",
+      "Minibar",
+      "Tủ khóa cá nhân",
+      "View sân vườn",
+      "View sông",
+      "View núi",
+    ],
+    seoTitle: "Deluxe Single / Double Room | Green Riverside Cosy Home",
+    seoDescription:
+      "Phòng riêng có phòng tắm riêng, điều hòa, Wi-Fi miễn phí và view sân vườn, sông, núi tuyệt đẹp tại Phong Nha.",
+  },
+  "superior-double-twin": {
+    title: "Superior Double / Twin Room",
+    category: "Phòng riêng",
+    shortDescription:
+      "Phòng rộng rãi với phòng tắm riêng, Wi-Fi miễn phí và không gian thiên nhiên yên bình.",
+    description:
+      "Được thiết kế cho các cặp đôi hoặc nhóm bạn, phòng Superior Double / Twin mang đến sự thoải mái và tiện nghi với phòng tắm riêng, điều hòa, Wi-Fi miễn phí và view thiên nhiên thanh bình xung quanh khu lưu trú.",
+    amenities: [
+      "Điều hòa",
+      "Wi-Fi miễn phí",
+      "Phòng tắm riêng",
+      "Vòi sen nước nóng",
+      "Tủ quần áo",
+      "View sân vườn",
+      "View núi",
+    ],
+    seoTitle: "Superior Double / Twin Room | Green Riverside Cosy Home",
+    seoDescription:
+      "Phòng rộng rãi, thoải mái cho cặp đôi hoặc bạn bè với tiện nghi hiện đại và không gian thiên nhiên yên bình.",
+  },
+  "deluxe-double-twin": {
+    title: "Deluxe Double / Twin Room",
+    category: "Phòng riêng",
+    shortDescription:
+      "Phòng có ban công riêng, view núi, điều hòa và phòng tắm riêng.",
+    description:
+      "Deluxe Double / Twin Room là lựa chọn rộng rãi và thoải mái cho một kỳ nghỉ thư giãn, với giường êm, điều hòa, quạt, Wi-Fi miễn phí, minibar và phòng tắm riêng có vòi sen nước nóng.\n\nKhách có thể ngắm view núi và khung cảnh đồng quê ngay từ ban công riêng của phòng.",
+    amenities: [
+      "Điều hòa",
+      "Quạt",
+      "Wi-Fi miễn phí",
+      "Ban công riêng",
+      "Phòng tắm riêng",
+      "Vòi sen nước nóng",
+      "Minibar",
+      "View núi",
+      "View đồng quê",
+    ],
+    seoTitle: "Deluxe Double / Twin Room | Green Riverside Cosy Home",
+    seoDescription:
+      "Tận hưởng view núi, ban công riêng, tiện nghi hiện đại và kỳ nghỉ yên bình tại Phong Nha.",
+  },
+  "deluxe-triple-room": {
+    title: "Deluxe Triple Room",
+    category: "Phòng riêng",
+    shortDescription:
+      "Phòng rộng rãi cho gia đình hoặc nhóm nhỏ, có view núi và phòng tắm riêng.",
+    description:
+      "Phòng Deluxe Triple được trang bị linh hoạt với một giường đôi và một giường tầng, hai giường đôi hoặc ba giường đơn. Phòng có điều hòa, quạt, Wi-Fi miễn phí, minibar, tủ quần áo và phòng tắm riêng với vòi sen nước nóng.\n\nĐây là lựa chọn phù hợp cho gia đình hoặc nhóm nhỏ muốn lưu trú thoải mái tại Phong Nha.",
+    amenities: [
+      "Điều hòa",
+      "Quạt",
+      "Wi-Fi miễn phí",
+      "Phòng tắm riêng",
+      "Vòi sen nước nóng",
+      "Tủ quần áo",
+      "Minibar",
+      "View núi",
+    ],
+    seoTitle: "Deluxe Triple Room | Green Riverside Cosy Home",
+    seoDescription:
+      "Phòng triple rộng rãi với phòng tắm riêng, Wi-Fi miễn phí và view núi đẹp tại Phong Nha.",
+  },
+  "deluxe-4-bed-dorm": {
+    title: "Deluxe 4 Bed Mixed Dorm Ensuite",
+    category: "Dorm nam nữ",
+    shortDescription:
+      "Dorm 4 giường thoải mái với phòng tắm riêng, điều hòa và view núi.",
+    description:
+      "Deluxe 4 Bed Mixed Dorm Ensuite là lựa chọn lưu trú thoải mái và dễ kết nối, gồm hai giường tầng, điều hòa, quạt, Wi-Fi miễn phí và phòng tắm riêng có vòi sen nước nóng.\n\nKhách có thể tận hưởng view sân vườn, view núi và gặp gỡ những người bạn du lịch mới.",
+    amenities: [
+      "Điều hòa",
+      "Quạt",
+      "Wi-Fi miễn phí",
+      "Phòng tắm riêng",
+      "Vòi sen nước nóng",
+      "Hai giường tầng",
+      "View sân vườn",
+      "View núi",
+      "Tủ khóa cá nhân",
+    ],
+    seoTitle: "Deluxe 4 Bed Mixed Dorm Ensuite | Green Riverside Cosy Home",
+    seoDescription:
+      "Dorm nam nữ 4 giường thoải mái với phòng tắm riêng, Wi-Fi miễn phí, điều hòa và view sân vườn, view núi.",
+  },
+  "deluxe-6-bed-dorm": {
+    title: "Deluxe 6 Bed Mixed Dorm Ensuite",
+    category: "Dorm nam nữ",
+    shortDescription:
+      "Dorm 6 giường giá tốt với phòng tắm riêng và view núi.",
+    description:
+      "Deluxe 6 Bed Mixed Dorm Ensuite có ba giường tầng, điều hòa, quạt, Wi-Fi miễn phí và phòng tắm riêng với vòi sen nước nóng.\n\nPhòng phù hợp cho backpacker và khách đi một mình muốn có không gian thoải mái, tiện nghi và giá tốt tại Phong Nha.",
+    amenities: [
+      "Điều hòa",
+      "Quạt",
+      "Wi-Fi miễn phí",
+      "Phòng tắm riêng",
+      "Vòi sen nước nóng",
+      "Ba giường tầng",
+      "View sân vườn",
+      "View núi",
+      "Tủ khóa cá nhân",
+    ],
+    seoTitle: "Deluxe 6 Bed Mixed Dorm Ensuite | Green Riverside Cosy Home",
+    seoDescription:
+      "Dorm nam nữ 6 giường giá tốt với Wi-Fi miễn phí, điều hòa và view núi tại Phong Nha.",
+  },
+  "deluxe-6-bed-female-dorm": {
+    title: "Deluxe 6 Bed Female Dorm Ensuite",
+    category: "Dorm nữ",
+    shortDescription:
+      "Dorm nữ với phòng tắm riêng, Wi-Fi miễn phí và view núi.",
+    description:
+      "Được thiết kế dành riêng cho nữ, dorm này có ba giường tầng, điều hòa, quạt, Wi-Fi miễn phí và phòng tắm riêng với vòi sen nước nóng.\n\nKhông gian an toàn, thân thiện và thoải mái, kết hợp cùng view sân vườn và view núi đẹp.",
+    amenities: [
+      "Điều hòa",
+      "Quạt",
+      "Wi-Fi miễn phí",
+      "Phòng tắm riêng",
+      "Vòi sen nước nóng",
+      "Ba giường tầng",
+      "Chỉ dành cho nữ",
+      "View sân vườn",
+      "View núi",
+      "Tủ khóa cá nhân",
+    ],
+    seoTitle: "Deluxe 6 Bed Female Dorm Ensuite | Green Riverside Cosy Home",
+    seoDescription:
+      "Dorm nữ 6 giường với phòng tắm riêng, Wi-Fi miễn phí và view núi đẹp tại Phong Nha.",
+  },
+  "deluxe-8-bed-dorm": {
+    title: "Deluxe 8 Bed Mixed Dorm Ensuite",
+    category: "Dorm nam nữ",
+    shortDescription:
+      "Dorm 8 giường tiết kiệm với hai vòi sen nước nóng và view núi.",
+    description:
+      "Deluxe 8 Bed Mixed Dorm Ensuite là lựa chọn phù hợp cho backpacker muốn lưu trú tiết kiệm tại Phong Nha.\n\nPhòng có bốn giường tầng, điều hòa, quạt, Wi-Fi miễn phí và hai vòi sen nước nóng, mang lại sự tiện lợi và thoải mái cho nhóm khách đông hơn.",
+    amenities: [
+      "Điều hòa",
+      "Quạt",
+      "Wi-Fi miễn phí",
+      "Phòng tắm trong phòng",
+      "Hai vòi sen nước nóng",
+      "Bốn giường tầng",
+      "View sân vườn",
+      "View núi",
+      "Tủ khóa cá nhân",
+    ],
+    seoTitle: "Deluxe 8 Bed Mixed Dorm Ensuite | Green Riverside Cosy Home",
+    seoDescription:
+      "Dorm nam nữ 8 giường giá tốt với hai vòi sen nước nóng, Wi-Fi miễn phí, điều hòa và view núi tại Phong Nha.",
+  },
+};
+
+for (const room of ROOMS) {
+  room.translations = {
+    vi: ROOM_VI_TRANSLATIONS[room.id],
+  };
+}
+
 export function getStoryContent(vi) {
   if (vi) {
     return {
@@ -124,16 +544,16 @@ export function getCafeContent(vi) {
   };
 }
 
-export const ROOMS = [
+const LEGACY_ROOMS = [
   {
-    id: "deluxe-mountain-view",
-    slug: "deluxe-mountain-view",
-    title: "Deluxe Single or Double Room with Mountain View",
+    id: "deluxe-single-double",
+    slug: "deluxe-single-double",
+    title: "Deluxe Single / Double Room",
     category: "Private Room",
     description:
-      "20 m² ensuite room with mountain view and private balcony. Double bed (1.6m × 2m), max 2 adults. Direct booking from USD 20/night (OTA from USD 22).",
-    shortDescription: "20 m² · Mountain view · Balcony · Max 2 guests",
-    amenities: ["AC", "Fan", "Mini bar", "Kettle", "Hair dryer", "Desk", "Fridge", "WiFi", "Balcony", "Mountain view"],
+      "Private ensuite room for one or two guests, with air-conditioning, Wi-Fi, hot shower, minibar, wardrobe, and peaceful garden or mountain views.",
+    shortDescription: "Single or double room · Ensuite · AC",
+    amenities: ["AC", "Fan", "WiFi", "Hot shower", "Mini bar", "Wardrobe"],
     capacity: 2,
     price: 500000,
     priceFrom: 500000,
@@ -141,88 +561,88 @@ export const ROOMS = [
     order: 1,
   },
   {
+    id: "deluxe-double-twin",
+    slug: "deluxe-double-twin",
+    title: "Deluxe Double / Twin Room",
+    category: "Private Room",
+    description:
+      "Spacious private ensuite room with double or twin bed setup, air-conditioning, Wi-Fi, hot shower, minibar, and comfortable space for couples or friends.",
+    shortDescription: "Double or twin beds · Ensuite · AC",
+    amenities: ["AC", "Fan", "WiFi", "Hot shower", "Mini bar", "Mountain view"],
+    capacity: 4,
+    price: 700000,
+    priceFrom: 700000,
+    currency: "VND",
+    order: 2,
+  },
+  {
     id: "superior-double-twin",
     slug: "superior-double-twin",
     title: "Superior Double / Twin Room",
     category: "Private Room",
     description:
-      "26 m² room with 2 double beds (1.6m × 2m), ideal for families or groups of 3–4. Partial mountain view, private bathroom. Direct USD 20–30/night.",
-    shortDescription: "26 m² · 2 double beds · Max 4 guests",
-    amenities: ["AC", "Fan", "Mini bar", "Kettle", "Hair dryer", "Desk", "Fridge", "WiFi"],
+      "Comfortable superior room with double or twin bed setup, private bathroom, air-conditioning, Wi-Fi, hot shower, and a relaxed homestay atmosphere.",
+    shortDescription: "Superior room · Double or twin · Ensuite",
+    amenities: ["AC", "Fan", "WiFi", "Hot shower", "Mini bar", "Desk"],
     capacity: 4,
-    price: 625000,
-    priceFrom: 500000,
-    currency: "VND",
-    order: 2,
-  },
-  {
-    id: "deluxe-double-twin-mountain",
-    slug: "deluxe-double-twin-mountain",
-    title: "Deluxe Double / Twin Room with Mountain View",
-    category: "Private Room",
-    description:
-      "30 m² room with mountain view and balcony. Flexible setup: 1 double + 1 single bed. Max 3–4 guests. Direct from USD 25/night.",
-    shortDescription: "30 m² · Mountain view · Balcony · Max 4 guests",
-    amenities: ["AC", "Fan", "Mini bar", "Kettle", "Hair dryer", "Desk", "Fridge", "WiFi", "Balcony"],
-    capacity: 4,
-    price: 625000,
-    priceFrom: 625000,
+    price: 650000,
+    priceFrom: 650000,
     currency: "VND",
     order: 3,
   },
   {
-    id: "family-suite",
-    slug: "family-suite",
-    title: "Family Suite with Balcony",
-    category: "Suite",
+    id: "deluxe-triple-room",
+    slug: "deluxe-triple-room",
+    title: "Deluxe Triple Room",
+    category: "Private Room",
     description:
-      "30 m² family suite with mountain-view balcony. 1 double bed (1.6m × 2m) + 1 bunk bed (1.2m × 2m). Direct USD 25–30/night.",
-    shortDescription: "30 m² · Bunk + double · Balcony · Max 4 guests",
-    amenities: ["AC", "Fan", "Mini bar", "Kettle", "Hair dryer", "Desk", "Fridge", "WiFi", "Balcony"],
-    capacity: 4,
-    price: 625000,
-    priceFrom: 625000,
+      "Private triple room for small families or groups, with ensuite bathroom, air-conditioning, Wi-Fi, hot shower, minibar, and comfortable bedding.",
+    shortDescription: "Triple room · Ensuite · AC",
+    amenities: ["AC", "Fan", "WiFi", "Hot shower", "Mini bar", "Wardrobe"],
+    capacity: 3,
+    price: 700000,
+    priceFrom: 700000,
     currency: "VND",
     order: 4,
   },
   {
     id: "deluxe-4-bed-dorm",
     slug: "deluxe-4-bed-dorm",
-    title: "Deluxe 4-Bed Mixed Dorm",
+    title: "Deluxe 4 Bed Dorm",
     category: "Dorm",
     description:
-      "25 m² mixed dorm with 2 bunk beds (4 beds). En-suite bathroom. From USD 9/bed when booking direct.",
-    shortDescription: "4 beds · En-suite · Privacy curtains",
+      "Four-bed dorm with bunk beds, air-conditioning, Wi-Fi, hot shower, lockers, privacy curtains, and reading lights. Price is per bed.",
+    shortDescription: "4 beds · Ensuite · Price per bed",
     amenities: ["AC", "Fan", "WiFi", "Locker", "Privacy curtain", "Reading light"],
     capacity: 4,
-    price: 225000,
-    priceFrom: 225000,
+    price: 250000,
+    priceFrom: 250000,
     currency: "VND",
     order: 5,
   },
   {
-    id: "deluxe-female-6-bed-dorm",
-    slug: "deluxe-female-6-bed-dorm",
-    title: "Deluxe Female 6-Bed Dorm",
+    id: "deluxe-6-bed-dorm",
+    slug: "deluxe-6-bed-dorm",
+    title: "Deluxe 6 Bed Dorm",
     category: "Dorm",
     description:
-      "30 m² female-only dorm with 3 bunk beds (6 beds). En-suite bathroom. From USD 8/bed when booking direct.",
-    shortDescription: "Female only · 6 beds · En-suite",
+      "Six-bed dorm with bunk beds, air-conditioning, Wi-Fi, hot shower, lockers, privacy curtains, and reading lights. Price is per bed.",
+    shortDescription: "6 beds · Ensuite · Price per bed",
     amenities: ["AC", "Fan", "WiFi", "Locker", "Privacy curtain", "Reading light"],
     capacity: 6,
-    price: 200000,
-    priceFrom: 200000,
+    price: 220000,
+    priceFrom: 220000,
     currency: "VND",
     order: 6,
   },
   {
     id: "deluxe-8-bed-dorm",
     slug: "deluxe-8-bed-dorm",
-    title: "Deluxe Mixed 8-Bed Dorm",
+    title: "Deluxe 8 Bed Dorm",
     category: "Dorm",
     description:
-      "40 m² mixed dorm with 4 bunk beds (8 beds) and 2 en-suite bathrooms. From USD 8/bed when booking direct.",
-    shortDescription: "8 beds · 2 bathrooms · Social atmosphere",
+      "Eight-bed dorm with bunk beds, air-conditioning, Wi-Fi, hot shower, lockers, privacy curtains, and reading lights. Price is per bed.",
+    shortDescription: "8 beds · Ensuite · Price per bed",
     amenities: ["AC", "Fan", "WiFi", "Locker", "Privacy curtain", "Reading light"],
     capacity: 8,
     price: 200000,

@@ -19,6 +19,29 @@ type ImageOptimizationPreset = {
   startQuality: number;
 };
 
+export type UploadableImageFile = File & {
+  originalFile?: File;
+  originalSize?: number;
+};
+
+export type UploadedImageResult = {
+  url: string;
+  path: string;
+  originalSize: number;
+  uploadedSize: number;
+  width?: number;
+  height?: number;
+};
+
+const ALLOWED_IMAGE_TYPES = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/avif",
+]);
+
+const MAX_SOURCE_IMAGE_BYTES = 18 * 1024 * 1024;
+
 const DEFAULT_IMAGE_PRESET: ImageOptimizationPreset = {
   maxWidth: 1600,
   targetBytes: 280 * 1024,
@@ -29,7 +52,7 @@ const DEFAULT_IMAGE_PRESET: ImageOptimizationPreset = {
 const IMAGE_PRESETS: Partial<Record<StorageFolder, ImageOptimizationPreset>> = {
   hero: { maxWidth: 2200, targetBytes: 420 * 1024, minQuality: 0.68, startQuality: 0.88 },
   site: { maxWidth: 2200, targetBytes: 420 * 1024, minQuality: 0.68, startQuality: 0.88 },
-  rooms: { maxWidth: 1800, targetBytes: 320 * 1024, minQuality: 0.64, startQuality: 0.86 },
+  rooms: { maxWidth: 1800, targetBytes: 360 * 1024, minQuality: 0.66, startQuality: 0.82 },
   tours: { maxWidth: 1800, targetBytes: 320 * 1024, minQuality: 0.64, startQuality: 0.86 },
   activities: { maxWidth: 1600, targetBytes: 280 * 1024, minQuality: 0.62, startQuality: 0.86 },
   gallery: { maxWidth: 1800, targetBytes: 320 * 1024, minQuality: 0.64, startQuality: 0.86 },
@@ -46,12 +69,22 @@ function getPresetForPath(path: string): ImageOptimizationPreset {
   return folder ? IMAGE_PRESETS[folder] ?? DEFAULT_IMAGE_PRESET : DEFAULT_IMAGE_PRESET;
 }
 
-function shouldSkipOptimization(file: File): boolean {
-  return (
-    !file.type.startsWith("image/") ||
-    file.type === "image/svg+xml" ||
-    file.type === "image/gif"
-  );
+function assertUploadableImage(file: File): void {
+  if (!ALLOWED_IMAGE_TYPES.has(file.type)) {
+    throw new Error("Only JPG, PNG, WebP, or AVIF images can be uploaded.");
+  }
+
+  if (file.size > MAX_SOURCE_IMAGE_BYTES) {
+    throw new Error("Image is too large. Please upload an image smaller than 18MB.");
+  }
+}
+
+export function isUploadableImage(file: File): boolean {
+  return ALLOWED_IMAGE_TYPES.has(file.type) && file.size <= MAX_SOURCE_IMAGE_BYTES;
+}
+
+export function getUploadableImageHint(): string {
+  return "JPG, PNG, WebP, or AVIF only. Max source file size: 18MB.";
 }
 
 function toWebpName(filename: string): string {
@@ -74,6 +107,26 @@ function withFileExtension(path: string, file: File): string {
   return path.includes(".")
     ? path.replace(/\.[^/.?]+$/, ext)
     : `${path}${ext}`;
+}
+
+function createUploadId(): string {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+    return crypto.randomUUID().slice(0, 12);
+  }
+
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function appendUniqueSuffix(filename: string): string {
+  const clean = filename || "image";
+  const dotIndex = clean.lastIndexOf(".");
+  const suffix = createUploadId();
+
+  if (dotIndex > 0) {
+    return `${clean.slice(0, dotIndex)}-${suffix}${clean.slice(dotIndex)}`;
+  }
+
+  return `${clean}-${suffix}`;
 }
 
 function canvasToBlob(
@@ -105,8 +158,8 @@ async function loadImageElement(file: File): Promise<HTMLImageElement> {
 export async function optimizeImage(
   file: File,
   preset = DEFAULT_IMAGE_PRESET
-): Promise<File> {
-  if (shouldSkipOptimization(file)) return file;
+): Promise<UploadableImageFile> {
+  assertUploadableImage(file);
 
   const img = await loadImageElement(file);
   const scale = Math.min(1, preset.maxWidth / Math.max(img.width, img.height));
@@ -133,12 +186,21 @@ export async function optimizeImage(
 
   if (!bestBlob) return file;
 
-  const optimized = new File([bestBlob], toWebpName(file.name), {
+  const optimized: UploadableImageFile = new File([bestBlob], toWebpName(file.name), {
     type: "image/webp",
     lastModified: Date.now(),
   });
+  optimized.originalFile = file;
+  optimized.originalSize = file.size;
 
-  return optimized.size < file.size || file.type !== "image/webp" ? optimized : file;
+  if (optimized.size < file.size || file.type !== "image/webp") {
+    return optimized;
+  }
+
+  const original = file as UploadableImageFile;
+  original.originalFile = file;
+  original.originalSize = file.size;
+  return original;
 }
 
 export function uploadImageWithProgress(
@@ -182,6 +244,23 @@ export async function uploadImage(
   return uploadImageWithProgress(withFileExtension(path, optimized), optimized, onProgress);
 }
 
+export async function uploadImageDetailed(
+  path: string,
+  file: File,
+  onProgress?: UploadProgressCallback
+): Promise<UploadedImageResult> {
+  const optimized = await optimizeImage(file, getPresetForPath(path));
+  const finalPath = withFileExtension(path, optimized);
+  const url = await uploadImageWithProgress(finalPath, optimized, onProgress);
+
+  return {
+    url,
+    path: finalPath,
+    originalSize: optimized.originalSize ?? file.size,
+    uploadedSize: optimized.size,
+  };
+}
+
 export async function uploadImages(
   folder: StorageFolder,
   files: File[],
@@ -190,7 +269,7 @@ export async function uploadImages(
   const urls: string[] = [];
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
-    const path = buildStoragePath(folder, `${Date.now()}-${i}-${file.name}`);
+    const path = buildStoragePath(folder, appendUniqueSuffix(file.name));
     const url = await uploadImage(path, file, (p) => onProgress?.(i, p));
     urls.push(url);
   }
@@ -215,6 +294,54 @@ export function buildStoragePath(
     .replace(/^-+|-+$/g, "");
 
   return `${STORAGE_PATHS[folder]}${safeFilename || "image"}`;
+}
+
+export function buildUniqueStoragePath(
+  folder: StorageFolder,
+  filename: string
+): string {
+  return buildStoragePath(folder, appendUniqueSuffix(filename));
+}
+
+export function buildRoomStoragePath(
+  roomId: string,
+  isCover: boolean,
+  filename: string
+): string {
+  const subfolder = isCover ? "cover" : "gallery";
+  const cleanFilename = filename
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-zA-Z0-9._-]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  
+  // Strip existing extension since optimizeImage converts it to webp
+  const nameWithoutExt = cleanFilename.replace(/\.[^.]+$/, "");
+  return `rooms/${roomId}/${subfolder}/${nameWithoutExt || "image"}-${createUploadId()}.webp`;
+}
+
+export async function uploadRoomImage(
+  roomId: string,
+  isCover: boolean,
+  file: File,
+  onProgress?: UploadProgressCallback
+): Promise<UploadedImageResult> {
+  const path = buildRoomStoragePath(roomId, isCover, file.name);
+  const preset: ImageOptimizationPreset = {
+    maxWidth: 1800,
+    targetBytes: 360 * 1024,
+    minQuality: 0.66,
+    startQuality: 0.82,
+  };
+  const optimized = await optimizeImage(file, preset);
+  const url = await uploadImageWithProgress(path, optimized, onProgress);
+  return {
+    url,
+    path,
+    originalSize: optimized.originalSize ?? file.size,
+    uploadedSize: optimized.size,
+  };
 }
 
 export function extractStoragePathFromUrl(url: string): string | null {

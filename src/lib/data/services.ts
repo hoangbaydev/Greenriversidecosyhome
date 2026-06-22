@@ -43,21 +43,46 @@ function byPublishedAtDesc(a: BlogPost, b: BlogPost): number {
   return (b.publishedAt ?? "").localeCompare(a.publishedAt ?? "");
 }
 
-export async function getRooms(): Promise<Room[]> {
+function localizeRoom(room: Room, locale?: Locale): Room {
+  if (!locale || locale === "en") return room;
+  const localized = room.translations?.[locale];
+  if (!localized) return room;
+
+  return {
+    ...room,
+    ...localized,
+    slug: room.slug,
+    id: room.id,
+    price: room.price,
+    priceFrom: room.priceFrom,
+    currency: room.currency,
+    images: room.images,
+    roomImages: room.roomImages,
+    featured: room.featured,
+    order: room.order,
+    published: room.published,
+    createdAt: room.createdAt,
+    updatedAt: room.updatedAt,
+    translations: room.translations,
+  };
+}
+
+export async function getRooms(locale?: Locale): Promise<Room[]> {
   const rooms = await serverGetCollection<Room>(FIRESTORE_COLLECTIONS.rooms, {
     publishedOnly: true,
   });
-  return rooms.sort(byOrder);
+  return rooms.sort(byOrder).map((room) => localizeRoom(room, locale));
 }
 
-export async function getRoomBySlug(slug: string): Promise<Room | null> {
-  return serverGetDocumentBySlug<Room>(FIRESTORE_COLLECTIONS.rooms, slug, {
+export async function getRoomBySlug(slug: string, locale?: Locale): Promise<Room | null> {
+  const room = await serverGetDocumentBySlug<Room>(FIRESTORE_COLLECTIONS.rooms, slug, {
     publishedOnly: true,
   });
+  return room ? localizeRoom(room, locale) : null;
 }
 
-export async function getFeaturedRooms(count = 4): Promise<Room[]> {
-  const rooms = await getRooms();
+export async function getFeaturedRooms(count = 4, locale?: Locale): Promise<Room[]> {
+  const rooms = await getRooms(locale);
   return rooms.filter((r) => r.featured).slice(0, count);
 }
 
@@ -66,9 +91,9 @@ export async function getAllRoomSlugs(): Promise<string[]> {
   return rooms.map((r) => r.slug);
 }
 
-export async function fetchRoomsByIds(ids: string[]): Promise<Room[]> {
+export async function fetchRoomsByIds(ids: string[], locale?: Locale): Promise<Room[]> {
   if (!ids.length) return [];
-  const all = await getRooms();
+  const all = await getRooms(locale);
   return ids.map((id) => all.find((r) => r.id === id)).filter((r): r is Room => Boolean(r));
 }
 

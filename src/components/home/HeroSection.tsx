@@ -82,7 +82,7 @@ export function HeroSection({ content }: HeroSectionProps) {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...defaultTransition, delay: 0.06 }}
-            className="font-heading mt-4 text-display text-white whitespace-pre-line leading-[1.1]"
+            className="font-heading mt-6 text-display text-white whitespace-pre-line leading-[1.1]"
           >
             {heroTitle}
           </motion.h1>
@@ -91,7 +91,7 @@ export function HeroSection({ content }: HeroSectionProps) {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ ...defaultTransition, delay: 0.14 }}
-              className="hero-subtitle mx-auto mt-6 text-white/95 max-w-2xl font-light"
+              className="hero-subtitle mx-auto mt-8 text-white/95 max-w-2xl font-light"
             >
               {heroSubtitle}
             </motion.p>
@@ -102,10 +102,10 @@ export function HeroSection({ content }: HeroSectionProps) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ ...defaultTransition, delay: 0.18 }}
-              className="mt-8 flex flex-wrap items-center justify-center gap-2"
+              className="mt-10 flex flex-wrap items-center justify-center gap-2"
             >
               {pillars.map((pill, i) => (
-                <li key={i} className="hero-pill rounded-full px-4 py-1.5 text-xs font-semibold tracking-wide">
+                <li key={i} className="hero-pill rounded-full px-4 py-2 text-sm font-semibold tracking-wide">
                   {pill}
                 </li>
               ))}
@@ -116,20 +116,20 @@ export function HeroSection({ content }: HeroSectionProps) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...defaultTransition, delay: 0.22 }}
-            className="mx-auto mt-10 flex w-full max-w-[22rem] flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:gap-4"
+            className="mx-auto mt-12 flex w-full max-w-[22rem] flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:gap-4"
           >
             {primaryLabel ? (
               <WhatsAppButton
                 messageType="book_room"
                 label={primaryLabel}
                 size="lg"
-                className="hero-cta-primary min-h-12 rounded-lg px-10 shadow-md transition-all"
+                className="hero-cta-primary min-h-12 rounded-full px-10 shadow-md transition-all"
               />
             ) : null}
             {secondaryLabel ? (
               <Link
                 href={secondaryLink}
-                className="hero-cta-secondary inline-flex min-h-12 items-center justify-center rounded-lg px-10 transition-colors"
+                className="hero-cta-secondary inline-flex min-h-12 items-center justify-center rounded-full px-10 transition-all"
               >
                 {secondaryLabel}
               </Link>

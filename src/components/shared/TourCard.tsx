@@ -73,7 +73,7 @@ function PremiumTourCard({
         {viewDetailsLabel ? (
           <Link
             href={detailHref}
-            className="mt-5 inline-flex min-h-10 w-fit items-center justify-center rounded-lg border border-primary/30 px-5 font-heading text-[13px] font-bold uppercase tracking-[0.04em] text-primary transition-colors hover:border-primary hover:bg-soft"
+            className="mt-5 inline-flex min-h-11 w-fit items-center justify-center rounded-lg border border-primary/30 px-5 font-heading text-sm font-bold uppercase tracking-[0.04em] text-primary transition-colors hover:border-primary hover:bg-soft"
           >
             {viewDetailsLabel}
           </Link>

@@ -169,7 +169,7 @@ export function WhatsAppFloatingButton() {
         aria-label="Chat on Zalo"
         className="flex h-14 w-14 items-center justify-center rounded-full bg-[#0068FF] text-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0068FF] focus-visible:ring-offset-2 animate-pulse-zalo"
       >
-        <span className="text-[11px] font-black tracking-tighter uppercase">Zalo</span>
+        <span className="text-sm font-black tracking-tighter uppercase">Zalo</span>
       </a>
 
       {/* WhatsApp Floating Button */}

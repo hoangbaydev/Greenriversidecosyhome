@@ -20,6 +20,10 @@ service cloud.firestore {
       allow read: if resource == null || isPublished() || isAdmin();
       allow write: if isAdmin();
     }
+    match /rooms/{roomId}/images/{imageId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
     match /tours/{doc} {
       allow read: if resource == null || isPublished() || isAdmin();
       allow write: if isAdmin();

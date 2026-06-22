@@ -59,7 +59,7 @@ export function SiteBrand({
   return (
     <Link
       href={localizedPath(locale, "/")}
-      className={cn("flex min-w-0 items-center gap-2.5 bg-transparent sm:gap-3", className)}
+      className={cn("flex min-w-0 items-center gap-2 bg-transparent sm:gap-2.5", className)}
       aria-label={siteName}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -77,7 +77,7 @@ export function SiteBrand({
         <span className="min-w-0 leading-tight">
           <span
             className={cn(
-              "block truncate font-heading text-sm font-bold uppercase tracking-[0.03em] text-primary sm:text-base",
+              "block truncate font-heading text-base sm:text-lg lg:text-xl font-bold text-primary-dark tracking-normal",
               nameClassName
             )}
           >
@@ -86,7 +86,7 @@ export function SiteBrand({
           {secondLine ? (
             <span
               className={cn(
-                "mt-0.5 block truncate text-[11px] font-normal tracking-[0.04em] text-text-muted sm:text-xs",
+                "mt-1.5 block truncate text-[13px] sm:text-sm font-medium text-text-muted/65 tracking-normal",
                 subtitleClassName
               )}
             >

@@ -11,6 +11,19 @@ export interface User {
   createdAt: FirestoreTimestamp;
 }
 
+export interface RoomImage {
+  id: string;
+  imageUrl: string;
+  imagePath: string;
+  roomId: string;
+  sortOrder: number;
+  isCover: boolean;
+  altText: string;
+  title?: string;
+  description?: string;
+  uploadedAt: string;
+}
+
 export interface Room {
   id: string;
   slug: string;
@@ -26,11 +39,16 @@ export interface Room {
   priceFrom?: number;
   currency: string;
   images: string[];
+  roomImages?: RoomImage[];
   featured: boolean;
   order: number;
   published: boolean;
   seoTitle?: string;
   seoDescription?: string;
+  translations?: {
+    en?: Partial<Pick<Room, "title" | "name" | "category" | "description" | "shortDescription" | "amenities" | "seoTitle" | "seoDescription">>;
+    vi?: Partial<Pick<Room, "title" | "name" | "category" | "description" | "shortDescription" | "amenities" | "seoTitle" | "seoDescription">>;
+  };
   createdAt: FirestoreTimestamp;
   updatedAt: FirestoreTimestamp;
 }

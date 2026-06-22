@@ -19,10 +19,10 @@ function isNavActive(path: string, href: string) {
 
 function navLinkClass(active: boolean) {
   return cn(
-    "inline-flex min-h-9 items-center rounded-md px-2.5 py-1.5 text-[13px] xl:text-sm font-medium transition-colors cursor-pointer whitespace-nowrap",
+    "inline-flex min-h-9 items-center rounded-md px-1.5 xl:px-3 py-1 xl:py-1.5 text-sm font-medium transition-colors cursor-pointer whitespace-nowrap tracking-normal font-sans border-2",
     active
-      ? "bg-soft text-primary font-semibold"
-      : "text-[var(--color-body)] hover:bg-soft/70 hover:text-primary"
+      ? "bg-soft text-primary font-semibold border-primary/25 shadow-sm"
+      : "text-[var(--color-body)] border-transparent hover:bg-soft/70 hover:text-primary hover:border-primary/10"
   );
 }
 
@@ -83,21 +83,26 @@ export function Navbar() {
 
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-50 border-b bg-white/90 backdrop-blur-md transition-all duration-300",
-          scrolled ? "border-border/60 shadow-[var(--shadow-sm)]" : "border-transparent"
+          "fixed inset-x-0 top-0 z-50 border-b-2 bg-white/95 backdrop-blur-md transition-all duration-300",
+          scrolled ? "border-border/80 shadow-[var(--shadow-sm)]" : "border-border/30"
         )}
       >
-        <div className="mx-auto flex h-[4rem] max-w-[92rem] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8 2xl:px-12">
+        <div className={cn(
+          "mx-auto flex items-center justify-between gap-2 xl:gap-4 px-4 sm:px-6 lg:px-8 transition-all duration-300 max-w-[85rem]",
+          scrolled ? "h-[4.25rem]" : "h-[5.25rem]"
+        )}>
+          {/* Logo Branding (Left Column) */}
           <SiteBrand
             siteName={siteName}
             tagline={tagline}
             logoUrl={settings?.logoUrl}
             locale={locale}
-            className="min-w-0 shrink-0"
+            className="shrink-0"
           />
 
+          {/* Navigation Links (Center Column) */}
           <nav
-            className="hidden items-center gap-0.5 lg:flex"
+            className="hidden items-center gap-0.5 xl:gap-2 xl:flex justify-center"
             aria-label="Main navigation"
           >
             {/* 1. Our Story */}
@@ -157,8 +162,7 @@ export function Navbar() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ duration: 0.2, ease: [0.25, 1, 0.5, 1] }}
-                    className="absolute top-full left-1/2 z-50 mt-1 w-56 -translate-x-1/2 border border-border bg-white p-2.5 shadow-[0_15px_30px_rgba(0,0,0,0.06)]"
-                    style={{ borderRadius: "var(--radius-card, 0px)" }}
+                    className="absolute top-full left-1/2 z-50 mt-1 w-56 -translate-x-1/2 border border-border bg-white p-2 shadow-[0_15px_30px_rgba(0,0,0,0.06)] rounded-xl"
                   >
                     {subExploreItems.map((sub) => {
                       const href = localizedPath(locale, sub.href);
@@ -168,9 +172,9 @@ export function Navbar() {
                           key={sub.href}
                           href={href}
                           className={cn(
-                            "block px-3.5 py-2.5 text-[14px] font-semibold tracking-[0.02em] transition-colors whitespace-nowrap",
+                            "block px-3.5 py-2 text-sm font-medium transition-colors whitespace-nowrap rounded-md",
                             active
-                              ? "bg-soft text-primary"
+                              ? "bg-soft text-primary font-semibold"
                               : "text-[var(--color-body)] hover:bg-soft/60 hover:text-primary"
                           )}
                         >
@@ -208,8 +212,7 @@ export function Navbar() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ duration: 0.2, ease: [0.25, 1, 0.5, 1] }}
-                    className="absolute top-full left-1/2 z-50 mt-1 w-56 -translate-x-1/2 border border-border bg-white p-2.5 shadow-[0_15px_30px_rgba(0,0,0,0.06)]"
-                    style={{ borderRadius: "var(--radius-card, 0px)" }}
+                    className="absolute top-full left-1/2 z-50 mt-1 w-56 -translate-x-1/2 border border-border bg-white p-2 shadow-[0_15px_30px_rgba(0,0,0,0.06)] rounded-xl"
                   >
                     {subTransportItems.map((sub) => {
                       const href = localizedPath(locale, sub.href);
@@ -219,9 +222,9 @@ export function Navbar() {
                           key={sub.href}
                           href={href}
                           className={cn(
-                            "block px-3.5 py-2.5 text-[14px] font-semibold tracking-[0.02em] transition-colors whitespace-nowrap",
+                            "block px-3.5 py-2 text-sm font-medium transition-colors whitespace-nowrap rounded-md",
                             active
-                              ? "bg-soft text-primary"
+                              ? "bg-soft text-primary font-semibold"
                               : "text-[var(--color-body)] hover:bg-soft/60 hover:text-primary"
                           )}
                         >
@@ -251,19 +254,20 @@ export function Navbar() {
             </Link>
           </nav>
 
-          <div className="flex shrink-0 items-center gap-3 md:gap-4">
-            <LanguageSwitcher variant="minimal" className="hidden sm:flex" />
+          {/* Actions Block (Right Column) */}
+          <div className="flex items-center gap-3 md:gap-4 shrink-0">
+            <LanguageSwitcher variant="dropdown" className="hidden xl:inline-block" />
             <WhatsAppButton
               messageType="book_room"
               label={bookNowLabel}
-              size="sm"
               showIcon={false}
-              className="hidden lg:inline-flex"
+              className="hidden xl:inline-flex bg-primary hover:bg-primary-dark text-white rounded-full font-sans text-sm font-semibold tracking-normal px-4 xl:px-6 py-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(96,121,59,0.3)] active:translate-y-0 hover:scale-[1.02] border-none"
             />
+            <LanguageSwitcher variant="dropdown" className="xl:hidden" />
             <button
               type="button"
               onClick={() => setMobileOpen((o) => !o)}
-              className="flex h-10 w-10 items-center justify-center rounded-lg border border-border text-text hover:bg-soft lg:hidden"
+              className="flex h-10 w-10 items-center justify-center rounded-lg border border-border text-text hover:bg-soft xl:hidden"
               aria-expanded={mobileOpen}
               aria-label={mobileOpen ? dict.nav.closeMenu : dict.nav.menu}
             >
@@ -280,7 +284,7 @@ export function Navbar() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40 bg-black/20 lg:hidden"
+              className="fixed inset-0 z-40 bg-black/20 xl:hidden"
               onClick={() => setMobileOpen(false)}
               aria-hidden
             />
@@ -289,7 +293,7 @@ export function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.25 }}
-              className="fixed inset-y-0 right-0 z-50 flex w-[min(100%,18rem)] flex-col border-l border-border bg-white shadow-xl lg:hidden"
+              className="fixed inset-y-0 right-0 z-50 flex w-[min(100%,18rem)] flex-col border-l border-border bg-white shadow-xl xl:hidden"
               aria-label="Mobile navigation"
             >
               <div className="flex h-[4rem] items-center justify-between border-b border-border px-4">
@@ -318,8 +322,8 @@ export function Navbar() {
                     <Link
                       href={localizedPath(locale, "/our-story")}
                       className={cn(
-                        "flex min-h-10 items-center rounded-md px-3 text-[14px] font-semibold uppercase tracking-[0.04em]",
-                        isNavActive(pathWithoutLocale, "/our-story") ? "bg-soft text-primary" : "text-[var(--color-body)] hover:bg-soft/80"
+                        "flex min-h-10 items-center rounded-md px-3 text-sm font-medium tracking-normal",
+                        isNavActive(pathWithoutLocale, "/our-story") ? "bg-soft text-primary font-semibold" : "text-[var(--color-body)] hover:bg-soft/80"
                       )}
                       onClick={() => setMobileOpen(false)}
                     >
@@ -332,8 +336,8 @@ export function Navbar() {
                     <Link
                       href={localizedPath(locale, "/stay")}
                       className={cn(
-                        "flex min-h-10 items-center rounded-md px-3 text-[14px] font-semibold uppercase tracking-[0.04em]",
-                        isNavActive(pathWithoutLocale, "/stay") ? "bg-soft text-primary" : "text-[var(--color-body)] hover:bg-soft/80"
+                        "flex min-h-10 items-center rounded-md px-3 text-sm font-medium tracking-normal",
+                        isNavActive(pathWithoutLocale, "/stay") ? "bg-soft text-primary font-semibold" : "text-[var(--color-body)] hover:bg-soft/80"
                       )}
                       onClick={() => setMobileOpen(false)}
                     >
@@ -346,8 +350,8 @@ export function Navbar() {
                     <Link
                       href={localizedPath(locale, "/eat-drink")}
                       className={cn(
-                        "flex min-h-10 items-center rounded-md px-3 text-[14px] font-semibold uppercase tracking-[0.04em]",
-                        isNavActive(pathWithoutLocale, "/eat-drink") ? "bg-soft text-primary" : "text-[var(--color-body)] hover:bg-soft/80"
+                        "flex min-h-10 items-center rounded-md px-3 text-sm font-medium tracking-normal",
+                        isNavActive(pathWithoutLocale, "/eat-drink") ? "bg-soft text-primary font-semibold" : "text-[var(--color-body)] hover:bg-soft/80"
                       )}
                       onClick={() => setMobileOpen(false)}
                     >
@@ -360,8 +364,8 @@ export function Navbar() {
                     <Link
                       href={localizedPath(locale, "/social-activities")}
                       className={cn(
-                        "flex min-h-10 items-center rounded-md px-3 text-[14px] font-semibold uppercase tracking-[0.04em]",
-                        isNavActive(pathWithoutLocale, "/social-activities") ? "bg-soft text-primary" : "text-[var(--color-body)] hover:bg-soft/80"
+                        "flex min-h-10 items-center rounded-md px-3 text-sm font-medium tracking-normal",
+                        isNavActive(pathWithoutLocale, "/social-activities") ? "bg-soft text-primary font-semibold" : "text-[var(--color-body)] hover:bg-soft/80"
                       )}
                       onClick={() => setMobileOpen(false)}
                     >
@@ -369,14 +373,14 @@ export function Navbar() {
                     </Link>
                   </li>
 
-                  {/* 5. Explore Dropdown Accordion */}
+                  {/* 5. Explore Accordion */}
                   <li>
                     <button
                       type="button"
                       onClick={() => setMobileExploreOpen((o) => !o)}
                       className={cn(
-                        "flex w-full min-h-10 items-center justify-between rounded-md px-3 text-[14px] font-semibold uppercase tracking-[0.04em] text-[var(--color-body)] hover:bg-soft/80",
-                        isNavActive(pathWithoutLocale, "/explore-phong-nha") && "text-primary"
+                        "flex w-full min-h-10 items-center justify-between rounded-md px-3 text-sm font-medium tracking-normal text-[var(--color-body)] hover:bg-soft/80",
+                        isNavActive(pathWithoutLocale, "/explore-phong-nha") && "text-primary font-semibold"
                       )}
                     >
                       {dict.nav.explore}
@@ -398,8 +402,8 @@ export function Navbar() {
                                 <Link
                                   href={href}
                                   className={cn(
-                                    "flex min-h-9 items-center rounded px-3.5 text-[13px] font-medium transition-colors",
-                                    active ? "bg-soft text-primary font-bold" : "text-[var(--color-body)] hover:text-primary"
+                                    "flex min-h-9 items-center rounded px-3.5 text-sm font-medium transition-colors",
+                                    active ? "bg-soft text-primary font-semibold" : "text-[var(--color-body)] hover:text-primary"
                                   )}
                                   onClick={() => setMobileOpen(false)}
                                 >
@@ -413,14 +417,14 @@ export function Navbar() {
                     </AnimatePresence>
                   </li>
 
-                  {/* 6. Transport Dropdown Accordion */}
+                  {/* 6. Transport Accordion */}
                   <li>
                     <button
                       type="button"
                       onClick={() => setMobileTransportOpen((o) => !o)}
                       className={cn(
-                        "flex w-full min-h-10 items-center justify-between rounded-md px-3 text-[14px] font-semibold uppercase tracking-[0.04em] text-[var(--color-body)] hover:bg-soft/80",
-                        isNavActive(pathWithoutLocale, "/transportation") && "text-primary"
+                        "flex w-full min-h-10 items-center justify-between rounded-md px-3 text-sm font-medium tracking-normal text-[var(--color-body)] hover:bg-soft/80",
+                        isNavActive(pathWithoutLocale, "/transportation") && "text-primary font-semibold"
                       )}
                     >
                       {dict.nav.transport}
@@ -442,8 +446,8 @@ export function Navbar() {
                                 <Link
                                   href={href}
                                   className={cn(
-                                    "flex min-h-9 items-center rounded px-3.5 text-[13px] font-medium transition-colors",
-                                    active ? "bg-soft text-primary font-bold" : "text-[var(--color-body)] hover:text-primary"
+                                    "flex min-h-9 items-center rounded px-3.5 text-sm font-medium transition-colors",
+                                    active ? "bg-soft text-primary font-semibold" : "text-[var(--color-body)] hover:text-primary"
                                   )}
                                   onClick={() => setMobileOpen(false)}
                                 >
@@ -462,8 +466,8 @@ export function Navbar() {
                     <Link
                       href={localizedPath(locale, "/other-services")}
                       className={cn(
-                        "flex min-h-10 items-center rounded-md px-3 text-[14px] font-semibold uppercase tracking-[0.04em]",
-                        isNavActive(pathWithoutLocale, "/other-services") ? "bg-soft text-primary" : "text-[var(--color-body)] hover:bg-soft/80"
+                        "flex min-h-10 items-center rounded-md px-3 text-sm font-medium tracking-normal",
+                        isNavActive(pathWithoutLocale, "/other-services") ? "bg-soft text-primary font-semibold" : "text-[var(--color-body)] hover:bg-soft/80"
                       )}
                       onClick={() => setMobileOpen(false)}
                     >
@@ -476,8 +480,8 @@ export function Navbar() {
                     <Link
                       href={localizedPath(locale, "/useful-info")}
                       className={cn(
-                        "flex min-h-10 items-center rounded-md px-3 text-[14px] font-semibold uppercase tracking-[0.04em]",
-                        isNavActive(pathWithoutLocale, "/useful-info") ? "bg-soft text-primary" : "text-[var(--color-body)] hover:bg-soft/80"
+                        "flex min-h-10 items-center rounded-md px-3 text-sm font-medium tracking-normal",
+                        isNavActive(pathWithoutLocale, "/useful-info") ? "bg-soft text-primary font-semibold" : "text-[var(--color-body)] hover:bg-soft/80"
                       )}
                       onClick={() => setMobileOpen(false)}
                     >
@@ -494,7 +498,7 @@ export function Navbar() {
                   label={bookNowLabel}
                   showIcon={false}
                   size="lg"
-                  className="w-full"
+                  className="w-full bg-primary hover:bg-primary-dark text-white rounded-full font-sans text-sm font-semibold tracking-normal py-3 transition-all shadow-sm hover:shadow-md duration-300 hover:scale-[1.02] border-none"
                 />
               </div>
             </motion.nav>
@@ -502,7 +506,7 @@ export function Navbar() {
         )}
       </AnimatePresence>
 
-      {!isHome && <div className="h-[4rem]" aria-hidden />}
+      {!isHome && <div className="h-[5.25rem]" aria-hidden />}
     </>
   );
 }

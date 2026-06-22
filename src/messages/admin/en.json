@@ -71,7 +71,54 @@
     "manage": "Manage"
   },
   "crud": {
-    "rooms": { "title": "Manage Rooms", "new": "New Room", "edit": "Edit Room" },
+    "rooms": {
+      "title": "Manage Rooms",
+      "new": "New Room",
+      "edit": "Edit Room",
+      "subtitle": "Update the 8 active room types, prices, photos, and booking copy.",
+      "tabs": {
+        "basics": "Listing Info",
+        "amenities": "Amenities",
+        "media": "Photos",
+        "seo": "SEO"
+      },
+      "form": {
+        "title": "Display room name",
+        "titlePlaceholder": "Example: Deluxe Single / Double Room",
+        "price": "Listing price (VND)",
+        "pricePlaceholder": "Example: 500000",
+        "capacity": "Capacity",
+        "capacityPlaceholder": "Example: 2",
+        "featured": "Homepage",
+        "published": "Public",
+        "shortDescription": "Short description on room cards",
+        "shortDescriptionPlaceholder": "Example: Private ensuite room - AC - Garden view",
+        "longDescription": "Detailed description for the room page",
+        "longDescriptionPlaceholder": "Describe beds, bathroom, view, amenities...",
+        "showAdvanced": "Open technical settings: link, group, order",
+        "hideAdvanced": "Hide technical settings",
+        "advancedHelp": "These fields control sorting and URLs. Usually edit them only when changing the room structure.",
+        "slug": "URL path",
+        "slugPlaceholder": "Example: deluxe-single-double",
+        "category": "Room group",
+        "categoryPlaceholder": "Example: Private Room or Dorm",
+        "order": "Display order",
+        "next": "Next step →"
+      },
+      "list": {
+        "currentTitle": "8 rooms currently published",
+        "allTitle": "All rooms",
+        "currentHelp": "Showing only the 8 main room types used on the public website.",
+        "allHelp": "Showing public rooms, drafts, and older records.",
+        "showArchived": "Show old/draft rooms ({count})",
+        "hideArchived": "Hide old/draft rooms",
+        "order": "Order",
+        "capacity": "Capacity",
+        "perNight": "/ night",
+        "perBed": "/ bed",
+        "empty": "No rooms yet. Add your first room to get started."
+      }
+    },
     "tours": { "title": "Manage Tours", "new": "New Tour", "edit": "Edit Tour" },
     "activities": { "title": "Manage Activities", "new": "New Activity" },
     "transportation": { "title": "Transportation", "new": "New Service" },

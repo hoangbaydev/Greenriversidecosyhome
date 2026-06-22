@@ -71,7 +71,54 @@
     "manage": "Quản lý"
   },
   "crud": {
-    "rooms": { "title": "Quản lý phòng", "new": "Phòng mới", "edit": "Sửa phòng" },
+    "rooms": {
+      "title": "Quản lý phòng",
+      "new": "Phòng mới",
+      "edit": "Sửa phòng",
+      "subtitle": "Cập nhật 8 loại phòng đang đăng, giá, ảnh và nội dung đặt phòng.",
+      "tabs": {
+        "basics": "Thông tin đăng",
+        "amenities": "Tiện nghi",
+        "media": "Ảnh",
+        "seo": "SEO"
+      },
+      "form": {
+        "title": "Tên phòng hiển thị",
+        "titlePlaceholder": "VD: Deluxe Single / Double Room",
+        "price": "Giá đăng (VND)",
+        "pricePlaceholder": "VD: 500000",
+        "capacity": "Sức chứa",
+        "capacityPlaceholder": "VD: 2",
+        "featured": "Trang chủ",
+        "published": "Công khai",
+        "shortDescription": "Mô tả ngắn trên thẻ phòng",
+        "shortDescriptionPlaceholder": "VD: Private ensuite room - AC - Garden view",
+        "longDescription": "Mô tả chi tiết khi khách bấm xem",
+        "longDescriptionPlaceholder": "Nhập mô tả rõ về loại giường, phòng tắm, view, tiện nghi...",
+        "showAdvanced": "Mở phần kỹ thuật: link, nhóm phòng, thứ tự",
+        "hideAdvanced": "Ẩn phần kỹ thuật",
+        "advancedHelp": "Các mục này dùng để hệ thống sắp xếp và tạo đường dẫn. Bình thường chỉ cần sửa khi đổi cấu trúc phòng.",
+        "slug": "Đường dẫn URL",
+        "slugPlaceholder": "VD: deluxe-single-double",
+        "category": "Nhóm phòng",
+        "categoryPlaceholder": "VD: Private Room hoặc Dorm",
+        "order": "Thứ tự hiển thị",
+        "next": "Bước tiếp theo →"
+      },
+      "list": {
+        "currentTitle": "Danh sách 8 phòng đang đăng",
+        "allTitle": "Tất cả phòng",
+        "currentHelp": "Chỉ hiện 8 loại phòng chính dùng trên website khách xem.",
+        "allHelp": "Đang hiện cả phòng công khai, bản nháp và dữ liệu cũ.",
+        "showArchived": "Hiện phòng cũ/bản nháp ({count})",
+        "hideArchived": "Ẩn phòng cũ/bản nháp",
+        "order": "Thứ tự",
+        "capacity": "Sức chứa",
+        "perNight": "/ đêm",
+        "perBed": "/ giường",
+        "empty": "Chưa có phòng. Thêm phòng đầu tiên để bắt đầu."
+      }
+    },
     "tours": { "title": "Quản lý tour", "new": "Tour mới", "edit": "Sửa tour" },
     "activities": { "title": "Quản lý hoạt động", "new": "Hoạt động mới" },
     "transportation": { "title": "Di chuyển", "new": "Dịch vụ mới" },

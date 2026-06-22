@@ -25,7 +25,7 @@ export default async function StayPage({ params }: { params: Promise<{ locale: s
   const p = dict.pages.stay;
   const [pageMeta, rooms] = await Promise.all([
     resolvePageMeta(loc, "stay", "/stay").then((r) => r.page),
-    getRooms(),
+    getRooms(loc),
   ]);
 
   const hero = resolvePageHero(pageMeta, { title: p.title, subtitle: p.subtitle });

@@ -11,6 +11,7 @@ import { Users, Check } from "lucide-react";
 import { locales, type Locale } from "@/lib/i18n/config";
 import { getPageContext } from "@/lib/i18n/get-dictionary";
 import { localizedBreadcrumb } from "@/lib/i18n/metadata";
+import { RoomGallery } from "@/components/stay/RoomGallery";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -23,7 +24,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props) {
   const { slug, locale } = await getPageContext(params);
-  const room = await getRoomBySlug(slug);
+  const room = await getRoomBySlug(slug, locale as Locale);
   if (!room) return {};
   const title = getRoomTitle(room);
   return createMetadata({
@@ -38,7 +39,7 @@ export default async function RoomDetailPage({ params }: Props) {
   const { slug, locale, dict } = await getPageContext(params);
   const loc = locale as Locale;
   const [room, page] = await Promise.all([
-    getRoomBySlug(slug),
+    getRoomBySlug(slug, loc),
     getPageContent(loc, "stay"),
   ]);
   if (!room) notFound();
@@ -47,6 +48,11 @@ export default async function RoomDetailPage({ params }: Props) {
   const title = getRoomTitle(room);
   const price = getRoomPrice(room);
   const capacity = getRoomCapacity(room);
+  const priceUnit = room.category?.toLowerCase().includes("dorm") || title.toLowerCase().includes("dorm")
+    ? locale === "vi"
+      ? "/ giường"
+      : "/ bed"
+    : labels?.perNight;
   const guestsText = labels?.upToGuests?.includes("{count}")
     ? labels.upToGuests.replace("{count}", String(capacity))
     : labels?.guests
@@ -67,13 +73,12 @@ export default async function RoomDetailPage({ params }: Props) {
 
       <Section>
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
-          <div className="grid gap-4">
-            {room.images.map((img, i) => (
-              <div key={img} className={`overflow-hidden rounded-2xl ${i === 0 ? "col-span-full aspect-[16/10]" : "aspect-square"}`}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={img} alt={`${title} ${i + 1}`} className="h-full w-full object-cover" />
-              </div>
-            ))}
+          <div>
+            <RoomGallery
+              roomTitle={title}
+              roomImages={room.roomImages}
+              fallbackImages={room.images}
+            />
           </div>
           <div>
             <Badge variant="secondary">{room.category}</Badge>
@@ -105,8 +110,8 @@ export default async function RoomDetailPage({ params }: Props) {
                 ) : null}
                 <p className="font-heading text-card-title text-primary">
                   {formatPrice(price, room.currency)}
-                  {labels?.perNight ? (
-                    <span className="text-base font-normal text-text/50">{labels.perNight}</span>
+                  {priceUnit ? (
+                    <span className="text-base font-normal text-text/50">{priceUnit}</span>
                   ) : null}
                 </p>
                 {labels?.bookRoom ? (
