@@ -26,6 +26,10 @@ import type {
   PageKey,
 } from "@/types";
 import { normalizeHomepage } from "@/types";
+import {
+  normalizeContactInformation,
+  normalizeSiteSettings,
+} from "@/lib/content/site-settings-defaults";
 
 const HOMEPAGE_ID = "main";
 const SETTINGS_ID = "main";
@@ -183,15 +187,24 @@ export async function getHomepageContent(): Promise<HomepageContent | null> {
   return doc ? normalizeHomepage(doc) : null;
 }
 
-export async function getSiteSettings(): Promise<SiteSettings | null> {
-  return serverGetDocument<SiteSettings>(FIRESTORE_COLLECTIONS.siteSettings, SETTINGS_ID);
+export async function getSiteSettings(): Promise<SiteSettings> {
+  const settings = await serverGetDocument<SiteSettings>(
+    FIRESTORE_COLLECTIONS.siteSettings,
+    SETTINGS_ID
+  );
+  return normalizeSiteSettings(settings);
 }
 
-export async function getContactInformation(): Promise<ContactInformation | null> {
-  return serverGetDocument<ContactInformation>(
-    FIRESTORE_COLLECTIONS.contactInformation,
-    CONTACT_ID
-  );
+export async function getContactInformation(): Promise<ContactInformation> {
+  const [contact, settings] = await Promise.all([
+    serverGetDocument<ContactInformation>(
+      FIRESTORE_COLLECTIONS.contactInformation,
+      CONTACT_ID
+    ),
+    serverGetDocument<SiteSettings>(FIRESTORE_COLLECTIONS.siteSettings, SETTINGS_ID),
+  ]);
+
+  return normalizeContactInformation(contact, settings);
 }
 
 export async function getStoryContent(locale: Locale): Promise<StoryContent | null> {

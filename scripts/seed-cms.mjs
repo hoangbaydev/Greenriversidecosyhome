@@ -42,9 +42,13 @@ async function seed() {
       phone: "+84 912 345 678",
       email: "hello@greenriversidecosyhome.com",
       address: "Son River, Phong Nha, Quang Binh, Vietnam",
-      googleMapsUrl: "https://maps.google.com/?q=Phong+Nha",
+      googleMapsUrl: "https://maps.app.goo.gl/pG4zBELktoPaRYtdA",
       bookNowLabel: "Book Now",
-      socialLinks: {},
+      socialLinks: {
+        facebook: "https://www.facebook.com/greenriverguesthouse",
+        instagram: "https://www.instagram.com/greenriversidecosyhomephongnha",
+        tiktok: "https://www.tiktok.com/@greenriversidecosyhome",
+      },
       seo: {
         defaultTitle: "Green Riverside Cosy Home | Phong Nha",
         defaultDescription:
@@ -64,7 +68,7 @@ async function seed() {
       address: "Son River, Phong Nha, Quang Binh, Vietnam",
       whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "",
       googleMapsEmbed: "",
-      googleMapsUrl: "",
+      googleMapsUrl: "https://maps.app.goo.gl/pG4zBELktoPaRYtdA",
       openingHours: "Daily · 7:00 – 22:00",
       updatedAt: ts,
     },

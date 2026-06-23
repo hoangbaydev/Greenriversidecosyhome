@@ -102,7 +102,7 @@ export default function AdminCafePage() {
                 "border-b-2 px-4 py-2.5 text-sm font-semibold capitalize transition-all focus:outline-none focus:ring-0",
                 activeTab === tab
                   ? "border-primary text-primary dark:border-primary-dark"
-                  : "border-transparent text-gray-500 hover:text-gray-750 dark:text-gray-400 dark:hover:text-gray-250"
+                  : "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
               )}
             >
               {tab === "basics" ? "1. Page Basics" : tab === "features" ? "2. Cafe Features" : "3. Menu Sections"}

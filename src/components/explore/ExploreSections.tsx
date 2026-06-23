@@ -10,8 +10,6 @@ import { HomeSection } from "@/components/ui/home-section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { WhatsAppButton } from "@/components/whatsapp/WhatsAppButton";
 import { fadeUp, staggerContainer, defaultTransition, viewportOnce } from "@/lib/motion";
-import { SAMPLE_IMAGES } from "@/lib/sample-media";
-import { OptimizedImage } from "@/components/ui/optimized-image";
 
 export function ExplorePreview({
   title,
@@ -65,7 +63,7 @@ export function ExplorePreview({
               {section.ctaHref && section.ctaLabel ? (
                 <Link
                   href={localizedPath(locale, section.ctaHref)}
-                  className="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:text-primary-dark"
+                  className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-all hover:-translate-y-0.5 hover:text-primary-dark"
                 >
                   {section.ctaLabel}
                   <ArrowRight className="h-4 w-4" aria-hidden />
@@ -79,7 +77,7 @@ export function ExplorePreview({
         {viewAllLabel ? (
           <Link
             href={localizedPath(locale, "/explore-phong-nha")}
-            className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-primary/25 px-8 text-sm font-semibold text-primary transition-colors hover:bg-soft"
+            className="inline-flex min-h-12 items-center gap-2 rounded-full border border-primary/25 bg-white px-8 text-sm font-semibold text-primary shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:bg-soft hover:shadow-md"
           >
             {viewAllLabel}
             <ArrowRight className="h-4 w-4" aria-hidden />
@@ -89,7 +87,7 @@ export function ExplorePreview({
           messageType="book_tour"
           label={locale === "vi" ? "Tư vấn tour qua WhatsApp" : "Get tour advice on WhatsApp"}
           size="lg"
-          className="min-h-11 rounded-lg px-8 text-sm font-semibold"
+          className="min-h-12 px-8 text-sm font-semibold"
         />
       </div>
     </HomeSection>
@@ -145,7 +143,7 @@ export function ExplorePhongNhaContent() {
             <div className="mt-10 flex flex-wrap gap-3">
               <Link
                 href={localizedPath(locale, section.ctaHref)}
-                className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-primary px-8 text-sm font-semibold text-white transition-colors hover:bg-primary-dark"
+                className="inline-flex min-h-12 items-center gap-2 rounded-full bg-primary px-8 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(96,121,59,0.22)] transition-all hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-[0_14px_30px_rgba(96,121,59,0.28)]"
               >
                 {section.ctaLabel}
                 <ArrowRight className="h-4 w-4" aria-hidden />
@@ -154,7 +152,7 @@ export function ExplorePhongNhaContent() {
                 messageType="book_tour"
                 label={locale === "vi" ? "Chat WhatsApp" : "Chat on WhatsApp"}
                 size="lg"
-                className="min-h-11 rounded-lg px-8 text-sm font-semibold"
+                className="min-h-12 px-8 text-sm font-semibold"
               />
             </div>
           ) : null}

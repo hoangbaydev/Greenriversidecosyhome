@@ -140,7 +140,7 @@ export default function AdminHomepagePage() {
                 "border-b-2 px-4 py-2.5 text-sm font-semibold capitalize transition-all focus:outline-none focus:ring-0",
                 activeTab === tab
                   ? "border-primary text-primary dark:border-primary-dark"
-                  : "border-transparent text-gray-500 hover:text-gray-750 dark:text-gray-400 dark:hover:text-gray-250"
+                  : "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
               )}
             >
               {tab === "hero" ? "1. Hero Banner" : tab === "whychoose" ? "2. Brand Values" : tab === "featured" ? "3. Featured Slider" : "4. Section Headings"}
@@ -411,7 +411,7 @@ export default function AdminHomepagePage() {
               <div className="grid gap-6 sm:grid-cols-2">
                 {(["story", "accommodation", "tours", "cafe", "activities", "reviews", "gallery", "blog", "contact"] as const).map((key) => (
                   <Card key={key} className="border border-gray-150 p-5 dark:border-gray-800 dark:bg-gray-950/20 space-y-4">
-                    <h3 className="font-heading font-bold text-gray-850 dark:text-gray-250 capitalize">{key.replace("-", " ")} Block</h3>
+                    <h3 className="font-heading font-bold text-gray-800 dark:text-gray-200 capitalize">{key.replace("-", " ")} Block</h3>
                     <div className="grid gap-3">
                       <div>
                         <Label>Block Heading</Label>

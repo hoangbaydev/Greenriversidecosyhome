@@ -96,7 +96,7 @@ function SortableImage({
         <button
           type="button"
           onClick={onRemove}
-          className="flex h-9 w-9 items-center justify-center rounded-full bg-red-500 text-white hover:bg-red-650 hover:scale-110 active:scale-95 transition-all shadow-md"
+          className="flex h-9 w-9 items-center justify-center rounded-full bg-red-500 text-white hover:bg-red-600 hover:scale-110 active:scale-95 transition-all shadow-md"
           title="Remove image"
         >
           <X className="h-4 w-4" />
@@ -250,7 +250,7 @@ export function ImageUploader({
         }}
         onClick={() => !uploading && fileInputRef.current?.click()}
         className={cn(
-          "relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed p-10 transition-all duration-350 cursor-pointer bg-gray-50/50 dark:bg-gray-950/5",
+          "relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed p-10 transition-all duration-300 cursor-pointer bg-gray-50/50 dark:bg-gray-950/5",
           dragOver
             ? "border-primary bg-primary/10 dark:border-primary-dark scale-[1.01]"
             : "border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600 hover:bg-gray-100/50 dark:hover:bg-gray-900/10",
@@ -268,14 +268,14 @@ export function ImageUploader({
         />
         
         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-soft text-primary mb-3.5 transition-transform duration-300 group-hover:scale-110">
-          <Upload className="h-5.5 w-5.5 text-primary" />
+          <Upload className="h-5 w-5 text-primary" />
         </div>
         
         <h3 className="text-sm font-bold text-gray-800 dark:text-gray-200 text-center">
           Drag and drop images here, or click to browse
         </h3>
         
-        <p className="mt-1.5 text-xs text-gray-450 dark:text-gray-400 text-center">
+        <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400 text-center">
           Images are converted to lightweight WebP before upload. {getUploadableImageHint()}
         </p>
 
@@ -303,7 +303,7 @@ export function ImageUploader({
             {pendingUploads.map((item) => (
               <div
                 key={item.id}
-                className="flex items-center gap-3 text-xs bg-gray-50 p-2 rounded-lg dark:bg-gray-950/20 border border-gray-100 dark:border-gray-850"
+                className="flex items-center gap-3 text-xs bg-gray-50 p-2 rounded-lg dark:bg-gray-950/20 border border-gray-100 dark:border-gray-800"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img

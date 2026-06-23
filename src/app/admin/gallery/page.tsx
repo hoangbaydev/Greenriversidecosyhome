@@ -157,7 +157,7 @@ export default function AdminGalleryPage() {
             <h2 className="font-heading text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
               <Filter className="h-4.5 w-4.5 text-primary" /> Gallery Stream ({filteredItems.length})
             </h2>
-            <div className="flex flex-wrap gap-1 bg-gray-150 p-1 rounded-xl dark:bg-gray-850 self-start">
+            <div className="flex flex-wrap gap-1 bg-gray-100 p-1 rounded-xl dark:bg-gray-800 self-start">
               <button
                 onClick={() => setActiveFilter("all")}
                 className={cn(
@@ -190,7 +190,7 @@ export default function AdminGalleryPage() {
             {filteredItems.map((item) => (
               <Card
                 key={item.id}
-                className="overflow-hidden border border-gray-250 bg-white dark:border-gray-850 dark:bg-gray-900 flex flex-col justify-between group shadow-sm hover:shadow transition-all"
+                className="overflow-hidden border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 flex flex-col justify-between group shadow-sm hover:shadow transition-all"
               >
                 <div className="relative aspect-video w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
                   {/* eslint-disable-next-line @next/next/no-img-element */}

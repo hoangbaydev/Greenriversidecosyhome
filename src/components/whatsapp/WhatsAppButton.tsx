@@ -25,6 +25,17 @@ function ZaloIcon({ className }: { className?: string }) {
   );
 }
 
+function WhatsAppAppIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 32 32" aria-hidden className={className}>
+      <path
+        fill="currentColor"
+        d="M16 3.2A12.7 12.7 0 0 0 5.1 22.4L3.6 28.8l6.6-1.5A12.7 12.7 0 1 0 16 3.2Zm0 22.9c-2 0-3.9-.6-5.6-1.6l-.4-.2-3.9.9.9-3.8-.2-.4A10.4 10.4 0 1 1 16 26.1Zm5.8-7.8c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1a8.5 8.5 0 0 1-2.5-1.5 9.4 9.4 0 0 1-1.7-2.1c-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.4.3-.6.1-.2.1-.4 0-.6s-.7-1.7-1-2.3c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4s-1.2 1.2-1.2 2.8 1.2 3.2 1.4 3.5c.2.2 2.4 3.7 5.9 5.2.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4Z"
+      />
+    </svg>
+  );
+}
+
 interface WhatsAppButtonProps extends Omit<ButtonProps, "onClick"> {
   messageType?: WhatsAppMessageType;
   customMessage?: string;
@@ -160,16 +171,18 @@ export function WhatsAppFloatingButton() {
   if (pathname.startsWith("/admin") || !phoneNumber) return null;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3.5">
+    <div
+      className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-3 z-50 flex flex-col items-center gap-3 sm:bottom-6 sm:right-6"
+    >
       {/* Zalo Floating Button */}
       <a
         href={getZaloUrl(phoneNumber)}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat on Zalo"
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-[#0068FF] text-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0068FF] focus-visible:ring-offset-2 animate-pulse-zalo"
+        className="animate-pulse-zalo flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0068FF] text-white shadow-[0_10px_28px_rgba(0,104,255,0.28)] ring-1 ring-white/40 transition-all duration-300 hover:scale-110 hover:shadow-xl active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0068FF] focus-visible:ring-offset-2 sm:h-14 sm:w-14"
       >
-        <span className="text-sm font-black tracking-tighter uppercase">Zalo</span>
+        <span className="text-xs font-black tracking-tighter uppercase sm:text-sm">Zalo</span>
       </a>
 
       {/* WhatsApp Floating Button */}
@@ -178,11 +191,10 @@ export function WhatsAppFloatingButton() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat on WhatsApp"
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 animate-pulse-whatsapp"
+        className="animate-pulse-whatsapp flex h-12 w-12 items-center justify-center rounded-2xl bg-[#25D366] text-white shadow-[0_10px_28px_rgba(37,211,102,0.28)] ring-1 ring-white/40 transition-all duration-300 hover:scale-110 hover:shadow-xl active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 sm:h-14 sm:w-14"
       >
-        <MessageCircle className="h-7 w-7" />
+        <WhatsAppAppIcon className="h-8 w-8 sm:h-9 sm:w-9" />
       </a>
     </div>
   );
 }
-

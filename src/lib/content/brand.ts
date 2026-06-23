@@ -234,7 +234,7 @@ export function getExploreSections(locale: Locale): ExploreSection[] {
     },
     {
       id: "bong-lai",
-      title: vi ? "Thung lũng Bong Lai" : "Bong Lai Valley",
+      title: vi ? "Tour Xe Đạp Đồng Quê" : "Countryside Cycling Tours",
       subtitle: vi ? "Đồng quê, trang trại và trải nghiệm địa phương" : "Countryside, farms, and local experiences",
       body: vi
         ? "Bong Lai Valley nằm cách trung tâm Phong Nha khoảng 10-15 km, nổi tiếng với đồng lúa, dòng sông, trang trại và những trải nghiệm vui, gần gũi với đời sống nông thôn.\n\nBạn có thể tự đạp xe, đi xe máy hoặc tham gia tour xe đạp và lớp nấu ăn cùng Green Riverside để tiết kiệm thời gian, đi đúng tuyến và hiểu câu chuyện địa phương phía sau mỗi điểm dừng."
@@ -282,7 +282,7 @@ export function getExploreSections(locale: Locale): ExploreSection[] {
     },
     {
       id: "motorbike-adventures",
-      title: vi ? "Motorbike Adventures" : "Motorbike Adventures",
+      title: vi ? "Tour Xe Máy Vòng Quanh" : "Motorbike Loop Tours",
       subtitle: vi ? "Tự do khám phá các cung đường Phong Nha" : "Scenic loop routes through Phong Nha",
       body: vi
         ? "Nếu bạn muốn đi xa hơn tour xe đạp, xe máy là cách linh hoạt để khám phá núi đá vôi, đường làng, thung lũng ẩn và các cung đường trong Vườn quốc gia Phong Nha - Kẻ Bàng.\n\nBạn có thể tự lái nếu có kinh nghiệm, hoặc chọn Easy Rider/xe riêng để an toàn và thoải mái hơn. Dịch vụ gọi xe như Grab rất hạn chế ở khu vực sâu trong vườn quốc gia, nên nên sắp xếp trước."
@@ -324,7 +324,7 @@ export function getExploreSections(locale: Locale): ExploreSection[] {
     },
     {
       id: "classic-cave-tours",
-      title: vi ? "Classic Cave Tours" : "Classic Cave Tours",
+      title: vi ? "Tour Hang Động Kinh Điển" : "Classic Cave Tours",
       subtitle: vi ? "Nhẹ nhàng, dễ đi và phù hợp lần đầu đến Phong Nha" : "Easy, relaxed, must-see cave experiences",
       body: vi
         ? "Classic Cave Tours phù hợp nếu bạn có ít thời gian và muốn thăm các hang nổi tiếng như Phong Nha Cave, Paradise Cave, Dark Cave hoặc các combo nửa ngày/cả ngày mà không cần tự lên kế hoạch phức tạp.\n\nKhách Green Riverside có thể nhận hỗ trợ chọn tour, đặt nhanh và kết hợp shuttle miễn phí đến Duck Tang Farm khi áp dụng."
@@ -334,7 +334,7 @@ export function getExploreSections(locale: Locale): ExploreSection[] {
     },
     {
       id: "adventure-cave-tours",
-      title: vi ? "Adventure Cave Tours" : "Adventure Cave Tours",
+      title: vi ? "Tour Hang Động Mạo Hiểm" : "Adventure Cave Tours",
       subtitle: vi ? "Trekking rừng, bơi hang và cắm trại qua đêm" : "Jungle trekking, cave swimming, and overnight expeditions",
       body: vi
         ? "Phong Nha là điểm đến tuyệt vời cho người thích phiêu lưu. Các tour có thể bao gồm trekking rừng nguyên sinh, lội suối, thăm bản làng xa, leo núi đá vôi, khám phá hang, bơi trong hồ hang trong xanh, chèo SUP trong hang và cắm trại qua đêm.\n\nCó nhiều cấp độ từ tour một ngày dễ đi đến hành trình 2, 3, 4 hoặc 5 ngày. Cô Linh sẽ tư vấn tour phù hợp với thời gian, thể lực và ngân sách của bạn."

@@ -34,13 +34,13 @@ export function SectionActions({
           messageType={primaryMessageType}
           label={primaryLabel}
           size="lg"
-          className="min-h-11 rounded-lg px-8"
+          className="min-h-12 px-8"
         />
       ) : null}
       {secondaryLabel && secondaryHref ? (
         <Link
           href={secondaryHref}
-          className="inline-flex min-h-11 items-center justify-center rounded-lg border border-primary/25 px-8 text-sm font-semibold text-primary transition-colors hover:border-primary hover:bg-soft"
+          className="inline-flex min-h-12 items-center justify-center rounded-full border border-primary/25 bg-white px-8 text-sm font-semibold text-primary shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:bg-soft hover:shadow-md"
         >
           {secondaryLabel}
         </Link>

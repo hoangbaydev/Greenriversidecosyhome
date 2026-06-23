@@ -136,7 +136,7 @@ export default function AdminBlogPage() {
                   "border-b-2 px-4 py-2.5 text-sm font-semibold capitalize transition-all focus:outline-none focus:ring-0",
                   activeTab === tab
                     ? "border-primary text-primary dark:border-primary-dark"
-                    : "border-transparent text-gray-500 hover:text-gray-750 dark:text-gray-400 dark:hover:text-gray-250"
+                    : "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                 )}
               >
                 {tab === "basics" ? "1. Post Basics" : tab === "content" ? "2. Rich Content" : tab === "media" ? "3. Cover Image" : "4. SEO Options"}
@@ -311,7 +311,7 @@ export default function AdminBlogPage() {
                 {/* Google Snippet Simulator */}
                 <div className="border-t border-gray-150 pt-5 dark:border-gray-800">
                   <Label className="text-sm font-semibold text-gray-500">Google Search Result Mock Preview</Label>
-                  <div className="mt-2.5 rounded-xl border border-gray-200 bg-gray-50 p-5 dark:border-gray-850 dark:bg-gray-950/40">
+                  <div className="mt-2.5 rounded-xl border border-gray-200 bg-gray-50 p-5 dark:border-gray-800 dark:bg-gray-950/40">
                     <p className="text-xs text-gray-400 dark:text-gray-500 flex items-center gap-1.5">
                       <Globe className="h-3 w-3" /> https://greenriversidecosyhome.com &gt; blog &gt; {editing.slug || "post-slug"}
                     </p>
@@ -384,7 +384,7 @@ export default function AdminBlogPage() {
                   <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 line-clamp-2">{post.excerpt}</p>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-100 pt-4 dark:border-gray-800">
-                  <span className="text-xs text-gray-450 dark:text-gray-450 font-semibold">By {post.author || "Admin"}</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400 font-semibold">By {post.author || "Admin"}</span>
                   <div className="flex gap-1">
                     <Button variant="ghost" size="icon" onClick={() => { setEditing(post); setActiveTab("basics"); }} title="Edit Post">
                       <Pencil className="h-4 w-4 text-gray-600 dark:text-gray-400" />

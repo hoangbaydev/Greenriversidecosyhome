@@ -47,7 +47,7 @@
     "tours": "Tour",
     "activities": "Hoạt động",
     "blogPosts": "Bài viết",
-    "galleryImages": "Ảnh gallery"
+    "galleryImages": "Ảnh thư viện"
   },
   "common": {
     "save": "Lưu",
@@ -129,7 +129,9 @@
     "settings": { "title": "Cài đặt", "save": "Lưu cài đặt" },
     "story": { "title": "Câu chuyện", "save": "Lưu câu chuyện" },
     "cafe": { "title": "Ăn uống", "save": "Lưu nội dung quán" },
-    "faq": { "title": "FAQ", "save": "Lưu FAQ",
+    "faq": {
+      "title": "FAQ",
+      "save": "Lưu FAQ",
       "sectionHeading": "Cài đặt mục",
       "sectionTitle": "Tiêu đề mục",
       "sectionSubtitle": "Mô tả phụ",

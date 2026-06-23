@@ -144,7 +144,7 @@ export default function AdminFaqPage() {
           </h1>
           <p className="mt-1 text-sm text-gray-500">Configure page descriptions and localized FAQs accordion items.</p>
         </div>
-        <div className="flex bg-gray-100 p-1 rounded-xl dark:bg-gray-850 self-start sm:self-center">
+        <div className="flex bg-gray-100 p-1 rounded-xl dark:bg-gray-800 self-start sm:self-center">
           {LOCALES.map((l) => (
             <button
               key={l}
@@ -173,7 +173,7 @@ export default function AdminFaqPage() {
             <h2 className="font-heading text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-primary" /> {faqDict.sectionHeading}
             </h2>
-            <p className="mt-1.5 text-xs text-gray-450 leading-relaxed mb-4">Update the titles and intro paragraphs shown at the top of the public FAQ tab.</p>
+            <p className="mt-1.5 text-xs text-gray-500 leading-relaxed mb-4">Update the titles and intro paragraphs shown at the top of the public FAQ tab.</p>
             <div className="space-y-4">
               <div>
                 <Label htmlFor="faq-sec-title">{faqDict.sectionTitle}</Label>
@@ -307,7 +307,7 @@ export default function AdminFaqPage() {
                 </div>
                 <div className="flex shrink-0 gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
                   <Button variant="ghost" size="icon" onClick={() => setEditing(item)} title="Edit FAQ">
-                    <Pencil className="h-4 w-4 text-gray-600 dark:text-gray-450" />
+                    <Pencil className="h-4 w-4 text-gray-600 dark:text-gray-400" />
                   </Button>
                   <Button variant="ghost" size="icon" onClick={() => handleDelete(item.id)} title="Delete FAQ">
                     <Trash2 className="h-4 w-4 text-red-500" />

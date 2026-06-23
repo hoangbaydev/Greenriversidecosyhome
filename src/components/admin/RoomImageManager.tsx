@@ -172,7 +172,7 @@ function SortableImageItem({
           <button
             type="button"
             onClick={onRemove}
-            className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-500/90 hover:bg-red-650 hover:scale-105 active:scale-95 text-white transition-all shadow-sm"
+            className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-500/90 hover:bg-red-600 hover:scale-105 active:scale-95 text-white transition-all shadow-sm"
             title="Delete Image"
           >
             <Trash2 className="h-4 w-4" />
@@ -182,7 +182,7 @@ function SortableImageItem({
         <div className="flex flex-col gap-1.5">
           {/* SEO Text Details Indicator */}
           {image.altText && (
-            <p className="text-[10px] font-semibold text-gray-200 line-clamp-1 bg-black/45 px-2 py-1 rounded-lg backdrop-blur-xs">
+            <p className="text-[10px] font-semibold text-gray-200 line-clamp-1 bg-black/45 px-2 py-1 rounded-lg backdrop-blur-sm">
               Alt: {image.altText}
             </p>
           )}
@@ -293,50 +293,44 @@ export function RoomImageManager({
       }));
       setPendingUploads(initialPendings);
 
-      const newlyUploaded: RoomImage[] = [];
-      let savedBytes = 0;
-
       try {
-        for (let i = 0; i < toUpload.length; i++) {
-          const file = toUpload[i];
-          const pendingId = initialPendings[i].id;
-          
-          // Check if this should be the cover image
-          // Cover is true if there are no existing images and this is the first image of the batch
-          const hasCover = orderedRoomImages.some((img) => img.isCover);
-          const isCover = !hasCover && i === 0;
+        const hasCover = orderedRoomImages.some((img) => img.isCover);
+        const uploadedItems = await Promise.all(
+          toUpload.map(async (file, i) => {
+            const pendingId = initialPendings[i].id;
+            const isCover = !hasCover && i === 0;
+            const result = await uploadRoomImage(roomId, isCover, file, (progress) => {
+              setPendingUploads((prev) =>
+                prev.map((item) =>
+                  item.id === pendingId ? { ...item, progress } : item
+                )
+              );
+            });
 
-          // Perform compression and upload
-          const result = await uploadRoomImage(roomId, isCover, file, (progress) => {
-            setPendingUploads((prev) =>
-              prev.map((item) =>
-                item.id === pendingId ? { ...item, progress } : item
-              )
-            );
-          });
-          savedBytes += Math.max(0, result.originalSize - result.uploadedSize);
+            const imageObj: RoomImage = {
+              id: `${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
+              imageUrl: result.url,
+              imagePath: result.path,
+              roomId,
+              sortOrder: orderedRoomImages.length + i,
+              isCover,
+              altText: `${roomTitle} at Green Riverside Cosy Home`,
+              title: roomTitle,
+              description: `${roomTitle} accommodation preview`,
+              uploadedAt: new Date().toISOString(),
+            };
 
-          // Create RoomImage object
-          const imageObj: RoomImage = {
-            id: `${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
-            imageUrl: result.url,
-            imagePath: result.path,
-            roomId,
-            sortOrder: orderedRoomImages.length + newlyUploaded.length,
-            isCover,
-            altText: `${roomTitle} at Green Riverside Cosy Home`,
-            title: roomTitle,
-            description: `${roomTitle} accommodation preview`,
-            uploadedAt: new Date().toISOString(),
-          };
+            return {
+              image: imageObj,
+              savedBytes: Math.max(0, result.originalSize - result.uploadedSize),
+            };
+          })
+        );
 
-          newlyUploaded.push(imageObj);
-        }
-
-        // Add uploaded to current images list
+        const newlyUploaded = uploadedItems.map((item) => item.image);
+        const savedBytes = uploadedItems.reduce((total, item) => total + item.savedBytes, 0);
         const updatedImages = normalizeCoverFirst([...orderedRoomImages, ...newlyUploaded]);
-        
-        // Finalize state
+
         onChange(updatedImages);
         const savedText = savedBytes > 0 ? ` Saved about ${formatBytes(savedBytes)}.` : "";
         toast.success(`Successfully optimized and uploaded ${newlyUploaded.length} images.${savedText}`);
@@ -534,7 +528,7 @@ export function RoomImageManager({
         }}
         onClick={() => !uploading && fileInputRef.current?.click()}
         className={cn(
-          "relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed p-10 transition-all duration-350 cursor-pointer bg-gray-50/50 dark:bg-gray-950/5",
+          "relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed p-10 transition-all duration-300 cursor-pointer bg-gray-50/50 dark:bg-gray-950/5",
           dragOver
             ? "border-primary bg-primary/10 dark:border-primary-dark scale-[1.01]"
             : "border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600 hover:bg-gray-100/50 dark:hover:bg-gray-900/10",
@@ -542,13 +536,13 @@ export function RoomImageManager({
         )}
       >
         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-soft text-primary mb-3.5 transition-transform duration-300 group-hover:scale-110">
-          <Upload className="h-5.5 w-5.5 text-primary" />
+          <Upload className="h-5 w-5 text-primary" />
         </div>
         <h3 className="text-sm font-bold text-gray-800 dark:text-gray-200 text-center">
           Drag and drop room gallery images here
         </h3>
-        <p className="text-xs text-gray-450 dark:text-gray-400 text-center mt-1.5 max-w-sm leading-relaxed">
-          JPG, PNG, WebP, or AVIF. Photos are resized to 1800px max and converted to lightweight WebP before upload.
+        <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-1.5 max-w-sm leading-relaxed">
+          JPG, PNG, WebP, or AVIF. Photos are resized up to 1920px and converted to high-quality lightweight WebP before upload.
         </p>
 
         <button
@@ -584,7 +578,7 @@ export function RoomImageManager({
             {pendingUploads.map((item) => (
               <div
                 key={item.id}
-                className="flex items-center gap-3 text-xs bg-gray-50 p-2 rounded-lg dark:bg-gray-950/20 border border-gray-100 dark:border-gray-850"
+                className="flex items-center gap-3 text-xs bg-gray-50 p-2 rounded-lg dark:bg-gray-950/20 border border-gray-100 dark:border-gray-800"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -658,7 +652,7 @@ export function RoomImageManager({
           </DndContext>
         </div>
       ) : (
-        <div className="rounded-xl border border-dashed border-gray-200 p-8 text-center text-sm text-gray-450 dark:border-gray-800">
+        <div className="rounded-xl border border-dashed border-gray-200 p-8 text-center text-sm text-gray-500 dark:border-gray-800">
           No images uploaded yet. Fill in basics tab first, then upload room photos here.
         </div>
       )}
@@ -680,7 +674,7 @@ export function RoomImageManager({
               </button>
             </div>
 
-            <div className="mt-4 flex gap-4 bg-gray-50 dark:bg-gray-950/30 p-3 rounded-xl border border-gray-100 dark:border-gray-850">
+            <div className="mt-4 flex gap-4 bg-gray-50 dark:bg-gray-950/30 p-3 rounded-xl border border-gray-100 dark:border-gray-800">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={seoEditImage.imageUrl}

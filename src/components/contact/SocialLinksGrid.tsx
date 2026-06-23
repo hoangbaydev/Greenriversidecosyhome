@@ -107,10 +107,12 @@ export function SocialLinksGrid({
           const isLink = !!card.href;
           const content = (
             <>
-              <Icon className="h-5 w-5 shrink-0 text-primary mt-0.5" aria-hidden />
+              <span className="icon-badge icon-badge--md shrink-0">
+                <Icon className="h-5 w-5" aria-hidden />
+              </span>
               <div className="min-w-0">
-                <p className="text-xs font-semibold uppercase tracking-wider text-text-muted">{card.label}</p>
-                <p className="mt-1.5 text-[13px] sm:text-sm font-bold text-text leading-snug break-words">
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-text-muted">{card.label}</p>
+                <p className="mt-1.5 break-words text-sm font-semibold leading-snug text-text">
                   {renderValue(card.value, card.key)}
                 </p>
               </div>
@@ -124,7 +126,7 @@ export function SocialLinksGrid({
                 href={card.href}
                 target={card.key === "address" ? "_blank" : undefined}
                 rel={card.key === "address" ? "noopener noreferrer" : undefined}
-                className="flex items-start gap-4 rounded-2xl border border-border bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/20 hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
+                className="social-link-card"
               >
                 {content}
               </a>
@@ -134,7 +136,7 @@ export function SocialLinksGrid({
           return (
             <div
               key={card.key}
-              className="flex items-start gap-4 rounded-2xl border border-border bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900"
+              className="social-link-card"
             >
               {content}
             </div>
@@ -143,7 +145,7 @@ export function SocialLinksGrid({
       </div>
 
       <div>
-        <p className="text-xs font-bold uppercase tracking-wider text-text-muted">{labels.followUs}</p>
+        <p className="text-xs font-bold uppercase tracking-[0.12em] text-text-muted">{labels.followUs}</p>
         <div className="mt-4 flex flex-wrap gap-3">
           {PLATFORMS.map((key) => {
             const href = social[key];

@@ -222,7 +222,7 @@ export default function AdminRoomsPage() {
                   "border-b-2 px-3 py-2 text-xs font-bold uppercase tracking-wide transition-all focus:outline-none focus:ring-0",
                   activeTab === tab
                     ? "border-primary text-primary dark:border-primary-dark"
-                    : "border-transparent text-gray-500 hover:text-gray-750 dark:text-gray-400 dark:hover:text-gray-250"
+                    : "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                 )}
               >
                 {tab === "basics" ? roomDict.tabs.basics : tab === "amenities" ? roomDict.tabs.amenities : tab === "media" ? roomDict.tabs.media : roomDict.tabs.seo}
@@ -384,7 +384,7 @@ export default function AdminRoomsPage() {
             {activeTab === "media" && (
               <div>
                 <Label className="text-base font-bold text-gray-800 dark:text-gray-200">Room Media Gallery</Label>
-                <p className="text-xs text-gray-450 mb-4">Manage room visuals: upload high-quality room photos, drag to set order, define a cover image, and optimize search visibility with SEO tags.</p>
+                <p className="mb-4 text-xs text-gray-500">Upload nhiều ảnh cùng lúc, tự nén WebP chất lượng cao, kéo để sắp xếp và chọn ảnh cover hiển thị đầu tiên.</p>
                 <RoomImageManager
                   roomId={roomStorageId(editing)}
                   roomTitle={editing.title || ""}
@@ -449,7 +449,7 @@ export default function AdminRoomsPage() {
                 {/* Google Snippet Simulator */}
                 <div className="border-t border-gray-150 pt-5 dark:border-gray-800">
                   <Label className="text-sm font-semibold text-gray-500">Google Search Result Mock Preview</Label>
-                  <div className="mt-2.5 rounded-xl border border-gray-200 bg-gray-50 p-5 dark:border-gray-850 dark:bg-gray-950/40">
+                  <div className="mt-2.5 rounded-xl border border-gray-200 bg-gray-50 p-5 dark:border-gray-800 dark:bg-gray-950/40">
                     <p className="text-xs text-gray-400 dark:text-gray-500 flex items-center gap-1.5">
                       <Globe className="h-3 w-3" /> https://greenriversidecosyhome.com &gt; stay &gt; {editing.slug || "deluxe-room"}
                     </p>

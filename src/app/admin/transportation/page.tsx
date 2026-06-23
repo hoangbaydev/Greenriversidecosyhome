@@ -110,7 +110,7 @@ export default function AdminTransportationPage() {
       </div>
 
       {editing && (
-        <Card className="border border-primary/20 bg-primary/5 p-6 dark:border-gray-850 dark:bg-gray-900 overflow-hidden">
+        <Card className="border border-primary/20 bg-primary/5 p-6 dark:border-gray-800 dark:bg-gray-900 overflow-hidden">
           <h2 className="font-heading text-lg font-bold text-gray-900 dark:text-white mb-4">
             {editing.id ? "Edit Transportation Options" : "Add New Transport Route"}
           </h2>
@@ -236,7 +236,7 @@ export default function AdminTransportationPage() {
                   <ArrowRight className="h-3.5 w-3.5 text-primary shrink-0" /> Route: {item.route || "No Route Specified"}
                 </div>
 
-                <p className="text-sm text-gray-500 dark:text-gray-450 line-clamp-2 leading-relaxed">{item.description}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed">{item.description}</p>
               </div>
 
               <div className="mt-5 border-t border-gray-100 pt-4 flex items-center justify-between dark:border-gray-800">

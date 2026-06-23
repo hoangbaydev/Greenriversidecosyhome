@@ -77,7 +77,7 @@ export function SiteBrand({
         <span className="min-w-0 leading-tight">
           <span
             className={cn(
-              "block truncate font-heading text-base sm:text-lg lg:text-xl font-bold text-primary-dark tracking-normal",
+              "brand-title block truncate font-heading text-base font-semibold tracking-normal text-primary-dark sm:text-lg lg:text-xl",
               nameClassName
             )}
           >
@@ -86,7 +86,7 @@ export function SiteBrand({
           {secondLine ? (
             <span
               className={cn(
-                "mt-1.5 block truncate text-[13px] sm:text-sm font-medium text-text-muted/65 tracking-normal",
+                "brand-subtitle mt-1 block truncate text-[12px] font-medium tracking-normal text-text-muted/70 sm:text-[13px]",
                 subtitleClassName
               )}
             >

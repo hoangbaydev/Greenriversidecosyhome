@@ -96,7 +96,7 @@ export default function AdminReviewsPage() {
       </div>
 
       {editing && (
-        <Card className="border border-primary/20 bg-primary/5 p-6 dark:border-gray-850 dark:bg-gray-900 max-w-2xl">
+        <Card className="border border-primary/20 bg-primary/5 p-6 dark:border-gray-800 dark:bg-gray-900 max-w-2xl">
           <h2 className="font-heading text-lg font-bold text-gray-900 dark:text-white mb-4">
             {editing.id ? "Edit Review Details" : "Create New Review Entry"}
           </h2>

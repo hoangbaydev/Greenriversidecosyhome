@@ -60,18 +60,18 @@ const INFO_ICONS: Record<string, ElementType> = {
 };
 
 const SECTION_ACCENTS = [
-  "border-rose-500 bg-rose-50/50 dark:bg-rose-950/20",
-  "border-emerald-500 bg-emerald-50/50 dark:bg-emerald-950/20",
-  "border-sky-500 bg-sky-50/50 dark:bg-sky-950/20",
-  "border-amber-500 bg-amber-50/50 dark:bg-amber-950/20",
+  "border-primary/20 bg-white",
+  "border-primary/20 bg-[#f8faf3]",
+  "border-primary/20 bg-white",
+  "border-primary/20 bg-[#fffaf4]",
 ];
 
 const ICON_TONES = [
-  "bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-300",
-  "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300",
-  "bg-sky-100 text-sky-700 dark:bg-sky-950 dark:text-sky-300",
-  "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300",
-  "bg-violet-100 text-violet-700 dark:bg-violet-950 dark:text-violet-300",
+  "bg-soft text-primary",
+  "bg-[#fff4e8] text-accent",
+  "bg-[#eef5ea] text-primary-dark",
+  "bg-white text-primary",
+  "bg-[#f5f7ef] text-primary",
 ];
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
@@ -108,20 +108,21 @@ export default async function UsefulInfoPage({
 
       <Section>
         <PageIntro>{p.intro}</PageIntro>
-        <div className="space-y-12">
+        <div className="space-y-14">
           {content.sections.map((section, sectionIndex) => (
-            <div key={section.id} className="space-y-5">
+            <div key={section.id} id={section.id} className="scroll-mt-28 space-y-6">
               <div
-                className={`border-l-4 px-5 py-4 ${SECTION_ACCENTS[sectionIndex % SECTION_ACCENTS.length]}`}
+                className={`rounded-[var(--radius-card)] border px-5 py-5 shadow-[var(--shadow-sm)] sm:px-6 ${SECTION_ACCENTS[sectionIndex % SECTION_ACCENTS.length]}`}
               >
                 <SectionHeader
                   title={section.title}
                   subtitle={section.subtitle}
                   centered={false}
                   compact
+                  className="!mb-0"
                 />
               </div>
-              <div className="grid gap-4 md:grid-cols-2">
+              <div className="grid gap-5 md:grid-cols-2">
                 {section.items.map((item, itemIndex) => {
                   const Icon = INFO_ICONS[item.icon] ?? CircleHelp;
                   const tone = ICON_TONES[(sectionIndex + itemIndex) % ICON_TONES.length];
@@ -129,11 +130,11 @@ export default async function UsefulInfoPage({
                   return (
                     <Card key={item.id} className="h-full">
                       <CardHeader className="flex-row items-start gap-4">
-                        <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ${tone}`}>
+                        <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-[var(--radius-card)] ring-1 ring-inset ring-primary/10 ${tone}`}>
                           <Icon className="h-5 w-5" aria-hidden />
                         </span>
-                        <div>
-                          <CardTitle className="text-base leading-snug">{item.title}</CardTitle>
+                        <div className="min-w-0">
+                          <CardTitle className="text-[1.05rem] leading-snug">{item.title}</CardTitle>
                           <CardDescription className="mt-2 leading-relaxed">
                             {item.description}
                           </CardDescription>

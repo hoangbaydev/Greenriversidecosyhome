@@ -117,13 +117,13 @@ export function TourHero({
               customMessage={`Hi! I'd like to book the ${tourTitle} tour.`}
               label={labels.bookWhatsApp}
               size="lg"
-              className="min-h-11 rounded-lg px-8 text-sm font-semibold"
+              className="min-h-12 px-8 text-sm font-semibold"
             />
             {experience.timeline.length > 0 ? (
               <button
                 type="button"
                 onClick={scrollToItinerary}
-                className="inline-flex min-h-11 items-center justify-center rounded-lg border border-white/50 bg-transparent px-8 text-sm font-semibold text-white transition-colors hover:bg-white/12"
+                className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/55 bg-transparent px-8 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-white/12"
               >
                 {labels.viewItinerary}
               </button>

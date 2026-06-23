@@ -54,7 +54,7 @@ function displayPhone(value: string) {
 
 function FooterTitle({ children }: { children: ReactNode }) {
   return (
-    <h3 className="text-sm font-semibold uppercase tracking-[0.15em] text-white/45">
+    <h3 className="text-xs font-semibold uppercase tracking-[0.14em] text-white/48">
       {children}
     </h3>
   );
@@ -64,7 +64,7 @@ function FooterLink({ href, children }: { href: string; children: ReactNode }) {
   return (
     <Link
       href={href}
-      className="block text-sm leading-6 text-white/68 transition-colors hover:text-white focus-visible:outline-none focus-visible:underline"
+      className="block text-sm leading-7 text-white/70 transition-colors hover:text-white focus-visible:outline-none focus-visible:underline"
     >
       {children}
     </Link>
@@ -99,8 +99,8 @@ export function Footer() {
 
   return (
     <footer className="bg-primary-dark text-white" role="contentinfo">
-      <Container size="large" className="py-10 md:py-12">
-        <div className="grid gap-8 md:grid-cols-[1.4fr_1fr_1fr] lg:grid-cols-[1.7fr_0.85fr_0.85fr_1.2fr] lg:gap-10">
+      <Container size="large" className="py-12 md:py-14">
+        <div className="grid gap-9 md:grid-cols-[1.4fr_1fr_1fr] lg:grid-cols-[1.7fr_0.85fr_0.85fr_1.2fr] lg:gap-12">
           <div>
             <SiteBrand
               siteName={siteName}
@@ -111,11 +111,11 @@ export function Footer() {
               nameClassName="!text-white"
               subtitleClassName="!text-white/50"
             />
-            <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/55">
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/58">
               {tagline}
             </p>
             {socialLinks.length > 0 ? (
-              <div className="mt-5 flex flex-wrap gap-2">
+              <div className="mt-6 flex flex-wrap gap-2">
                 {socialLinks.map(({ key, url }) => (
                   <a
                     key={key}
@@ -123,7 +123,7 @@ export function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={key}
-                    className="flex h-8 w-8 items-center justify-center rounded-md border border-white/10 text-white/65 transition-colors hover:border-white/25 hover:bg-white/5 hover:text-white"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white/68 transition-all hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/8 hover:text-white"
                   >
                     <SocialIcon platform={key} className="h-3.5 w-3.5" />
                   </a>
@@ -134,7 +134,7 @@ export function Footer() {
 
           <div>
             <FooterTitle>{dict.nav.stay}</FooterTitle>
-            <ul className="mt-3 space-y-1.5">
+            <ul className="mt-4 space-y-1.5">
               {STAY_LINKS.map((item) => (
                 <li key={item.href}>
                   <FooterLink href={localizedPath(locale, item.href)}>
@@ -151,7 +151,7 @@ export function Footer() {
 
           <div>
             <FooterTitle>{dict.nav.explore}</FooterTitle>
-            <ul className="mt-3 space-y-1.5">
+            <ul className="mt-4 space-y-1.5">
               {EXPERIENCE_LINKS.map((item) => (
                 <li key={item.href}>
                   <FooterLink href={localizedPath(locale, item.href)}>
@@ -164,7 +164,7 @@ export function Footer() {
 
           <div>
             <FooterTitle>{dict.footer.contactUs}</FooterTitle>
-            <ul className="mt-3 space-y-1.5 text-sm leading-6 text-white/68">
+            <ul className="mt-4 space-y-1.5 text-sm leading-7 text-white/70">
               {showSalesLine ? (
                 <li>
                   <WhatsAppLink messageType="general" className="hover:text-white">
@@ -198,14 +198,6 @@ export function Footer() {
                 </li>
               ) : null}
             </ul>
-            {salesLine ? (
-              <WhatsAppLink
-                messageType="book_room"
-                className="mt-4 inline-flex min-h-11 items-center justify-center rounded-md bg-white px-5 text-base font-semibold text-primary-dark transition-colors hover:bg-white/90 shadow-xs"
-              >
-                {dict.nav.bookNow}
-              </WhatsAppLink>
-            ) : null}
           </div>
         </div>
       </Container>

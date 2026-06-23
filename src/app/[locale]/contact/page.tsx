@@ -111,7 +111,7 @@ export default async function ContactPage({
 
           <div>
             {contact.googleMapsEmbed ? (
-              <div className="overflow-hidden rounded-2xl border border-border shadow-sm">
+              <div className="overflow-hidden rounded-[var(--radius-card)] border border-border shadow-[var(--shadow-soft)]">
                 <iframe
                   src={contact.googleMapsEmbed}
                   width="100%"
@@ -124,7 +124,7 @@ export default async function ContactPage({
                 />
               </div>
             ) : contact.googleMapsUrl ? (
-              <div className="flex h-[360px] items-center justify-center rounded-2xl bg-soft">
+              <div className="flex h-[360px] items-center justify-center rounded-[var(--radius-card)] bg-soft shadow-[var(--shadow-sm)]">
                 <a
                   href={contact.googleMapsUrl}
                   target="_blank"

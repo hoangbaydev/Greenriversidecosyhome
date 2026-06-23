@@ -25,8 +25,12 @@ const emptySettings: SiteSettings = {
   phone: "",
   email: "",
   address: "",
-  googleMapsUrl: "",
-  socialLinks: {},
+  googleMapsUrl: "https://maps.app.goo.gl/pG4zBELktoPaRYtdA",
+  socialLinks: {
+    facebook: "https://www.facebook.com/greenriverguesthouse",
+    instagram: "https://www.instagram.com/greenriversidecosyhomephongnha",
+    tiktok: "https://www.tiktok.com/@greenriversidecosyhome",
+  },
   seo: { defaultTitle: "", defaultDescription: "", ogImage: "" },
 };
 
@@ -36,7 +40,7 @@ const emptyContact: ContactInformation = {
   address: "",
   whatsapp: "",
   googleMapsEmbed: "",
-  googleMapsUrl: "",
+  googleMapsUrl: "https://maps.app.goo.gl/pG4zBELktoPaRYtdA",
   openingHours: "",
 };
 
@@ -113,7 +117,7 @@ export default function AdminSettingsPage() {
                 "border-b-2 px-4 py-2.5 text-sm font-semibold capitalize transition-all focus:outline-none focus:ring-0",
                 activeTab === tab
                   ? "border-primary text-primary dark:border-primary-dark"
-                  : "border-transparent text-gray-500 hover:text-gray-750 dark:text-gray-400 dark:hover:text-gray-250"
+                  : "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
               )}
             >
               {tab === "contact" ? "1. Contact Information" : tab === "social" ? "2. Social Media Accounts" : "3. Brand & SEO Fallbacks"}

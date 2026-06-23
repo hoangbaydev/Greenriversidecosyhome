@@ -88,7 +88,7 @@ export default function AdminStoryPage() {
           <h1 className="font-heading text-3xl font-bold text-gray-900 dark:text-white">Our Story & History</h1>
           <p className="mt-1 text-sm text-gray-500">Configure public editorial narratives, founder stories, and the chronological timeline.</p>
         </div>
-        <div className="flex bg-gray-100 p-1 rounded-xl dark:bg-gray-850 self-start sm:self-center">
+        <div className="flex bg-gray-100 p-1 rounded-xl dark:bg-gray-800 self-start sm:self-center">
           {LOCALES.map((l) => (
             <button
               key={l}
@@ -118,7 +118,7 @@ export default function AdminStoryPage() {
                 "border-b-2 px-4 py-2.5 text-sm font-semibold capitalize transition-all focus:outline-none focus:ring-0",
                 activeTab === tab
                   ? "border-primary text-primary dark:border-primary-dark"
-                  : "border-transparent text-gray-500 hover:text-gray-750 dark:text-gray-400 dark:hover:text-gray-250"
+                  : "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
               )}
             >
               {tab === "hero" ? "1. Hero & Preview" : tab === "narratives" ? "2. Chapters & Narratives" : "3. Chronological Timeline"}
@@ -239,7 +239,7 @@ export default function AdminStoryPage() {
                 ["lifeAtGreenRiverside", "Life at Green Riverside"],
               ].map(([key, label]) => (
                 <Card key={key} className="border border-gray-150 p-5 dark:border-gray-800 dark:bg-gray-950/20 space-y-4">
-                  <h3 className="font-heading font-bold text-gray-850 dark:text-gray-250">{label}</h3>
+                  <h3 className="font-heading font-bold text-gray-800 dark:text-gray-200">{label}</h3>
                   <div className="grid gap-4">
                     <div>
                       <Label htmlFor={`title-${key}`}>Chapter Heading</Label>

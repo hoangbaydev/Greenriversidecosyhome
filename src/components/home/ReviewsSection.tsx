@@ -23,7 +23,7 @@ function ReviewCard({ review }: { review: Review }) {
         {Array.from({ length: 5 }).map((_, i) => (
           <Star
             key={i}
-            className={`h-3.5 w-3.5 ${i < review.rating ? "fill-accent text-accent animate-pulse" : "text-border"}`}
+            className={`h-3.5 w-3.5 ${i < review.rating ? "fill-accent text-accent" : "text-border"}`}
             aria-hidden
           />
         ))}
@@ -73,13 +73,13 @@ export function ReviewsSection({
             />
           ) : null}
           <MotionReveal>
-            <div className="rounded-[var(--radius-card)] border border-border bg-white p-8 text-center lg:text-left">
+            <div className="rounded-[var(--radius-card)] border border-border bg-white p-8 text-center shadow-[var(--shadow-soft)] lg:text-left">
               <p className="font-heading text-5xl text-primary">{avg.toFixed(1)}</p>
               <div className="mt-3 flex justify-center gap-0.5 lg:justify-start">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star
                     key={i}
-                    className={`h-5 w-5 ${i < Math.round(avg) ? "fill-accent text-accent animate-pulse" : "text-border"}`}
+                    className={`h-5 w-5 ${i < Math.round(avg) ? "fill-accent text-accent" : "text-border"}`}
                     aria-hidden
                   />
                 ))}

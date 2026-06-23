@@ -12,7 +12,7 @@ import {
   Waves,
 } from "lucide-react";
 import { PageCta, PageHero, PageIntro, Section, SectionHeader } from "@/components/ui/section";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { WhatsAppButton } from "@/components/whatsapp/WhatsAppButton";
 import { MotionItem, MotionStagger } from "@/components/motion";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -21,6 +21,56 @@ import { getPageContext } from "@/lib/i18n/get-dictionary";
 import { createLocalizedMetadata, localizedBreadcrumb } from "@/lib/i18n/metadata";
 import { getOtherServicesContent } from "@/lib/content/guest-pages";
 import type { Locale } from "@/lib/i18n/config";
+
+function renderDescription(text: string) {
+  const paragraphs = text.split('\n\n');
+  return (
+    <div className="space-y-4 mt-2">
+      {paragraphs.map((p, i) => {
+        const lines = p.split('\n');
+        const elements: React.ReactNode[] = [];
+        let inList = false;
+        let listItems: React.ReactNode[] = [];
+        
+        for (let j = 0; j < lines.length; j++) {
+          const line = lines[j].trim();
+          if (!line) continue;
+
+          if (line.startsWith('•')) {
+            listItems.push(<li key={`li-${j}`}>{line.replace(/^•\s*/, '')}</li>);
+            inList = true;
+          } else {
+            if (inList) {
+              elements.push(<ul key={`ul-${j}`} className="list-disc pl-5 space-y-1.5 mt-2 mb-3">{listItems}</ul>);
+              listItems = [];
+              inList = false;
+            }
+            
+            const isHeading = 
+              line.length < 60 && 
+              !line.endsWith('.') && 
+              j < lines.length - 1 && 
+              lines[j+1].trim().startsWith('•');
+              
+            const isHeadingColon = line.endsWith(':');
+            
+            if (isHeading || isHeadingColon) {
+              elements.push(<strong key={`heading-${j}`} className="block mt-4 mb-2 text-foreground font-semibold">{line}</strong>);
+            } else {
+              elements.push(<p key={`p-${j}`} className={j > 0 ? "mt-2" : ""}>{line}</p>);
+            }
+          }
+        }
+        
+        if (inList) {
+          elements.push(<ul key={`ul-end`} className="list-disc pl-5 space-y-1.5 mt-2 mb-3">{listItems}</ul>);
+        }
+        
+        return <div key={i}>{elements}</div>;
+      })}
+    </div>
+  );
+}
 
 const SERVICE_ICONS: Record<string, ElementType> = {
   bike: Bike,
@@ -96,7 +146,7 @@ export default async function OtherServicesPage({
                   compact
                 />
               </div>
-              <MotionStagger fast className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <MotionStagger fast className="grid gap-6">
                 {section.items.map((item, itemIndex) => {
                   const Icon = SERVICE_ICONS[item.icon] ?? Droplets;
                   const tone = ICON_TONES[(sectionIndex + itemIndex) % ICON_TONES.length];
@@ -110,9 +160,9 @@ export default async function OtherServicesPage({
                         </span>
                         <div>
                           <CardTitle className="text-base leading-snug">{item.title}</CardTitle>
-                          <CardDescription className="mt-2 leading-relaxed">
-                            {item.description}
-                          </CardDescription>
+                          <div className="mt-2 text-sm text-text/70 leading-relaxed text-[var(--color-body)]">
+                            {renderDescription(item.description)}
+                          </div>
                         </div>
                       </CardHeader>
                       </Card>

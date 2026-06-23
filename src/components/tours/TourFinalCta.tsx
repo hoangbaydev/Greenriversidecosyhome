@@ -49,7 +49,7 @@ export function TourFinalCta({
             customMessage={`Hi! I'd like to book the ${tourTitle} tour.`}
             label={labels.ctaButton}
             size="lg"
-            className="min-h-11 rounded-lg px-10 shadow-lg"
+            className="mt-8 min-h-12 px-10 shadow-lg"
           />
         </motion.div>
       </div>

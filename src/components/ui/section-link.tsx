@@ -16,7 +16,7 @@ export function SectionLink({
     <Link
       href={href}
       className={cn(
-        "inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-colors hover:text-primary-dark",
+        "inline-flex items-center gap-1.5 rounded-full text-sm font-semibold text-primary transition-all hover:-translate-y-0.5 hover:text-primary-dark",
         className
       )}
     >

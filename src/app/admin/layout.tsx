@@ -35,7 +35,7 @@ import { logoutAdmin } from "@/lib/firebase/auth";
 import { cn } from "@/lib/utils";
 import { AdminPageSkeleton } from "@/components/ui/skeleton";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 type NavKey =
   | "dashboard"
@@ -162,7 +162,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
   if (!user || !isAdmin) return null;
 
   return (
-    <div className="flex min-h-screen bg-gray-50 dark:bg-gray-950">
+    <div className="flex min-h-screen bg-[linear-gradient(135deg,#f7f9f1_0%,#ffffff_45%,#eef4e4_100%)] text-gray-900 dark:bg-gray-950 dark:text-gray-100">
       {sidebarOpen && (
         <button
           type="button"
@@ -174,11 +174,11 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
 
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 flex w-72 shrink-0 flex-col border-r border-gray-200 bg-white transition-transform dark:border-gray-800 dark:bg-gray-900 lg:static lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-50 flex w-72 shrink-0 flex-col border-r border-primary/10 bg-white/95 shadow-sm backdrop-blur transition-transform dark:border-gray-800 dark:bg-gray-900/95 lg:static lg:translate-x-0",
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
-        <div className="flex items-center justify-between border-b border-gray-200 p-5 dark:border-gray-800">
+        <div className="flex items-center justify-between border-b border-primary/10 bg-soft/40 p-5 dark:border-gray-800 dark:bg-gray-950/30">
           <Link href="/admin" className="min-w-0">
             <span className="block font-heading text-lg font-bold text-primary">
               {dict.layout.brand}
@@ -217,7 +217,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
                           "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors",
                           active
                             ? "bg-primary text-white shadow-sm"
-                            : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+                            : "text-gray-600 hover:bg-primary/10 hover:text-primary dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
                         )}
                       >
                         <Icon className="h-4 w-4" />
@@ -255,7 +255,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
       </aside>
 
       <main className="flex-1 overflow-auto">
-        <div className="sticky top-0 z-30 hidden items-center justify-between border-b border-gray-200 bg-white/90 px-8 py-3 backdrop-blur dark:border-gray-800 dark:bg-gray-900/90 lg:flex">
+        <div className="sticky top-0 z-30 hidden items-center justify-between border-b border-primary/10 bg-white/85 px-8 py-3 shadow-sm backdrop-blur-xl dark:border-gray-800 dark:bg-gray-900/85 lg:flex">
           <div>
             <p className="text-xs font-bold uppercase tracking-wider text-gray-400">
               Content Management

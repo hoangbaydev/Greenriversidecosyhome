@@ -34,7 +34,7 @@ function PremiumTourCard({
     <article className="page-card page-card--lift group flex h-full flex-col">
       <Link
         href={detailHref}
-        className="relative block aspect-[4/3] overflow-hidden bg-soft"
+        className="relative block aspect-[4/3] overflow-hidden bg-soft after:absolute after:inset-0 after:bg-gradient-to-t after:from-black/20 after:via-black/0 after:to-transparent"
         tabIndex={-1}
         aria-hidden
       >
@@ -48,8 +48,8 @@ function PremiumTourCard({
           />
         ) : null}
       </Link>
-      <div className="flex flex-1 flex-col p-6 md:p-7">
-        <h3 className="text-card-title text-text">
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        <h3 className="font-heading text-[1.28rem] leading-tight text-text sm:text-[1.4rem]">
           <Link
             href={detailHref}
             className="transition-colors hover:text-primary"
@@ -58,14 +58,14 @@ function PremiumTourCard({
           </Link>
         </h3>
         {tour.shortDescription ? (
-          <p className="mt-3 line-clamp-3 flex-1 text-base leading-relaxed text-text-muted">
+          <p className="mt-3 line-clamp-3 flex-1 text-sm leading-[1.7] text-text-muted">
             {tour.shortDescription}
           </p>
         ) : null}
-        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-base text-text-muted">
+        <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-border pt-4 text-sm text-text-muted">
           {tour.duration ? <span>{tour.duration}</span> : null}
           {price > 0 ? (
-            <span className="font-heading font-bold text-primary">
+              <span className="font-sans font-semibold text-primary">
               {formatPrice(price, tour.currency)}
             </span>
           ) : null}
@@ -73,7 +73,7 @@ function PremiumTourCard({
         {viewDetailsLabel ? (
           <Link
             href={detailHref}
-            className="mt-5 inline-flex min-h-11 w-fit items-center justify-center rounded-lg border border-primary/30 px-5 font-heading text-sm font-bold uppercase tracking-[0.04em] text-primary transition-colors hover:border-primary hover:bg-soft"
+            className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full border border-primary/20 bg-white px-5 font-sans text-sm font-semibold text-primary shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/35 hover:bg-soft hover:shadow-[var(--shadow-soft)] sm:w-fit"
           >
             {viewDetailsLabel}
           </Link>

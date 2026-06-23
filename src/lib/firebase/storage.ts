@@ -44,16 +44,16 @@ const MAX_SOURCE_IMAGE_BYTES = 18 * 1024 * 1024;
 
 const DEFAULT_IMAGE_PRESET: ImageOptimizationPreset = {
   maxWidth: 1600,
-  targetBytes: 280 * 1024,
-  minQuality: 0.62,
-  startQuality: 0.86,
+  targetBytes: 360 * 1024,
+  minQuality: 0.68,
+  startQuality: 0.88,
 };
 
 const IMAGE_PRESETS: Partial<Record<StorageFolder, ImageOptimizationPreset>> = {
   hero: { maxWidth: 2200, targetBytes: 420 * 1024, minQuality: 0.68, startQuality: 0.88 },
   site: { maxWidth: 2200, targetBytes: 420 * 1024, minQuality: 0.68, startQuality: 0.88 },
-  rooms: { maxWidth: 1800, targetBytes: 360 * 1024, minQuality: 0.66, startQuality: 0.82 },
-  tours: { maxWidth: 1800, targetBytes: 320 * 1024, minQuality: 0.64, startQuality: 0.86 },
+  rooms: { maxWidth: 1920, targetBytes: 520 * 1024, minQuality: 0.72, startQuality: 0.9 },
+  tours: { maxWidth: 1800, targetBytes: 420 * 1024, minQuality: 0.68, startQuality: 0.88 },
   activities: { maxWidth: 1600, targetBytes: 280 * 1024, minQuality: 0.62, startQuality: 0.86 },
   gallery: { maxWidth: 1800, targetBytes: 320 * 1024, minQuality: 0.64, startQuality: 0.86 },
   cafe: { maxWidth: 1600, targetBytes: 260 * 1024, minQuality: 0.62, startQuality: 0.86 },
@@ -155,29 +155,69 @@ async function loadImageElement(file: File): Promise<HTMLImageElement> {
   });
 }
 
+async function loadImageSource(file: File): Promise<{
+  source: CanvasImageSource;
+  width: number;
+  height: number;
+  cleanup: () => void;
+}> {
+  if (typeof createImageBitmap === "function") {
+    try {
+      const bitmap = await createImageBitmap(file, {
+        imageOrientation: "from-image",
+      } as ImageBitmapOptions);
+
+      return {
+        source: bitmap,
+        width: bitmap.width,
+        height: bitmap.height,
+        cleanup: () => bitmap.close(),
+      };
+    } catch {
+      // Fall back below when the browser cannot decode the selected format.
+    }
+  }
+
+  const img = await loadImageElement(file);
+  return {
+    source: img,
+    width: img.naturalWidth || img.width,
+    height: img.naturalHeight || img.height,
+    cleanup: () => undefined,
+  };
+}
+
 export async function optimizeImage(
   file: File,
   preset = DEFAULT_IMAGE_PRESET
 ): Promise<UploadableImageFile> {
   assertUploadableImage(file);
 
-  const img = await loadImageElement(file);
-  const scale = Math.min(1, preset.maxWidth / Math.max(img.width, img.height));
-  const width = Math.max(1, Math.round(img.width * scale));
-  const height = Math.max(1, Math.round(img.height * scale));
+  const image = await loadImageSource(file);
+  const scale = Math.min(1, preset.maxWidth / Math.max(image.width, image.height));
+  const width = Math.max(1, Math.round(image.width * scale));
+  const height = Math.max(1, Math.round(image.height * scale));
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
 
   const ctx = canvas.getContext("2d", { alpha: true });
-  if (!ctx) return file;
+  if (!ctx) {
+    image.cleanup();
+    return file;
+  }
 
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = "high";
-  ctx.drawImage(img, 0, 0, width, height);
+  ctx.drawImage(image.source, 0, 0, width, height);
+  image.cleanup();
 
   let bestBlob: Blob | null = null;
-  for (let quality = preset.startQuality; quality >= preset.minQuality; quality -= 0.06) {
+  const qualitySteps = [preset.startQuality, 0.84, 0.8, 0.76, 0.72, preset.minQuality]
+    .filter((quality, index, array) => quality >= preset.minQuality && array.indexOf(quality) === index)
+    .sort((a, b) => b - a);
+
+  for (const quality of qualitySteps) {
     const blob = await canvasToBlob(canvas, "image/webp", Number(quality.toFixed(2)));
     if (!blob) continue;
     bestBlob = blob;
@@ -329,10 +369,10 @@ export async function uploadRoomImage(
 ): Promise<UploadedImageResult> {
   const path = buildRoomStoragePath(roomId, isCover, file.name);
   const preset: ImageOptimizationPreset = {
-    maxWidth: 1800,
-    targetBytes: 360 * 1024,
-    minQuality: 0.66,
-    startQuality: 0.82,
+    maxWidth: 1920,
+    targetBytes: 520 * 1024,
+    minQuality: 0.72,
+    startQuality: 0.9,
   };
   const optimized = await optimizeImage(file, preset);
   const url = await uploadImageWithProgress(path, optimized, onProgress);

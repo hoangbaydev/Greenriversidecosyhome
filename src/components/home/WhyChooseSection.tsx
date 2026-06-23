@@ -2,10 +2,8 @@
 
 import { motion } from "framer-motion";
 import { useLocale, useDictionary } from "@/components/providers/I18nProvider";
-import { OptimizedImage } from "@/components/ui/optimized-image";
 import { WhatsAppButton } from "@/components/whatsapp/WhatsAppButton";
 import { fadeUp, defaultTransition, viewportOnce } from "@/lib/motion";
-import { SAMPLE_IMAGES } from "@/lib/sample-media";
 import { getWhyStayItems } from "@/lib/content/brand";
 import { BrandIconBadge } from "@/components/shared/BrandIconBadge";
 
@@ -103,7 +101,7 @@ export function FinalCtaSection({ content }: { content: { finalCtaTitle?: string
               label={content.primaryCtaLabel}
               size="lg"
               variant="accent"
-              className="h-11 rounded-lg px-6 text-base font-semibold shadow-sm"
+              className="min-h-12 px-7 text-base font-semibold"
             />
           </div>
         ) : null}

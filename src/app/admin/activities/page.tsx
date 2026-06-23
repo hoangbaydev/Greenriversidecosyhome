@@ -106,7 +106,7 @@ export default function AdminActivitiesPage() {
       </div>
 
       {editing && (
-        <Card className="border border-primary/20 bg-primary/5 p-6 dark:border-gray-850 dark:bg-gray-900 overflow-hidden">
+        <Card className="border border-primary/20 bg-primary/5 p-6 dark:border-gray-800 dark:bg-gray-900 overflow-hidden">
           <h2 className="font-heading text-lg font-bold text-gray-900 dark:text-white mb-4">
             {editing.id ? "Edit Activity Details" : "Create New Community Event"}
           </h2>
@@ -228,7 +228,7 @@ export default function AdminActivitiesPage() {
                 <div>
                   <h3 className="font-heading text-lg font-bold text-gray-900 dark:text-white leading-snug group-hover:text-primary transition-colors">{a.title || a.name}</h3>
                   <p className="mt-1 text-xs text-gray-400 uppercase tracking-wider font-semibold flex items-center gap-1">
-                    <Clock className="h-3.5 w-3.5 text-gray-450" /> {a.time} · Order: {a.order}
+                    <Clock className="h-3.5 w-3.5 text-gray-500" /> {a.time} · Order: {a.order}
                   </p>
                   <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 line-clamp-2">{a.description}</p>
                 </div>

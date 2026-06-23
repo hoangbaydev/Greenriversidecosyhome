@@ -67,7 +67,7 @@ export function WeeklyCalendar({
               messageType="join_activity"
               label={joinLabel}
               size="lg"
-              className="min-h-12 rounded-lg px-10 text-sm font-semibold shadow-sm"
+              className="min-h-12 px-10 text-sm font-semibold"
             />
           </div>
         ) : null}

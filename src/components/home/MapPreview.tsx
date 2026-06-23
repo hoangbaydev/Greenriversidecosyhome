@@ -44,7 +44,7 @@ export function MapPreview({ embedUrl, mapsUrl }: MapPreviewProps) {
               href={mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-6 font-heading text-[15px] font-bold uppercase tracking-[0.04em] text-white transition-colors hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className="inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-7 font-sans text-sm font-semibold text-white shadow-[0_10px_24px_rgba(96,121,59,0.22)] transition-all hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-[0_14px_30px_rgba(96,121,59,0.28)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               {dict.home.map.getDirections}
             </a>

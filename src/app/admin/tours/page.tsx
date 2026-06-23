@@ -174,7 +174,7 @@ export default function AdminToursPage() {
                   "border-b-2 px-4 py-2.5 text-sm font-semibold capitalize transition-all focus:outline-none focus:ring-0",
                   activeTab === tab
                     ? "border-primary text-primary dark:border-primary-dark"
-                    : "border-transparent text-gray-500 hover:text-gray-750 dark:text-gray-400 dark:hover:text-gray-250"
+                    : "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                 )}
               >
                 {tab === "basics" ? "1. Basics" : tab === "experience" ? "2. Details & Timeline" : tab === "media" ? "3. Media" : "4. SEO Options"}
@@ -512,7 +512,7 @@ export default function AdminToursPage() {
                 {/* Google Snippet Simulator */}
                 <div className="border-t border-gray-150 pt-5 dark:border-gray-800">
                   <Label className="text-sm font-semibold text-gray-500">Google Search Result Mock Preview</Label>
-                  <div className="mt-2.5 rounded-xl border border-gray-200 bg-gray-50 p-5 dark:border-gray-850 dark:bg-gray-950/40">
+                  <div className="mt-2.5 rounded-xl border border-gray-200 bg-gray-50 p-5 dark:border-gray-800 dark:bg-gray-950/40">
                     <p className="text-xs text-gray-400 dark:text-gray-500 flex items-center gap-1.5">
                       <Globe className="h-3 w-3" /> https://greenriversidecosyhome.com &gt; tours &gt; {editing.slug || "phong-nha"}
                     </p>
