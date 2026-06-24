@@ -32,6 +32,7 @@ import { breadcrumbSchema } from "@/lib/seo";
 import { getPageContext } from "@/lib/i18n/get-dictionary";
 import { createLocalizedMetadata, localizedBreadcrumb } from "@/lib/i18n/metadata";
 import { getUsefulInfoContent } from "@/lib/content/guest-pages";
+import { getPageContent } from "@/lib/data/services";
 import type { Locale } from "@/lib/i18n/config";
 
 const INFO_ICONS: Record<string, ElementType> = {
@@ -91,8 +92,12 @@ export default async function UsefulInfoPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale, dict } = await getPageContext(params);
+  const loc = locale as Locale;
   const p = dict.pages.usefulInfo;
-  const content = getUsefulInfoContent(locale as Locale);
+  const [page, content] = await Promise.all([
+    getPageContent(loc, "useful-info"),
+    Promise.resolve(getUsefulInfoContent(loc)),
+  ]);
 
   return (
     <>
@@ -104,10 +109,14 @@ export default async function UsefulInfoPage({
           ])
         )}
       />
-      <PageHero title={p.title} subtitle={p.subtitle} />
+      <PageHero
+        title={page?.heroTitle || p.title}
+        subtitle={page?.heroSubtitle || p.subtitle}
+        image={page?.heroImage}
+      />
 
       <Section>
-        <PageIntro>{p.intro}</PageIntro>
+        <PageIntro>{page?.intro || p.intro}</PageIntro>
         <div className="space-y-14">
           {content.sections.map((section, sectionIndex) => (
             <div key={section.id} id={section.id} className="scroll-mt-28 space-y-6">

@@ -16,13 +16,23 @@
   },
   "layout": {
     "brand": "GR Admin",
+    "productName": "Green Riverside CMS",
+    "topbarEyebrow": "Quản lý nội dung",
+    "website": "Trang web",
+    "viewWebsite": "Xem trang web",
     "logout": "Đăng xuất",
     "closeSidebar": "Đóng menu",
     "openMenu": "Mở menu",
     "toggleTheme": "Đổi giao diện sáng/tối",
     "firebaseNotConfiguredTitle": "Firebase chưa cấu hình",
     "firebaseNotConfiguredDesc": "Sao chép .env.example thành .env.local và điền thông tin Firebase.",
-    "language": "Ngôn ngữ"
+    "language": "Ngôn ngữ",
+    "groups": {
+      "overview": "Tổng quan",
+      "website": "Menu trang web",
+      "catalog": "Dữ liệu nội dung",
+      "trustMedia": "Cài đặt & hỗ trợ"
+    }
   },
   "nav": {
     "dashboard": "Tổng quan",
@@ -32,6 +42,11 @@
     "faq": "FAQ",
     "pages": "Trang nội dung",
     "rooms": "Phòng",
+    "stay": "Lưu trú",
+    "explore": "Khám phá",
+    "transport": "Di chuyển",
+    "otherServices": "Dịch vụ khác",
+    "usefulInfo": "Thông tin hữu ích",
     "tours": "Tour",
     "activities": "Hoạt động",
     "transportation": "Di chuyển",
@@ -42,12 +57,45 @@
   },
   "dashboard": {
     "title": "Tổng quan",
-    "subtitle": "Quản lý nội dung website từ Firestore.",
+    "eyebrow": "Bảng quản trị CMS",
+    "subtitle": "Quản lý trang công khai, phòng, tour, di chuyển, hình ảnh, đánh giá và cài đặt ở một nơi gọn gàng.",
     "rooms": "Phòng",
     "tours": "Tour",
     "activities": "Hoạt động",
     "blogPosts": "Bài viết",
-    "galleryImages": "Ảnh thư viện"
+    "galleryImages": "Ảnh thư viện",
+    "manageContent": "Quản lý nội dung",
+    "quickActions": "Thao tác nhanh",
+    "publishingChecklist": "Checklist trước khi đăng",
+    "directBookingFocus": "Ưu tiên đặt trực tiếp",
+    "directBookingHelp": "Giữ nút kêu gọi hành động rõ ràng và dẫn khách về WhatsApp cho phòng, tour, đưa đón và câu hỏi.",
+    "helpers": {
+      "rooms": "Danh mục lưu trú",
+      "tours": "Hang động và trải nghiệm",
+      "activities": "Hoạt động hằng tuần",
+      "blogPosts": "Bài hướng dẫn du lịch",
+      "galleryImages": "Khoảnh khắc đã đăng"
+    },
+    "actions": {
+      "homepage": "Trang chủ",
+      "homepageHelp": "Hero, phòng nổi bật, tour nổi bật",
+      "pages": "Nội dung trang",
+      "pagesHelp": "Hero, giới thiệu, nhãn, SEO",
+      "newTour": "Tour mới",
+      "newTourHelp": "Tạo hoặc cập nhật trải nghiệm hang động",
+      "gallery": "Đăng ảnh",
+      "galleryHelp": "Thêm ảnh đẹp lên trang công khai",
+      "transportation": "Di chuyển",
+      "transportationHelp": "Đưa đón, xe buýt, thuê xe",
+      "settings": "Cài đặt website",
+      "settingsHelp": "Logo, liên hệ, mạng xã hội"
+    },
+    "workflow": [
+      "Cập nhật hero trang chủ và nội dung nổi bật trước.",
+      "Chỉ đăng phòng và tour khi giá và ảnh đã sẵn sàng.",
+      "Đăng ít ảnh nhưng chất lượng: một ảnh bìa và thư viện gọn.",
+      "Kiểm tra tiêu đề SEO trước khi đăng trang mới."
+    ]
   },
   "common": {
     "save": "Lưu",
@@ -67,8 +115,19 @@
     "uploadRequired": "Vui lòng tải lên ít nhất một ảnh",
     "confirmDelete": "Xóa mục này?",
     "published": "Đã xuất bản",
+    "draft": "Nháp",
     "featured": "Nổi bật",
-    "manage": "Quản lý"
+    "manage": "Quản lý",
+    "viewPublicPage": "Xem trang công khai",
+    "seoTitle": "Tối ưu tìm kiếm",
+    "seoHelp": "Tùy chỉnh thông tin cho Google Search. Nếu để trống, hệ thống dùng tiêu đề và mô tả ngắn của mục này.",
+    "customMetaTitle": "Tiêu đề meta riêng",
+    "customMetaDescription": "Mô tả meta riêng",
+    "seoPreview": "Xem trước kết quả Google",
+    "characters": "ký tự",
+    "idealLength": "lý tưởng: 120-160",
+    "emptySeoTitle": "Nhập thông tin để xem trước tiêu đề tìm kiếm.",
+    "emptySeoDescription": "Bản xem trước mô tả sẽ hiển thị ở đây."
   },
   "crud": {
     "rooms": {
@@ -103,7 +162,12 @@
         "category": "Nhóm phòng",
         "categoryPlaceholder": "VD: Private Room hoặc Dorm",
         "order": "Thứ tự hiển thị",
-        "next": "Bước tiếp theo →"
+        "next": "Bước tiếp theo",
+        "amenitiesLabel": "Tiện nghi / đặc điểm phòng",
+        "amenitiesPlaceholder": "Máy lạnh, nước nóng, view núi, ban công riêng, Wi-Fi miễn phí...",
+        "amenitiesHelp": "Ngăn cách tiện nghi bằng dấu phẩy. Website sẽ tự hiển thị thành danh sách có dấu tick.",
+        "mediaTitle": "Thư viện ảnh phòng",
+        "mediaHelp": "Có thể tải nhiều ảnh cùng lúc, tự nén WebP chất lượng cao, kéo để sắp xếp và chọn ảnh bìa đầu tiên."
       },
       "list": {
         "currentTitle": "Danh sách 8 phòng đang đăng",

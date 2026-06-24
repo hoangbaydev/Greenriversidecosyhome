@@ -6,6 +6,8 @@ import { ArrowRight } from "lucide-react";
 import { getExploreSections } from "@/lib/content/brand";
 import { useLocale } from "@/components/providers/I18nProvider";
 import { localizedPath } from "@/lib/i18n/config";
+import { getWhatsAppUrl } from "@/lib/whatsapp";
+import { useWhatsAppNumber } from "@/hooks/use-whatsapp";
 import { HomeSection } from "@/components/ui/home-section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { WhatsAppButton } from "@/components/whatsapp/WhatsAppButton";
@@ -96,6 +98,7 @@ export function ExplorePreview({
 
 export function ExplorePhongNhaContent() {
   const locale = useLocale();
+  const phoneNumber = useWhatsAppNumber();
   const sections = getExploreSections(locale);
 
   return (
@@ -126,17 +129,43 @@ export function ExplorePhongNhaContent() {
               viewport={viewportOnce}
               className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
             >
-              {section.highlights.map((h) => (
-                <motion.div
-                  key={h.title}
-                  variants={fadeUp}
-                  transition={defaultTransition}
-                  className="experience-card p-5"
-                >
-                  <h3 className="font-heading text-base text-text">{h.title}</h3>
-                  <p className="mt-2 text-sm text-text-muted">{h.description}</p>
-                </motion.div>
-              ))}
+              {section.highlights.map((h) => {
+                const href =
+                  h.ctaMessage && phoneNumber
+                    ? getWhatsAppUrl("book_tour", h.ctaMessage, phoneNumber)
+                    : null;
+                const card = (
+                  <motion.div
+                    key={h.title}
+                    variants={fadeUp}
+                    transition={defaultTransition}
+                    className="experience-card flex h-full flex-col p-5"
+                  >
+                    <h3 className="font-heading text-base text-text">{h.title}</h3>
+                    <p className="mt-2 flex-1 text-sm text-text-muted">{h.description}</p>
+                    {h.ctaLabel ? (
+                      <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                        {h.ctaLabel}
+                        <ArrowRight className="h-4 w-4" aria-hidden />
+                      </span>
+                    ) : null}
+                  </motion.div>
+                );
+
+                if (!href) return card;
+
+                return (
+                  <a
+                    key={h.title}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block h-full transition-transform hover:-translate-y-0.5"
+                  >
+                    {card}
+                  </a>
+                );
+              })}
             </motion.div>
           ) : null}
           {section.ctaHref && section.ctaLabel ? (

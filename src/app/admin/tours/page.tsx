@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ImageUploader } from "@/components/admin/ImageUploader";
 import { TableSkeleton } from "@/components/ui/skeleton";
 import { useAdminLoader } from "@/hooks/use-admin-loader";
+import { useAdminI18n } from "@/components/admin/AdminI18nProvider";
 import type { Tour, TourFaqItem, TourTimelineItem } from "@/types";
 import { slugify, cn } from "@/lib/utils";
 import { getTourTitle, getTourPrice } from "@/types";
@@ -58,6 +59,8 @@ function parseFaq(text: string): TourFaqItem[] {
 type TabType = "basics" | "experience" | "media" | "seo";
 
 export default function AdminToursPage() {
+  const { dict, locale } = useAdminI18n();
+  const publicLocalePrefix = locale === "vi" ? "/vi" : "/en";
   const fetchList = useCallback(async () => {
     try {
       return (await fetchAllTours()).sort((a, b) => a.order - b.order);
@@ -469,17 +472,17 @@ export default function AdminToursPage() {
                 <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 flex gap-3 text-sm text-primary">
                   <Sparkles className="h-5 w-5 shrink-0 mt-0.5" />
                   <div>
-                    <span className="font-semibold">Search Engine Optimization</span>
-                    <p className="mt-1 text-xs text-primary/80 leading-relaxed">Customize your metadata specifically for Google, Bing, and Facebook crawls. If left empty, these fields will fall back automatically to the Tour Title and Short Description.</p>
+                    <span className="font-semibold">{dict.common.seoTitle}</span>
+                    <p className="mt-1 text-xs text-primary/80 leading-relaxed">{dict.common.seoHelp}</p>
                   </div>
                 </div>
 
                 <div className="grid gap-6">
                   <div className="grid gap-1.5">
                     <div className="flex items-center justify-between text-sm font-semibold">
-                      <Label htmlFor="tour-seo-title">Custom Meta Title</Label>
+                      <Label htmlFor="tour-seo-title">{dict.common.customMetaTitle}</Label>
                       <span className={cn("text-xs font-bold", seoTitlePreview.length > 60 ? "text-rose-500" : "text-emerald-500")}>
-                        {seoTitlePreview.length} / 60 characters
+                        {seoTitlePreview.length} / 60 {dict.common.characters}
                       </span>
                     </div>
                     <Input
@@ -493,14 +496,14 @@ export default function AdminToursPage() {
 
                   <div className="grid gap-1.5">
                     <div className="flex items-center justify-between text-sm font-semibold">
-                      <Label htmlFor="tour-seo-desc">Custom Meta Description</Label>
+                      <Label htmlFor="tour-seo-desc">{dict.common.customMetaDescription}</Label>
                       <span className={cn("text-xs font-bold", seoDescPreview.length > 160 || seoDescPreview.length < 120 ? "text-amber-500" : "text-emerald-500")}>
-                        {seoDescPreview.length} / 160 characters (ideal: 120-160)
+                        {seoDescPreview.length} / 160 {dict.common.characters} ({dict.common.idealLength})
                       </span>
                     </div>
                     <Textarea
                       id="tour-seo-desc"
-                      placeholder="Enter a custom meta description for search result snippet..."
+                      placeholder={dict.common.emptySeoDescription}
                       value={editing.seoDescription || ""}
                       onChange={(e) => setEditing({ ...editing, seoDescription: e.target.value })}
                       className="mt-1.5"
@@ -511,16 +514,16 @@ export default function AdminToursPage() {
 
                 {/* Google Snippet Simulator */}
                 <div className="border-t border-gray-150 pt-5 dark:border-gray-800">
-                  <Label className="text-sm font-semibold text-gray-500">Google Search Result Mock Preview</Label>
+                  <Label className="text-sm font-semibold text-gray-500">{dict.common.seoPreview}</Label>
                   <div className="mt-2.5 rounded-xl border border-gray-200 bg-gray-50 p-5 dark:border-gray-800 dark:bg-gray-950/40">
                     <p className="text-xs text-gray-400 dark:text-gray-500 flex items-center gap-1.5">
                       <Globe className="h-3 w-3" /> https://greenriversidecosyhome.com &gt; tours &gt; {editing.slug || "phong-nha"}
                     </p>
                     <h4 className="mt-1 text-lg font-medium text-blue-800 dark:text-blue-400 hover:underline cursor-pointer leading-tight">
-                      {seoTitlePreview || "Please enter details to populate snippet..."}
+                      {seoTitlePreview || dict.common.emptySeoTitle}
                     </h4>
                     <p className="mt-1 text-sm text-gray-600 dark:text-gray-400 leading-normal">
-                      {seoDescPreview || "Description snippet preview details will display here."}
+                      {seoDescPreview || dict.common.emptySeoDescription}
                     </p>
                   </div>
                 </div>
@@ -532,10 +535,10 @@ export default function AdminToursPage() {
           <div className="flex items-center justify-between border-t border-gray-200 bg-gray-50/50 p-6 dark:border-gray-800 dark:bg-gray-950/20">
             <div className="flex gap-2">
               <Button onClick={handleSave} disabled={saving} size="default" className="min-w-[100px]">
-                {saving ? "Saving..." : "Save Tour"}
+                {saving ? dict.common.saving : dict.common.save}
               </Button>
               <Button variant="ghost" onClick={() => startEditing(null)}>
-                Cancel
+                {dict.common.cancel}
               </Button>
             </div>
             {activeTab !== "seo" && (
@@ -544,7 +547,7 @@ export default function AdminToursPage() {
                 const nextIdx = (tabs.indexOf(activeTab) + 1) % tabs.length;
                 setActiveTab(tabs[nextIdx]);
               }}>
-                Next Step &rarr;
+                {dict.crud.rooms.form.next}
               </Button>
             )}
           </div>
@@ -567,13 +570,13 @@ export default function AdminToursPage() {
                 {/* Status Badges Overlay */}
                 <div className="absolute top-3 left-3 flex gap-1.5">
                   {tour.published ? (
-                    <span className="rounded bg-emerald-500/90 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">Published</span>
+                    <span className="rounded bg-emerald-500/90 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">{dict.common.published}</span>
                   ) : (
-                    <span className="rounded bg-gray-500/90 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">Draft</span>
+                    <span className="rounded bg-gray-500/90 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">{dict.common.draft}</span>
                   )}
                   {tour.featured && (
                     <span className="rounded bg-amber-500/90 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm flex items-center gap-0.5">
-                      <Star className="h-2.5 w-2.5 fill-white text-white" /> Featured
+                      <Star className="h-2.5 w-2.5 fill-white text-white" /> {dict.common.featured}
                     </span>
                   )}
                 </div>
@@ -581,7 +584,7 @@ export default function AdminToursPage() {
               <div className="p-5 flex-1 flex flex-col justify-between gap-4">
                 <div>
                   <h3 className="font-heading text-lg font-bold text-gray-900 dark:text-white leading-snug group-hover:text-primary transition-colors">{getTourTitle(tour)}</h3>
-                  <p className="mt-1 text-xs text-gray-400 uppercase tracking-wider font-semibold">{tour.duration} · Order: {tour.order}</p>
+                  <p className="mt-1 text-xs text-gray-400 uppercase tracking-wider font-semibold">{tour.duration} - Order: {tour.order}</p>
                   <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 line-clamp-2">{tour.shortDescription}</p>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-100 pt-4 dark:border-gray-800">
@@ -589,10 +592,10 @@ export default function AdminToursPage() {
                     {getTourPrice(tour).toLocaleString()} {tour.currency || "VND"}
                   </span>
                   <div className="flex gap-1">
-                    <Button variant="ghost" size="icon" onClick={() => startEditing(tour)} title="Edit Tour">
+                    <Button variant="ghost" size="icon" onClick={() => startEditing(tour)} title={dict.common.edit}>
                       <Pencil className="h-4 w-4 text-gray-600 dark:text-gray-400" />
                     </Button>
-                    <a href={`/tours/${tour.slug}`} target="_blank" rel="noopener noreferrer" className="inline-flex h-9 w-9 items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" title="View Public Page">
+                    <a href={`${publicLocalePrefix}/tours/${tour.slug}`} target="_blank" rel="noopener noreferrer" className="inline-flex h-9 w-9 items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" title={dict.common.viewPublicPage}>
                       <Eye className="h-4 w-4 text-gray-600 dark:text-gray-400" />
                     </a>
                     <Button
@@ -605,7 +608,7 @@ export default function AdminToursPage() {
                             .then(() => toast.success("Deleted successfully"));
                         }
                       }}
-                      title="Delete Tour"
+                      title={dict.common.delete}
                     >
                       <Trash2 className="h-4 w-4 text-red-500" />
                     </Button>

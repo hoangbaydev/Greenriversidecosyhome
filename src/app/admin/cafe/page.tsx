@@ -13,8 +13,17 @@ import type { CafeContent } from "@/types";
 import { Plus, Trash2, Coffee, Layers, Sparkles } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { getCafeExperienceBlocks } from "@/lib/content/brand";
+import { SAMPLE_IMAGES } from "@/lib/sample-media";
 
 const LOCALES = ["en", "vi"] as const;
+const DEFAULT_CAFE_SECTION_IMAGES = [
+  SAMPLE_IMAGES.lunch,
+  SAMPLE_IMAGES.rooftop,
+  SAMPLE_IMAGES.sunset,
+  SAMPLE_IMAGES.community,
+  SAMPLE_IMAGES.mountains,
+] as const;
 
 const emptyCafe = (): CafeContent => ({
   title: "",
@@ -23,8 +32,48 @@ const emptyCafe = (): CafeContent => ({
   reserveCtaLabel: "",
   features: [],
   menuCategories: [],
-  images: [],
+  images: [...DEFAULT_CAFE_SECTION_IMAGES],
 });
+
+function normalizeCafeContent(content: CafeContent | null | undefined): CafeContent {
+  if (!content) return emptyCafe();
+  return {
+    ...content,
+    title: content.title || "",
+    subtitle: content.subtitle || "",
+    description: content.description || "",
+    reserveCtaLabel: content.reserveCtaLabel || "",
+    features: content.features || [],
+    menuCategories: content.menuCategories || [],
+    images: content.images?.length ? content.images : [...DEFAULT_CAFE_SECTION_IMAGES],
+  };
+}
+
+function normalizeCafeImages(images?: string[]): string[] {
+  return Array.from(
+    { length: DEFAULT_CAFE_SECTION_IMAGES.length },
+    (_, index) => images?.[index] || ""
+  );
+}
+
+function prepareCafeForSave(content: CafeContent): CafeContent {
+  return {
+    title: content.title || "",
+    subtitle: content.subtitle || "",
+    description: content.description || "",
+    reserveCtaLabel: content.reserveCtaLabel || "",
+    features: (content.features || []).map((feature) => ({
+      title: feature.title || "",
+      description: feature.description || "",
+      icon: feature.icon || "coffee",
+    })),
+    menuCategories: (content.menuCategories || []).map((category) => ({
+      name: category.name || "",
+      items: (category.items || []).filter(Boolean),
+    })),
+    images: normalizeCafeImages(content.images),
+  };
+}
 
 type CafeTabType = "basics" | "features" | "menu";
 
@@ -40,7 +89,7 @@ export default function AdminCafePage() {
       setLoading(true);
       try {
         const data = await fetchCafeContent(locale);
-        setContent(data ?? emptyCafe());
+        setContent(normalizeCafeContent(data));
       } catch {
         toast.error("Failed to load cafe content");
       } finally {
@@ -53,13 +102,24 @@ export default function AdminCafePage() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      await saveCafeContent(locale, content);
+      const data = prepareCafeForSave(content);
+      await saveCafeContent(locale, data);
+      setContent(normalizeCafeContent(data));
       toast.success("Cafe content saved successfully!");
-    } catch {
+    } catch (error) {
+      console.error("Failed to save cafe content", error);
       toast.error("Failed to save cafe content");
     } finally {
       setSaving(false);
     }
+  };
+
+  const experienceBlocks = getCafeExperienceBlocks(locale);
+
+  const setExperienceImage = (index: number, image: string) => {
+    const images = normalizeCafeImages(content.images);
+    images[index] = image;
+    setContent({ ...content, images });
   };
 
   if (loading) return <FormSkeleton />;
@@ -72,7 +132,7 @@ export default function AdminCafePage() {
           <h1 className="font-heading text-3xl font-bold text-gray-900 dark:text-white">Eat & Drink</h1>
           <p className="mt-1 text-sm text-gray-500">Configure rooftop cafe narrative, food collections, highlights, and menu templates.</p>
         </div>
-        <div className="flex bg-gray-100 p-1 rounded-xl dark:bg-gray-855 self-start sm:self-center">
+        <div className="flex bg-gray-100 p-1 rounded-xl dark:bg-gray-800 self-start sm:self-center">
           {LOCALES.map((l) => (
             <button
               key={l}
@@ -156,16 +216,26 @@ export default function AdminCafePage() {
                     placeholder="e.g. Reserve Table"
                   />
                 </div>
-                <div>
-                  <Label>Cafe Gallery Images</Label>
-                  <p className="text-xs text-gray-400 mb-2">Display rooftop views, specialty coffee, and local Vietnamese dishes.</p>
-                  <ImageUploader
-                    folder="cafe"
-                    images={content.images || []}
-                    onChange={(imgs) => setContent({ ...content, images: imgs })}
-                    maxImages={6}
-                    className="mt-1.5"
-                  />
+                <div className="rounded-xl border border-gray-200 bg-gray-50/70 p-3 dark:border-gray-800 dark:bg-gray-950/30 sm:p-4">
+                  <Label>Eat & Drink section images</Label>
+                  <p className="mt-1 max-w-3xl text-xs text-gray-500">
+                    Sample images are prefilled. Remove or replace each slot when your real cafe photos are ready.
+                  </p>
+                  <div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                    {experienceBlocks.map((block, index) => (
+                      <div key={block.title} className="rounded-lg border border-gray-200 bg-white p-2.5 dark:border-gray-800 dark:bg-gray-900">
+                        <Label className="text-xs">{index + 1}. {block.title}</Label>
+                        <p className="mt-1 line-clamp-1 text-[11px] leading-4 text-gray-500 sm:line-clamp-2">{block.description}</p>
+                        <ImageUploader
+                          folder="cafe"
+                          images={content.images?.[index] ? [content.images[index]] : []}
+                          onChange={(imgs) => setExperienceImage(index, imgs[0] || "")}
+                          maxImages={1}
+                          className="mt-2"
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

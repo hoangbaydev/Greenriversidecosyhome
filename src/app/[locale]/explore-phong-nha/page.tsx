@@ -1,4 +1,5 @@
 import { getTours } from "@/lib/data/services";
+import { getPageContent } from "@/lib/data/services";
 import { resolvePageMeta } from "@/lib/cms/page-meta";
 import { PageCta, PageHero, PageIntro, Section, SectionHeader } from "@/components/ui/section";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -31,7 +32,8 @@ export default async function ExplorePhongNhaPage({
   const { locale, dict } = await getPageContext(params);
   const loc = locale as Locale;
   const p = dict.pages.explore;
-  const [toursPage, tours] = await Promise.all([
+  const [page, toursPage, tours] = await Promise.all([
+    getPageContent(loc, "explore-phong-nha"),
     resolvePageMeta(loc, "tours", "/tours").then((r) => r.page),
     getTours(),
   ]);
@@ -55,7 +57,16 @@ export default async function ExplorePhongNhaPage({
           ])
         )}
       />
-      <PageHero title={p.title} subtitle={p.subtitle} image={SAMPLE_IMAGES.mountains} />
+      <PageHero
+        title={page?.heroTitle || p.title}
+        subtitle={page?.heroSubtitle || p.subtitle}
+        image={page?.heroImage || SAMPLE_IMAGES.mountains}
+      />
+      {page?.intro ? (
+        <Section>
+          <PageIntro>{page.intro}</PageIntro>
+        </Section>
+      ) : null}
       <ExplorePhongNhaContent />
       <Section id="experiences" background="soft">
         <SectionHeader title={experienceTitle} subtitle={experienceSubtitle} />

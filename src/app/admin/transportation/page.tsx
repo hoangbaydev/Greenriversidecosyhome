@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { TableSkeleton } from "@/components/ui/skeleton";
 import { useAdminLoader } from "@/hooks/use-admin-loader";
+import { useAdminI18n } from "@/components/admin/AdminI18nProvider";
 import type { Transportation } from "@/types";
 import { slugify } from "@/lib/utils";
 
@@ -30,6 +31,8 @@ const emptyItem: Partial<Transportation> = {
 };
 
 export default function AdminTransportationPage() {
+  const { dict, locale } = useAdminI18n();
+  const publicLocalePrefix = locale === "vi" ? "/vi" : "/en";
   const fetchList = useCallback(
     async () => {
       try {
@@ -195,7 +198,7 @@ export default function AdminTransportationPage() {
               {saving ? "Saving..." : "Save Service"}
             </Button>
             <Button variant="ghost" onClick={() => setEditing(null)}>
-              Cancel
+              {dict.common.cancel}
             </Button>
           </div>
         </Card>
@@ -210,13 +213,13 @@ export default function AdminTransportationPage() {
               {/* Overlay featured badge */}
               <div className="absolute top-3 right-3 flex gap-1.5">
                 {item.published ? (
-                  <span className="rounded bg-emerald-500/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-emerald-700">Published</span>
+                  <span className="rounded bg-emerald-500/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-emerald-700">{dict.common.published}</span>
                 ) : (
-                  <span className="rounded bg-gray-500/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-gray-700">Draft</span>
+                  <span className="rounded bg-gray-500/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-gray-700">{dict.common.draft}</span>
                 )}
                 {item.featured && (
                   <span className="rounded bg-amber-500/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-amber-700 flex items-center gap-0.5">
-                    <Star className="h-2.5 w-2.5 fill-amber-700 text-amber-700" /> Featured
+                    <Star className="h-2.5 w-2.5 fill-amber-700 text-amber-700" /> {dict.common.featured}
                   </span>
                 )}
               </div>
@@ -247,14 +250,14 @@ export default function AdminTransportationPage() {
                   <Button variant="ghost" size="icon" onClick={() => setEditing(item)} title="Edit Options">
                     <Pencil className="h-4 w-4 text-gray-600 dark:text-gray-400" />
                   </Button>
-                  <a href="/transportation" target="_blank" rel="noopener noreferrer" className="inline-flex h-9 w-9 items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" title="View Public Page">
+                  <a href={`${publicLocalePrefix}/transportation`} target="_blank" rel="noopener noreferrer" className="inline-flex h-9 w-9 items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" title={dict.common.viewPublicPage}>
                     <Eye className="h-4 w-4 text-gray-600 dark:text-gray-400" />
                   </a>
                   <Button
                     variant="ghost"
                     size="icon"
                     onClick={() => handleDelete(item.id, item.title || item.name || "Route")}
-                    title="Delete Option"
+                    title={dict.common.delete}
                   >
                     <Trash2 className="h-4 w-4 text-red-500" />
                   </Button>

@@ -20,53 +20,73 @@ import { breadcrumbSchema } from "@/lib/seo";
 import { getPageContext } from "@/lib/i18n/get-dictionary";
 import { createLocalizedMetadata, localizedBreadcrumb } from "@/lib/i18n/metadata";
 import { getOtherServicesContent } from "@/lib/content/guest-pages";
+import { getPageContent } from "@/lib/data/services";
 import type { Locale } from "@/lib/i18n/config";
 
+function isBulletLine(line: string) {
+  return line.startsWith("•") || line.startsWith("-") || line.startsWith("â€¢");
+}
+
+function cleanBulletLine(line: string) {
+  return line.replace(/^(•|-|â€¢)\s*/, "");
+}
+
 function renderDescription(text: string) {
-  const paragraphs = text.split('\n\n');
+  const paragraphs = text.split("\n\n");
   return (
     <div className="space-y-4 mt-2">
-      {paragraphs.map((p, i) => {
-        const lines = p.split('\n');
+      {paragraphs.map((paragraph, paragraphIndex) => {
+        const lines = paragraph.split("\n");
         const elements: React.ReactNode[] = [];
-        let inList = false;
         let listItems: React.ReactNode[] = [];
-        
-        for (let j = 0; j < lines.length; j++) {
-          const line = lines[j].trim();
+
+        const flushList = (key: string) => {
+          if (!listItems.length) return;
+          elements.push(
+            <ul key={key} className="list-disc pl-5 space-y-1.5 mt-2 mb-3">
+              {listItems}
+            </ul>
+          );
+          listItems = [];
+        };
+
+        for (let index = 0; index < lines.length; index++) {
+          const line = lines[index].trim();
           if (!line) continue;
 
-          if (line.startsWith('•')) {
-            listItems.push(<li key={`li-${j}`}>{line.replace(/^•\s*/, '')}</li>);
-            inList = true;
+          if (isBulletLine(line)) {
+            listItems.push(<li key={`li-${index}`}>{cleanBulletLine(line)}</li>);
+            continue;
+          }
+
+          flushList(`ul-${index}`);
+
+          const nextLine = lines[index + 1]?.trim() || "";
+          const isHeading =
+            line.length < 60 &&
+            !line.endsWith(".") &&
+            index < lines.length - 1 &&
+            isBulletLine(nextLine);
+          const isHeadingColon = line.endsWith(":");
+
+          if (isHeading || isHeadingColon) {
+            elements.push(
+              <strong key={`heading-${index}`} className="block mt-4 mb-2 text-foreground font-semibold">
+                {line}
+              </strong>
+            );
           } else {
-            if (inList) {
-              elements.push(<ul key={`ul-${j}`} className="list-disc pl-5 space-y-1.5 mt-2 mb-3">{listItems}</ul>);
-              listItems = [];
-              inList = false;
-            }
-            
-            const isHeading = 
-              line.length < 60 && 
-              !line.endsWith('.') && 
-              j < lines.length - 1 && 
-              lines[j+1].trim().startsWith('•');
-              
-            const isHeadingColon = line.endsWith(':');
-            
-            if (isHeading || isHeadingColon) {
-              elements.push(<strong key={`heading-${j}`} className="block mt-4 mb-2 text-foreground font-semibold">{line}</strong>);
-            } else {
-              elements.push(<p key={`p-${j}`} className={j > 0 ? "mt-2" : ""}>{line}</p>);
-            }
+            elements.push(
+              <p key={`p-${index}`} className={index > 0 ? "mt-2" : ""}>
+                {line}
+              </p>
+            );
           }
         }
-        
-        if (inList) {
-          elements.push(<ul key={`ul-end`} className="list-disc pl-5 space-y-1.5 mt-2 mb-3">{listItems}</ul>);
-        }
-        
-        return <div key={i}>{elements}</div>;
+
+        flushList("ul-end");
+
+        return <div key={paragraphIndex}>{elements}</div>;
       })}
     </div>
   );
@@ -116,8 +136,12 @@ export default async function OtherServicesPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale, dict } = await getPageContext(params);
+  const loc = locale as Locale;
   const p = dict.pages.otherServices;
-  const content = getOtherServicesContent(locale as Locale);
+  const [page, content] = await Promise.all([
+    getPageContent(loc, "other-services"),
+    Promise.resolve(getOtherServicesContent(loc)),
+  ]);
 
   return (
     <>
@@ -129,10 +153,14 @@ export default async function OtherServicesPage({
           ])
         )}
       />
-      <PageHero title={p.title} subtitle={p.subtitle} />
+      <PageHero
+        title={page?.heroTitle || p.title}
+        subtitle={page?.heroSubtitle || p.subtitle}
+        image={page?.heroImage}
+      />
 
       <Section>
-        <PageIntro>{p.intro}</PageIntro>
+        <PageIntro>{page?.intro || p.intro}</PageIntro>
         <MotionStagger className="space-y-12">
           {content.sections.map((section, sectionIndex) => (
             <MotionItem key={section.id} className="space-y-5">
@@ -154,17 +182,17 @@ export default async function OtherServicesPage({
                   return (
                     <MotionItem key={item.id}>
                       <Card className="h-full">
-                      <CardHeader className="gap-4">
-                        <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ${tone}`}>
-                          <Icon className="h-5 w-5" aria-hidden />
-                        </span>
-                        <div>
-                          <CardTitle className="text-base leading-snug">{item.title}</CardTitle>
-                          <div className="mt-2 text-sm text-text/70 leading-relaxed text-[var(--color-body)]">
-                            {renderDescription(item.description)}
+                        <CardHeader className="gap-4">
+                          <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ${tone}`}>
+                            <Icon className="h-5 w-5" aria-hidden />
+                          </span>
+                          <div>
+                            <CardTitle className="text-base leading-snug">{item.title}</CardTitle>
+                            <div className="mt-2 text-sm text-text/70 leading-relaxed text-[var(--color-body)]">
+                              {renderDescription(item.description)}
+                            </div>
                           </div>
-                        </div>
-                      </CardHeader>
+                        </CardHeader>
                       </Card>
                     </MotionItem>
                   );

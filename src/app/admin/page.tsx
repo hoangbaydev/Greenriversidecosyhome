@@ -28,7 +28,7 @@ import {
   countTours,
 } from "@/services";
 import { AdminPageSkeleton } from "@/components/ui/skeleton";
-import { useAdminDict } from "@/components/admin/AdminI18nProvider";
+import { useAdminI18n } from "@/components/admin/AdminI18nProvider";
 
 type StatCard = {
   label: string;
@@ -39,15 +39,9 @@ type StatCard = {
   helper: string;
 };
 
-const workflow = [
-  "Update homepage hero and featured content first.",
-  "Keep rooms and tours published only when pricing and images are ready.",
-  "Upload fewer, stronger images: one cover plus a clean gallery.",
-  "Review SEO titles before publishing new public pages.",
-];
-
 export default function AdminDashboard() {
-  const dict = useAdminDict();
+  const { dict, locale } = useAdminI18n();
+  const websiteHref = locale === "vi" ? "/vi" : "/en";
   const [stats, setStats] = useState<Record<string, number>>({});
   const [loading, setLoading] = useState(true);
 
@@ -79,7 +73,7 @@ export default function AdminDashboard() {
         icon: Bed,
         href: "/admin/rooms",
         tone: "bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-300",
-        helper: "Accommodation catalog",
+        helper: dict.dashboard.helpers.rooms,
       },
       {
         label: dict.dashboard.tours,
@@ -87,7 +81,7 @@ export default function AdminDashboard() {
         icon: Map,
         href: "/admin/tours",
         tone: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300",
-        helper: "Caves and experiences",
+        helper: dict.dashboard.helpers.tours,
       },
       {
         label: dict.dashboard.activities,
@@ -95,7 +89,7 @@ export default function AdminDashboard() {
         icon: Calendar,
         href: "/admin/activities",
         tone: "bg-violet-50 text-violet-700 dark:bg-violet-950 dark:text-violet-300",
-        helper: "Weekly guest events",
+        helper: dict.dashboard.helpers.activities,
       },
       {
         label: dict.dashboard.blogPosts,
@@ -103,7 +97,7 @@ export default function AdminDashboard() {
         icon: FileText,
         href: "/admin/blog",
         tone: "bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300",
-        helper: "Travel guides",
+        helper: dict.dashboard.helpers.blogPosts,
       },
       {
         label: dict.dashboard.galleryImages,
@@ -111,46 +105,46 @@ export default function AdminDashboard() {
         icon: ImageIcon,
         href: "/admin/gallery",
         tone: "bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-300",
-        helper: "Published moments",
+        helper: dict.dashboard.helpers.galleryImages,
       },
     ],
     [dict, stats]
   );
 
   const quickActions = [
-    { label: "Homepage", href: "/admin/homepage", icon: Home, helper: "Hero, featured rooms, featured tours" },
-    { label: "Page Content", href: "/admin/pages", icon: Layout, helper: "Page heroes, intros, labels, SEO" },
-    { label: "New Tour", href: "/admin/tours", icon: Map, helper: "Create or update cave experiences" },
-    { label: "Upload Gallery", href: "/admin/gallery", icon: ImageIcon, helper: "Add curated public photos" },
-    { label: "Transportation", href: "/admin/transportation", icon: Truck, helper: "Transfers, buses, rentals" },
-    { label: "Site Settings", href: "/admin/settings", icon: Settings, helper: "Logo, contact info, socials" },
+    { label: dict.dashboard.actions.homepage, href: "/admin/homepage", icon: Home, helper: dict.dashboard.actions.homepageHelp },
+    { label: dict.dashboard.actions.pages, href: "/admin/pages", icon: Layout, helper: dict.dashboard.actions.pagesHelp },
+    { label: dict.dashboard.actions.newTour, href: "/admin/tours", icon: Map, helper: dict.dashboard.actions.newTourHelp },
+    { label: dict.dashboard.actions.gallery, href: "/admin/gallery", icon: ImageIcon, helper: dict.dashboard.actions.galleryHelp },
+    { label: dict.dashboard.actions.transportation, href: "/admin/transportation", icon: Truck, helper: dict.dashboard.actions.transportationHelp },
+    { label: dict.dashboard.actions.settings, href: "/admin/settings", icon: Settings, helper: dict.dashboard.actions.settingsHelp },
   ];
 
   if (loading) return <AdminPageSkeleton />;
 
   return (
     <div className="space-y-8">
-      <section className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+      <section className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
         <div className="grid gap-6 p-6 lg:grid-cols-[1fr_auto] lg:items-center">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-primary">
               <Sparkles className="h-3.5 w-3.5" />
-              CMS Dashboard
+              {dict.dashboard.eyebrow}
             </div>
             <h1 className="mt-4 font-heading text-3xl font-bold text-gray-950 dark:text-white">
               {dict.dashboard.title}
             </h1>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed text-gray-500 dark:text-gray-400">
-              Manage public pages, rooms, tours, transport, images, reviews, and site settings from one calm workspace.
+              {dict.dashboard.subtitle}
             </p>
           </div>
           <Link
-            href="/en"
+            href={websiteHref}
             target="_blank"
             className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-dark"
           >
             <Globe className="h-4 w-4" />
-            View Website
+            {dict.layout.viewWebsite}
             <ExternalLink className="h-3.5 w-3.5" />
           </Link>
         </div>
@@ -178,7 +172,7 @@ export default function AdminDashboard() {
                     {card.value ?? 0}
                   </p>
                   <span className="mt-2 block text-xs font-semibold text-gray-400 transition-colors group-hover:text-primary">
-                    Manage content
+                    {dict.dashboard.manageContent}
                   </span>
                 </CardContent>
               </Card>
@@ -192,7 +186,7 @@ export default function AdminDashboard() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 font-heading text-xl text-gray-950 dark:text-white">
               <Plus className="h-5 w-5 text-primary" />
-              Quick Actions
+              {dict.dashboard.quickActions}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -224,11 +218,11 @@ export default function AdminDashboard() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 font-heading text-xl text-gray-950 dark:text-white">
               <CheckCircle2 className="h-5 w-5 text-primary" />
-              Publishing Checklist
+              {dict.dashboard.publishingChecklist}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            {workflow.map((item) => (
+            {dict.dashboard.workflow.map((item) => (
               <div key={item} className="flex gap-3 rounded-lg bg-gray-50 p-3 dark:bg-gray-950">
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                 <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">{item}</p>
@@ -238,9 +232,9 @@ export default function AdminDashboard() {
               <div className="flex gap-3">
                 <MessageCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                 <div>
-                  <p className="text-sm font-bold text-gray-900 dark:text-white">Direct booking focus</p>
+                  <p className="text-sm font-bold text-gray-900 dark:text-white">{dict.dashboard.directBookingFocus}</p>
                   <p className="mt-1 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-                    Keep calls-to-action clear and route guests to WhatsApp for rooms, tours, transfers, and questions.
+                    {dict.dashboard.directBookingHelp}
                   </p>
                 </div>
               </div>

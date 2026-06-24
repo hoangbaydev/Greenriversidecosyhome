@@ -19,12 +19,20 @@ export function createMetadata({
 }: PageSEO): Metadata {
   const url = `${SITE_URL}${path}`;
   const ogImage = image || `${SITE_URL}${DEFAULT_OG_IMAGE}`;
+  const alternatePath = path && path !== "/" ? path.replace(/^\/(en|vi)/, "") : "";
 
   return {
     title,
     description,
     metadataBase: new URL(SITE_URL),
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      languages: {
+        en: `${SITE_URL}/en${alternatePath}`,
+        vi: `${SITE_URL}/vi${alternatePath}`,
+        "x-default": `${SITE_URL}/en${alternatePath}`,
+      },
+    },
     openGraph: {
       title,
       description,

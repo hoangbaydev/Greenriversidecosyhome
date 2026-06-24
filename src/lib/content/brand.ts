@@ -27,6 +27,8 @@ export interface WeeklyDay {
 export interface ExploreHighlight {
   title: string;
   description: string;
+  ctaLabel?: string;
+  ctaMessage?: string;
 }
 
 export interface ExploreSection {
@@ -341,6 +343,90 @@ export function getExploreSections(locale: Locale): ExploreSection[] {
         : "Phong Nha is one of Vietnam's best destinations for adventure lovers. Tours may include jungle trekking, stream crossings, remote villages, limestone climbs, cave exploration, swimming in clear cave pools, underground paddle boarding, and overnight camping.\n\nOptions range from easy one-day trips to 2, 3, 4, and 5-day expeditions. Ms. Linh can help you choose the right adventure for your time, fitness level, and budget.",
       ctaHref: "/tours",
       ctaLabel: vi ? "Nhận tư vấn tour mạo hiểm" : "Get adventure tour advice",
+    },
+    {
+      id: "other-tours-vietnam",
+      title: vi ? "Tour Khác ở Việt Nam" : "Other Tours in Vietnam",
+      subtitle: vi
+        ? "Hà Giang, Sa Pa, Hạ Long, Ninh Bình, Huế, Đà Nẵng và Hội An"
+        : "Ha Giang, Sa Pa, Ha Long, Ninh Binh, Hue, Da Nang, and Hoi An",
+      body: vi
+        ? "Nếu bạn muốn tiếp tục hành trình sau Phong Nha, Green Riverside có thể gợi ý các tuyến tour và điểm dừng nổi bật ở miền Bắc, miền Trung và ven biển Việt Nam.\n\nChúng tôi có thể hỗ trợ bạn chọn lịch trình phù hợp, nối chuyến xe/tàu, thời gian di chuyển hợp lý và những trải nghiệm đáng đi nhất theo ngân sách, số ngày và phong cách du lịch của bạn."
+        : "If you want to continue your journey beyond Phong Nha, Green Riverside can help you plan trusted routes and highlights across northern, central, and coastal Vietnam.\n\nWe can suggest a practical itinerary, transport connections, travel timing, and the best-fit experiences based on your budget, available days, and travel style.",
+      highlights: [
+        {
+          title: "Ha Giang",
+          description: vi
+            ? "Cung đường vòng núi đá hùng vĩ, đèo Mã Pì Lèng, làng dân tộc và cảnh quan miền núi phía Bắc."
+            : "Dramatic mountain loop roads, Ma Pi Leng Pass, ethnic villages, and northern highland scenery.",
+          ctaLabel: vi ? "Hỏi tour Hà Giang" : "Ask about Ha Giang",
+          ctaMessage: vi
+            ? "Chào Green Riverside! Tôi muốn hỏi tour Hà Giang. Bạn có thể tư vấn lịch trình, giá và cách di chuyển không?"
+            : "Hi Green Riverside! I'd like to ask about Ha Giang tours. Could you help with itinerary, price, and transport?",
+        },
+        {
+          title: "Sa Pa",
+          description: vi
+            ? "Ruộng bậc thang, trekking bản làng, Fansipan và không khí vùng cao mát mẻ."
+            : "Rice terraces, village trekking, Fansipan, and cool mountain weather.",
+          ctaLabel: vi ? "Hỏi tour Sa Pa" : "Ask about Sa Pa",
+          ctaMessage: vi
+            ? "Chào Green Riverside! Tôi muốn hỏi tour Sa Pa. Bạn có thể tư vấn lịch trình, giá và cách di chuyển không?"
+            : "Hi Green Riverside! I'd like to ask about Sa Pa tours. Could you help with itinerary, price, and transport?",
+        },
+        {
+          title: "Ha Long",
+          description: vi
+            ? "Du thuyền vịnh, kayak, hang động biển và cảnh quan đá vôi nổi tiếng thế giới."
+            : "Bay cruises, kayaking, sea caves, and world-famous limestone seascapes.",
+          ctaLabel: vi ? "Hỏi tour Hạ Long" : "Ask about Ha Long",
+          ctaMessage: vi
+            ? "Chào Green Riverside! Tôi muốn hỏi tour Hạ Long. Bạn có thể tư vấn du thuyền, lịch trình, giá và cách di chuyển không?"
+            : "Hi Green Riverside! I'd like to ask about Ha Long tours. Could you help with cruise options, itinerary, price, and transport?",
+        },
+        {
+          title: "Ninh Binh",
+          description: vi
+            ? "Tràng An, Tam Cốc, Hang Múa, chùa Bái Đính và cảnh đồng quê đẹp gần Hà Nội."
+            : "Trang An, Tam Coc, Hang Mua, Bai Dinh Pagoda, and countryside scenery near Hanoi.",
+          ctaLabel: vi ? "Hỏi tour Ninh Bình" : "Ask about Ninh Binh",
+          ctaMessage: vi
+            ? "Chào Green Riverside! Tôi muốn hỏi tour Ninh Bình. Bạn có thể tư vấn lịch trình, giá và cách di chuyển không?"
+            : "Hi Green Riverside! I'd like to ask about Ninh Binh tours. Could you help with itinerary, price, and transport?",
+        },
+        {
+          title: "Hue",
+          description: vi
+            ? "Kinh thành, lăng vua, sông Hương, ẩm thực cung đình và lịch sử miền Trung."
+            : "Imperial citadel, royal tombs, Perfume River, local food, and central Vietnam history.",
+          ctaLabel: vi ? "Hỏi tour Huế" : "Ask about Hue",
+          ctaMessage: vi
+            ? "Chào Green Riverside! Tôi muốn hỏi tour Huế. Bạn có thể tư vấn lịch trình, giá và cách di chuyển không?"
+            : "Hi Green Riverside! I'd like to ask about Hue tours. Could you help with itinerary, price, and transport?",
+        },
+        {
+          title: "Da Nang",
+          description: vi
+            ? "Biển Mỹ Khê, Bà Nà Hills, Ngũ Hành Sơn và điểm nối thuận tiện giữa Huế - Hội An."
+            : "My Khe Beach, Ba Na Hills, Marble Mountains, and an easy hub between Hue and Hoi An.",
+          ctaLabel: vi ? "Hỏi tour Đà Nẵng" : "Ask about Da Nang",
+          ctaMessage: vi
+            ? "Chào Green Riverside! Tôi muốn hỏi tour Đà Nẵng. Bạn có thể tư vấn lịch trình, giá và cách di chuyển không?"
+            : "Hi Green Riverside! I'd like to ask about Da Nang tours. Could you help with itinerary, price, and transport?",
+        },
+        {
+          title: "Hoi An",
+          description: vi
+            ? "Phố cổ, đèn lồng, may đo, lớp nấu ăn, làng rau Trà Quế và biển An Bàng."
+            : "Ancient town, lanterns, tailoring, cooking classes, Tra Que village, and An Bang Beach.",
+          ctaLabel: vi ? "Hỏi tour Hội An" : "Ask about Hoi An",
+          ctaMessage: vi
+            ? "Chào Green Riverside! Tôi muốn hỏi tour Hội An. Bạn có thể tư vấn lịch trình, giá và cách di chuyển không?"
+            : "Hi Green Riverside! I'd like to ask about Hoi An tours. Could you help with itinerary, price, and transport?",
+        },
+      ],
+      ctaHref: "/contact",
+      ctaLabel: vi ? "Hỏi lịch trình Việt Nam" : "Ask about Vietnam routes",
     },
   ];
 }

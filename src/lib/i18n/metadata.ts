@@ -16,16 +16,21 @@ export function createLocalizedMetadata(
   const normalized = path.startsWith("/") ? path : `/${path}`;
   const fullPath = `/${locale}${normalized === "/" ? "" : normalized}`;
 
+  const languages = Object.fromEntries(
+    locales.map((l) => [
+      l,
+      `${SITE_URL}/${l}${normalized === "/" ? "" : normalized}`,
+    ])
+  );
+
   return {
     ...createMetadata({ title, description, path: fullPath }),
     alternates: {
       canonical: `${SITE_URL}${fullPath}`,
-      languages: Object.fromEntries(
-        locales.map((l) => [
-          l,
-          `${SITE_URL}/${l}${normalized === "/" ? "" : normalized}`,
-        ])
-      ),
+      languages: {
+        ...languages,
+        "x-default": `${SITE_URL}/en${normalized === "/" ? "" : normalized}`,
+      },
     },
   };
 }

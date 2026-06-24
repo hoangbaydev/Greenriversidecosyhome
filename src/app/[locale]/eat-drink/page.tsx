@@ -43,7 +43,7 @@ export default async function EatDrinkPage({ params }: { params: Promise<{ local
     {
       heroTitle: page?.heroTitle || cafe.title,
       heroSubtitle: page?.heroSubtitle || cafe.subtitle,
-      heroImage: page?.heroImage || cafe.images?.[0],
+      heroImage: page?.heroImage,
     },
     { title: p.title, subtitle: cafe.subtitle }
   );

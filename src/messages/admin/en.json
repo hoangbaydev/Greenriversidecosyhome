@@ -16,13 +16,23 @@
   },
   "layout": {
     "brand": "GR Admin",
+    "productName": "Green Riverside CMS",
+    "topbarEyebrow": "Content Management",
+    "website": "Website",
+    "viewWebsite": "View website",
     "logout": "Logout",
     "closeSidebar": "Close sidebar",
     "openMenu": "Open menu",
     "toggleTheme": "Toggle theme",
     "firebaseNotConfiguredTitle": "Firebase Not Configured",
     "firebaseNotConfiguredDesc": "Copy .env.example to .env.local and add your Firebase credentials.",
-    "language": "Language"
+    "language": "Language",
+    "groups": {
+      "overview": "Overview",
+      "website": "Website menu",
+      "catalog": "Content catalogs",
+      "trustMedia": "Settings & support"
+    }
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -32,6 +42,11 @@
     "faq": "FAQ",
     "pages": "Pages",
     "rooms": "Rooms",
+    "stay": "Stay",
+    "explore": "Explore",
+    "transport": "Transport",
+    "otherServices": "Other Services",
+    "usefulInfo": "Useful Information",
     "tours": "Tours",
     "activities": "Activities",
     "transportation": "Transportation",
@@ -42,12 +57,45 @@
   },
   "dashboard": {
     "title": "Dashboard",
-    "subtitle": "Manage your website content from Firestore.",
+    "eyebrow": "CMS Dashboard",
+    "subtitle": "Manage public pages, rooms, tours, transport, images, reviews, and site settings from one calm workspace.",
     "rooms": "Rooms",
     "tours": "Tours",
     "activities": "Activities",
     "blogPosts": "Blog Posts",
-    "galleryImages": "Gallery Images"
+    "galleryImages": "Gallery Images",
+    "manageContent": "Manage content",
+    "quickActions": "Quick actions",
+    "publishingChecklist": "Publishing checklist",
+    "directBookingFocus": "Direct booking focus",
+    "directBookingHelp": "Keep calls-to-action clear and route guests to WhatsApp for rooms, tours, transfers, and questions.",
+    "helpers": {
+      "rooms": "Accommodation catalog",
+      "tours": "Caves and experiences",
+      "activities": "Weekly guest events",
+      "blogPosts": "Travel guides",
+      "galleryImages": "Published moments"
+    },
+    "actions": {
+      "homepage": "Homepage",
+      "homepageHelp": "Hero, featured rooms, featured tours",
+      "pages": "Page content",
+      "pagesHelp": "Page heroes, intros, labels, SEO",
+      "newTour": "New tour",
+      "newTourHelp": "Create or update cave experiences",
+      "gallery": "Upload gallery",
+      "galleryHelp": "Add curated public photos",
+      "transportation": "Transportation",
+      "transportationHelp": "Transfers, buses, rentals",
+      "settings": "Site settings",
+      "settingsHelp": "Logo, contact info, socials"
+    },
+    "workflow": [
+      "Update homepage hero and featured content first.",
+      "Publish rooms and tours only when pricing and images are ready.",
+      "Upload fewer, stronger images: one cover plus a clean gallery.",
+      "Review SEO titles before publishing new public pages."
+    ]
   },
   "common": {
     "save": "Save",
@@ -67,8 +115,19 @@
     "uploadRequired": "Upload at least one image",
     "confirmDelete": "Delete this item?",
     "published": "Published",
+    "draft": "Draft",
     "featured": "Featured",
-    "manage": "Manage"
+    "manage": "Manage",
+    "viewPublicPage": "View public page",
+    "seoTitle": "Search Engine Optimization",
+    "seoHelp": "Customize metadata for Google Search. Defaults use the item title and short description when left empty.",
+    "customMetaTitle": "Custom meta title",
+    "customMetaDescription": "Custom meta description",
+    "seoPreview": "Google search result preview",
+    "characters": "characters",
+    "idealLength": "ideal: 120-160",
+    "emptySeoTitle": "Enter details to populate the search title.",
+    "emptySeoDescription": "Description preview will display here."
   },
   "crud": {
     "rooms": {
@@ -103,7 +162,12 @@
         "category": "Room group",
         "categoryPlaceholder": "Example: Private Room or Dorm",
         "order": "Display order",
-        "next": "Next step →"
+        "next": "Next step",
+        "amenitiesLabel": "Amenities / room features",
+        "amenitiesPlaceholder": "Air conditioning, Hot shower, Mountain view, Private balcony, Free Wi-Fi...",
+        "amenitiesHelp": "Separate amenities with commas. They will appear as checked bullet items on the room details page.",
+        "mediaTitle": "Room media gallery",
+        "mediaHelp": "Upload several images at once, optimize to high-quality WebP, drag to sort, and choose the first cover image."
       },
       "list": {
         "currentTitle": "8 rooms currently published",

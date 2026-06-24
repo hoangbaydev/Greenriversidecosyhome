@@ -13,6 +13,31 @@ import type { PageContent, PageKey, PageLabels } from "@/types";
 
 const LOCALES = ["en", "vi"] as const;
 
+const PUBLIC_MENU_PAGES: { key: PageKey; label: string; helper: string }[] = [
+  { key: "our-story", label: "Our Story", helper: "Hero, intro, CTA, and SEO for the story page." },
+  { key: "stay", label: "Stay", helper: "Hero, intro, listing labels, room CTA, and SEO." },
+  { key: "eat-drink", label: "Eat & Drink", helper: "Hero, intro, CTA, and SEO for the cafe page." },
+  { key: "social-activities", label: "Social Activities", helper: "Hero, intro, schedule labels, and SEO." },
+  { key: "explore-phong-nha", label: "Explore", helper: "Hero, intro, and SEO for Explore Phong Nha." },
+  { key: "transportation", label: "Transport", helper: "Hero, intro, CTA, and SEO for transport." },
+  { key: "other-services", label: "Other Services", helper: "Hero, intro, CTA, and SEO for other services." },
+  { key: "gallery", label: "Gallery", helper: "Hero, intro, filters, gallery labels, and SEO." },
+  { key: "useful-info", label: "Useful Information", helper: "Hero, intro, CTA, and SEO for useful information." },
+  { key: "tours", label: "Tours Catalog", helper: "Tour listing labels and SEO used by tour sections." },
+  { key: "blog", label: "Blog", helper: "Hero, search labels, blog listing text, and SEO." },
+  { key: "contact", label: "Contact", helper: "Hero, contact labels, map labels, and SEO." },
+];
+
+function isPageKey(value: string | null): value is PageKey {
+  return !!value && PAGE_KEYS.includes(value as PageKey);
+}
+
+function readPageHash(): PageKey | null {
+  if (typeof window === "undefined") return null;
+  const value = window.location.hash.replace("#", "");
+  return isPageKey(value) ? value : null;
+}
+
 const emptyPage = (pageKey: PageKey, locale: string): PageContent => ({
   pageKey,
   locale,
@@ -59,10 +84,19 @@ const LABEL_FIELDS: { key: keyof PageLabels; label: string; pages: PageKey[] }[]
 
 export default function AdminPagesPage() {
   const [locale, setLocale] = useState<(typeof LOCALES)[number]>("en");
-  const [pageKey, setPageKey] = useState<PageKey>("stay");
+  const [pageKey, setPageKey] = useState<PageKey>(() => readPageHash() ?? "stay");
   const [content, setContent] = useState<PageContent>(emptyPage("stay", "en"));
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    const syncHash = () => {
+      const nextPage = readPageHash();
+      if (nextPage) setPageKey(nextPage);
+    };
+    window.addEventListener("hashchange", syncHash);
+    return () => window.removeEventListener("hashchange", syncHash);
+  }, []);
 
   useEffect(() => {
     async function load() {
@@ -99,13 +133,16 @@ export default function AdminPagesPage() {
   };
 
   const pageLabels = LABEL_FIELDS.filter((f) => f.pages.includes(pageKey));
+  const pageOption = PUBLIC_MENU_PAGES.find((page) => page.key === pageKey);
 
   if (loading) return <FormSkeleton />;
 
   return (
     <div>
-      <h1 className="font-heading text-2xl font-bold dark:text-white">Page Content</h1>
-      <p className="mt-1 text-sm text-gray-500">Hero, intro, CTAs, labels, and SEO for each public page.</p>
+      <h1 className="font-heading text-2xl font-bold dark:text-white">Website Menu Content</h1>
+      <p className="mt-1 text-sm text-gray-500">
+        Edit hero, intro, buttons, labels, and SEO for each menu item on the public website.
+      </p>
 
       <div className="mt-4 flex flex-wrap gap-2">
         {LOCALES.map((l) => (
@@ -116,16 +153,19 @@ export default function AdminPagesPage() {
       </div>
 
       <div className="mt-4">
-        <Label>Page</Label>
+        <Label>Menu item / page</Label>
         <select
           value={pageKey}
           onChange={(e) => setPageKey(e.target.value as PageKey)}
           className="mt-1 w-full max-w-md rounded-lg border px-3 py-2 text-sm dark:bg-gray-800"
         >
-          {PAGE_KEYS.map((key) => (
-            <option key={key} value={key}>{key}</option>
+          {PUBLIC_MENU_PAGES.map((page) => (
+            <option key={page.key} value={page.key}>{page.label}</option>
           ))}
         </select>
+        {pageOption ? (
+          <p className="mt-2 text-xs text-gray-500">{pageOption.helper}</p>
+        ) : null}
       </div>
 
       <div className="mt-6 space-y-8">

@@ -1,10 +1,10 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { locales, type Locale, localizedPath, stripLocale } from "@/lib/i18n/config";
+import { locales, localizedPath, stripLocale, type Locale } from "@/lib/i18n/config";
 import { cn } from "@/lib/utils";
 
 const LOCALE_DETAILS = {
@@ -24,13 +24,12 @@ export function LanguageSwitcher({
   const pathname = usePathname();
   const currentLocale = (pathname.split("/")[1] as Locale) || "en";
   const pathWithoutLocale = stripLocale(pathname);
-
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleOutsideClick = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
@@ -42,7 +41,7 @@ export function LanguageSwitcher({
     return (
       <div
         className={cn(
-          "flex items-center gap-1 rounded-full border border-border bg-soft/50 p-1 w-full shadow-sm",
+          "flex w-full items-center gap-1 rounded-full border border-border bg-soft/50 p-1 shadow-sm",
           className
         )}
         role="group"
@@ -56,15 +55,17 @@ export function LanguageSwitcher({
               key={loc}
               href={localizedPath(loc, pathWithoutLocale)}
               className={cn(
-                "flex-1 inline-flex min-h-10 items-center justify-center gap-2 rounded-full px-3 text-sm font-semibold transition-all duration-300",
+                "inline-flex min-h-10 flex-1 items-center justify-center gap-2 rounded-full px-3 text-sm font-semibold transition-all duration-300",
                 isActive
-                  ? "bg-primary text-white shadow-sm font-bold"
+                  ? "bg-primary text-white shadow-sm"
                   : "text-text-muted hover:bg-white hover:text-primary"
               )}
               aria-current={isActive ? "true" : undefined}
               lang={loc}
             >
-              <span aria-hidden>{itemDetails.flag}</span>
+              <span aria-hidden className="text-base leading-none">
+                {itemDetails.flag}
+              </span>
               <span>{itemDetails.label}</span>
             </a>
           );
@@ -81,7 +82,7 @@ export function LanguageSwitcher({
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
         className={cn(
-          "inline-flex min-h-10 items-center justify-between gap-2 rounded-full border px-3.5 text-sm font-semibold transition-all duration-200 cursor-pointer shadow-sm hover:-translate-y-0.5 hover:shadow active:translate-y-0",
+          "inline-flex min-h-10 items-center justify-between gap-2 rounded-full border px-3.5 text-sm font-semibold shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow active:translate-y-0",
           inverted
             ? "border-white/20 bg-white/10 text-white hover:bg-white/25"
             : "border-border bg-white/85 text-text hover:border-primary/25 hover:bg-soft"
@@ -89,7 +90,9 @@ export function LanguageSwitcher({
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
-        <span aria-hidden>{details.flag}</span>
+        <span aria-hidden className="text-base leading-none">
+          {details.flag}
+        </span>
         <span className="language-label font-sans text-sm font-semibold">{details.label}</span>
         <ChevronDown
           className={cn(
@@ -118,12 +121,14 @@ export function LanguageSwitcher({
                   className={cn(
                     "flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-left text-sm font-semibold transition-colors",
                     isActive
-                      ? "bg-soft text-primary font-semibold"
+                      ? "bg-soft text-primary"
                       : "text-text-muted hover:bg-soft/75 hover:text-primary"
                   )}
                   lang={loc}
                 >
-                  <span aria-hidden>{itemDetails.flag}</span>
+                  <span aria-hidden className="text-base leading-none">
+                    {itemDetails.flag}
+                  </span>
                   <span>{itemDetails.label}</span>
                 </a>
               );

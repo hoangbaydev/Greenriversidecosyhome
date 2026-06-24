@@ -39,7 +39,7 @@ export function EatDrinkExperience({
         />
         <div className="mt-12 space-y-20 md:space-y-28">
           {featured.map((block, index) => {
-            const image = SAMPLE_IMAGES[block.imageKey];
+            const image = content.images?.[index] || SAMPLE_IMAGES[block.imageKey];
             const reversed = index % 2 === 1;
             return (
               <motion.div
@@ -80,7 +80,8 @@ export function EatDrinkExperience({
           className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
         >
           {gridBlocks.map((block, index) => {
-            const image = SAMPLE_IMAGES[block.imageKey];
+            const contentImageIndex = featured.length + index;
+            const image = content.images?.[contentImageIndex] || SAMPLE_IMAGES[block.imageKey];
             return (
               <motion.article
                 key={block.title}

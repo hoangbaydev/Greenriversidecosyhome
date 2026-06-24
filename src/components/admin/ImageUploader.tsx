@@ -40,10 +40,12 @@ function SortableImage({
   url,
   index,
   onRemove,
+  compact = false,
 }: {
   url: string;
   index: number;
   onRemove: () => void;
+  compact?: boolean;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: url });
@@ -59,7 +61,10 @@ function SortableImage({
       ref={setNodeRef}
       style={style}
       className={cn(
-        "group relative aspect-square overflow-hidden rounded-xl border bg-gray-50 transition-all duration-300 dark:bg-gray-900",
+        "group relative overflow-hidden border bg-gray-50 transition-all duration-300 dark:bg-gray-900",
+        compact
+          ? "h-28 rounded-lg sm:h-32"
+          : "aspect-square rounded-xl",
         index === 0
           ? "border-amber-400 ring-2 ring-amber-400/30 dark:border-amber-500 shadow-md"
           : "border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700",
@@ -74,7 +79,7 @@ function SortableImage({
       />
 
       {/* Cover Label Badge */}
-      {index === 0 && (
+      {index === 0 && !compact && (
         <span className="absolute left-2.5 top-2.5 z-10 flex items-center gap-1 rounded-full bg-amber-500 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white shadow-sm">
           <Star className="h-3 w-3 fill-current" /> Cover
         </span>
@@ -150,6 +155,8 @@ export function ImageUploader({
   const [pendingUploads, setPendingUploads] = useState<
     { id: string; name: string; progress: number; previewUrl: string }[]
   >([]);
+  const canAddMore = images.length < maxImages;
+  const isSingleImage = maxImages === 1;
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -171,7 +178,8 @@ export function ImageUploader({
 
       if (!fileArray.length) return;
 
-      const remaining = maxImages - images.length;
+      const replacingSingleImage = maxImages === 1 && images.length >= maxImages;
+      const remaining = replacingSingleImage ? 1 : maxImages - images.length;
       const toUpload = fileArray.slice(0, remaining);
 
       if (toUpload.length < fileArray.length) {
@@ -209,7 +217,7 @@ export function ImageUploader({
           newUrls.push(result.url);
           savedBytes += Math.max(0, result.originalSize - result.uploadedSize);
         }
-        onChange([...images, ...newUrls]);
+        onChange(replacingSingleImage ? newUrls : [...images, ...newUrls]);
         const savedText = savedBytes > 0 ? ` Saved about ${formatBytes(savedBytes)}.` : "";
         toast.success(`${newUrls.length} image(s) optimized and uploaded.${savedText}`);
       } catch (error) {
@@ -236,61 +244,72 @@ export function ImageUploader({
   };
 
   return (
-    <div className={cn("space-y-6", className)}>
-      <div
-        onDragOver={(e) => {
-          e.preventDefault();
-          setDragOver(true);
-        }}
-        onDragLeave={() => setDragOver(false)}
-        onDrop={(e) => {
-          e.preventDefault();
-          setDragOver(false);
-          if (e.dataTransfer.files.length) handleFiles(e.dataTransfer.files);
-        }}
-        onClick={() => !uploading && fileInputRef.current?.click()}
-        className={cn(
-          "relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed p-10 transition-all duration-300 cursor-pointer bg-gray-50/50 dark:bg-gray-950/5",
-          dragOver
-            ? "border-primary bg-primary/10 dark:border-primary-dark scale-[1.01]"
-            : "border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600 hover:bg-gray-100/50 dark:hover:bg-gray-900/10",
-          uploading && "pointer-events-none opacity-60"
-        )}
-      >
-        <input
-          type="file"
-          ref={fileInputRef}
-          accept="image/*"
-          multiple
-          className="hidden"
-          onChange={(e) => e.target.files && handleFiles(e.target.files)}
-          disabled={uploading || images.length >= maxImages}
-        />
-        
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-soft text-primary mb-3.5 transition-transform duration-300 group-hover:scale-110">
-          <Upload className="h-5 w-5 text-primary" />
-        </div>
-        
-        <h3 className="text-sm font-bold text-gray-800 dark:text-gray-200 text-center">
-          Drag and drop images here, or click to browse
-        </h3>
-        
-        <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400 text-center">
-          Images are converted to lightweight WebP before upload. {getUploadableImageHint()}
-        </p>
+    <div className={cn(isSingleImage ? "space-y-3" : "space-y-6", className)}>
+      <input
+        type="file"
+        ref={fileInputRef}
+        accept="image/*"
+        multiple={maxImages > 1}
+        className="hidden"
+        onChange={(e) => e.target.files && handleFiles(e.target.files)}
+        disabled={uploading || (!canAddMore && maxImages > 1)}
+      />
 
-        <button 
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            fileInputRef.current?.click();
+      {canAddMore && (
+        <div
+          onDragOver={(e) => {
+            e.preventDefault();
+            setDragOver(true);
           }}
-          disabled={uploading || images.length >= maxImages}
-          className="mt-5 rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-primary/95 transition-all active:scale-[0.98]"
+          onDragLeave={() => setDragOver(false)}
+          onDrop={(e) => {
+            e.preventDefault();
+            setDragOver(false);
+            if (e.dataTransfer.files.length) handleFiles(e.dataTransfer.files);
+          }}
+          onClick={() => !uploading && fileInputRef.current?.click()}
+          className={cn(
+            "relative flex flex-col items-center justify-center border-2 border-dashed transition-all duration-300 cursor-pointer bg-gray-50/50 dark:bg-gray-950/5",
+            isSingleImage ? "rounded-xl p-4" : "rounded-2xl p-10",
+            dragOver
+              ? "border-primary bg-primary/10 dark:border-primary-dark scale-[1.01]"
+              : "border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600 hover:bg-gray-100/50 dark:hover:bg-gray-900/10",
+            uploading && "pointer-events-none opacity-60"
+          )}
         >
-          Choose Files
-        </button>
-      </div>
+          <div
+            className={cn(
+              "flex items-center justify-center rounded-full bg-soft text-primary transition-transform duration-300 group-hover:scale-110",
+              isSingleImage ? "mb-2 h-9 w-9" : "mb-3.5 h-12 w-12"
+            )}
+          >
+            <Upload className={cn("text-primary", isSingleImage ? "h-4 w-4" : "h-5 w-5")} />
+          </div>
+
+          <h3 className={cn("font-bold text-gray-800 dark:text-gray-200 text-center", isSingleImage ? "text-xs" : "text-sm")}>
+            {isSingleImage ? "Click to upload image" : "Drag and drop images here, or click to browse"}
+          </h3>
+
+          <p className={cn("text-gray-500 dark:text-gray-400 text-center", isSingleImage ? "mt-1 text-[11px]" : "mt-1.5 text-xs")}>
+            Images are converted to lightweight WebP before upload. {getUploadableImageHint()}
+          </p>
+
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              fileInputRef.current?.click();
+            }}
+            disabled={uploading || (!canAddMore && maxImages > 1)}
+            className={cn(
+              "rounded-xl bg-primary text-xs font-bold text-white shadow-sm hover:bg-primary/95 transition-all active:scale-[0.98]",
+              isSingleImage ? "mt-3 px-4 py-2" : "mt-5 px-5 py-2.5"
+            )}
+          >
+            {isSingleImage ? "Choose image" : "Choose Files"}
+          </button>
+        </div>
+      )}
 
       {/* Pending Upload Progress items */}
       {pendingUploads.length > 0 && (
@@ -335,11 +354,22 @@ export function ImageUploader({
         <div className="space-y-2">
           <div className="flex items-center justify-between px-1">
             <h4 className="text-xs font-bold text-gray-700 dark:text-gray-350 uppercase tracking-wider">
-              Gallery Images ({images.length} / {maxImages})
+              {isSingleImage ? "Image" : `Gallery Images (${images.length} / ${maxImages})`}
             </h4>
-            <p className="text-[10px] text-gray-400">
-              Drag images to reorder. The first photo is the cover.
-            </p>
+            {isSingleImage ? (
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploading}
+                className="rounded-lg border border-gray-200 px-3 py-1 text-[10px] font-bold text-primary transition-colors hover:bg-primary/5 disabled:opacity-50 dark:border-gray-800"
+              >
+                Replace image
+              </button>
+            ) : (
+              <p className="text-[10px] text-gray-400">
+                Drag images to reorder. The first photo is the cover.
+              </p>
+            )}
           </div>
           
           <DndContext
@@ -348,12 +378,20 @@ export function ImageUploader({
             onDragEnd={handleDragEnd}
           >
             <SortableContext items={images} strategy={rectSortingStrategy}>
-              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+              <div
+                className={cn(
+                  isSingleImage ? "grid gap-2" : "grid gap-4",
+                  isSingleImage
+                    ? "grid-cols-1"
+                    : "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
+                )}
+              >
                 {images.map((url, index) => (
                   <SortableImage
                     key={url}
                     url={url}
                     index={index}
+                    compact={isSingleImage}
                     onRemove={() =>
                       onChange(images.filter((img) => img !== url))
                     }

@@ -69,6 +69,7 @@ export function Navbar() {
     { href: "/explore-phong-nha#motorbike-adventures", label: dict.nav.exploreMotorbike },
     { href: "/explore-phong-nha#classic-cave-tours", label: dict.nav.exploreClassic },
     { href: "/explore-phong-nha#adventure-cave-tours", label: dict.nav.exploreAdventure },
+    { href: "/explore-phong-nha#other-tours-vietnam", label: dict.nav.exploreOtherVietnam },
   ];
 
   const subTransportItems = [
