@@ -15,6 +15,8 @@ import { SiteDataProvider } from "@/components/providers/SiteDataProvider";
 import { getSiteSettings, getContactInformation } from "@/lib/data/services";
 import { createLocalizedMetadata } from "@/lib/i18n/metadata";
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }

@@ -39,6 +39,13 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
       "Family-run hospitality in Phong Nha. Stay, eat, explore and connect. Book direct via WhatsApp.",
     ogImage: "/images/home-hero.webp",
   },
+  reviewRatings: {
+    booking: "",
+    airbnb: "",
+    hostelworld: "",
+    tripadvisor: "",
+    google: "",
+  },
 };
 
 export const DEFAULT_CONTACT_INFORMATION: ContactInformation = {
@@ -75,6 +82,10 @@ export function normalizeSiteSettings(settings: SiteSettings | null): SiteSettin
     seo: {
       ...DEFAULT_SITE_SETTINGS.seo,
       ...base.seo,
+    },
+    reviewRatings: {
+      ...DEFAULT_SITE_SETTINGS.reviewRatings,
+      ...base.reviewRatings,
     },
   };
 }

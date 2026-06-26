@@ -172,7 +172,8 @@ export function WhatsAppFloatingButton() {
 
   return (
     <div
-      className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-3 z-50 flex flex-col items-center gap-3 sm:bottom-6 sm:right-6"
+      translate="no"
+      className="notranslate fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-3 z-50 flex flex-col items-center gap-3 sm:bottom-6 sm:right-6"
     >
       {/* Zalo Floating Button */}
       <a

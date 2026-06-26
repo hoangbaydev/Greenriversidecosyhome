@@ -80,6 +80,36 @@ service cloud.firestore {
       allow read: if true;
       allow write: if isAdmin();
     }
+
+    match /analytics_events/{doc} {
+      allow create: if request.resource.data.keys().hasOnly([
+          'path',
+          'title',
+          'locale',
+          'referrer',
+          'device',
+          'sessionId',
+          'userAgent',
+          'day',
+          'month',
+          'createdAt'
+        ]) &&
+        request.resource.data.path is string &&
+        request.resource.data.path.size() <= 240 &&
+        !request.resource.data.path.matches('^/admin.*') &&
+        request.resource.data.title is string &&
+        request.resource.data.title.size() <= 160 &&
+        request.resource.data.referrer is string &&
+        request.resource.data.referrer.size() <= 240 &&
+        request.resource.data.userAgent is string &&
+        request.resource.data.userAgent.size() <= 180 &&
+        request.resource.data.sessionId is string &&
+        request.resource.data.sessionId.size() <= 80 &&
+        request.resource.data.day is string &&
+        request.resource.data.month is string &&
+        request.resource.data.device in ['desktop', 'mobile', 'tablet'];
+      allow read, update, delete: if isAdmin();
+    }
     function isBootstrapAdminCreate(userId) {
       return request.auth != null &&
         request.auth.uid == userId &&

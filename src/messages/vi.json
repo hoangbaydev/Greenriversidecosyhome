@@ -181,6 +181,12 @@
     "reviews": {
       "title": "Đánh giá từ khách",
       "subtitle": "Lắng nghe những câu chuyện từ du khách đã trở thành người thân.",
+      "eyebrow": "Đánh giá từ khách",
+      "fallbackTitle": "Khách nói gì về chúng tôi",
+      "fiveStarLabel": "Đánh giá năm sao từ khách",
+      "internationalGuest": "Khách quốc tế",
+      "viewVerified": "Xem đánh giá đã xác thực",
+      "goToGroup": "Chuyển đến nhóm đánh giá {count}",
       "basedOn": "Dựa trên {count} đánh giá",
       "excellent": "Xuất sắc"
     },
@@ -474,6 +480,8 @@
   "common": {
     "learnMore": "Tìm hiểu thêm",
     "viewDetails": "Xem chi tiết",
+    "readMore": "Xem thêm",
+    "showLess": "Thu gọn",
     "skipToContent": "Chuyển tới nội dung",
     "loading": "Đang tải...",
     "notFound": "Không tìm thấy trang",

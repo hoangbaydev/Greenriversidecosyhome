@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Phone, Globe, Share2 } from "lucide-react";
+import { Phone, Globe, Share2, Star } from "lucide-react";
 import {
   fetchSiteSettings,
   saveSiteSettings,
@@ -32,6 +32,13 @@ const emptySettings: SiteSettings = {
     tiktok: "https://www.tiktok.com/@greenriversidecosyhome",
   },
   seo: { defaultTitle: "", defaultDescription: "", ogImage: "" },
+  reviewRatings: {
+    booking: "",
+    airbnb: "",
+    hostelworld: "",
+    tripadvisor: "",
+    google: "",
+  },
 };
 
 const emptyContact: ContactInformation = {
@@ -44,7 +51,7 @@ const emptyContact: ContactInformation = {
   openingHours: "",
 };
 
-type SettingTabType = "contact" | "social" | "brand";
+type SettingTabType = "contact" | "social" | "brand" | "trust";
 
 export default function AdminSettingsPage() {
   const [settings, setSettings] = useState<SiteSettings>(emptySettings);
@@ -108,7 +115,7 @@ export default function AdminSettingsPage() {
       <div className="rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900 overflow-hidden">
         {/* Tab Navigation Header */}
         <div className="flex flex-wrap border-b border-gray-200 bg-gray-50/50 px-4 pt-3 dark:border-gray-800 dark:bg-gray-950/20">
-          {(["contact", "social", "brand"] as SettingTabType[]).map((tab) => (
+          {(["contact", "social", "brand", "trust"] as SettingTabType[]).map((tab) => (
             <button
               key={tab}
               type="button"
@@ -120,7 +127,13 @@ export default function AdminSettingsPage() {
                   : "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
               )}
             >
-              {tab === "contact" ? "1. Contact Information" : tab === "social" ? "2. Social Media Accounts" : "3. Brand & SEO Fallbacks"}
+              {tab === "contact"
+                ? "1. Contact Information"
+                : tab === "social"
+                  ? "2. Social Media Accounts"
+                  : tab === "brand"
+                    ? "3. Brand & SEO Fallbacks"
+                    : "4. Trust Scores"}
             </button>
           ))}
         </div>
@@ -321,6 +334,94 @@ export default function AdminSettingsPage() {
               </div>
             </div>
           )}
+
+          {activeTab === "trust" && (
+            <div className="space-y-6">
+              <div className="flex items-center gap-2 text-primary font-heading font-semibold text-lg">
+                <Star className="h-5 w-5" /> Manual Review Platform Scores
+              </div>
+              <p className="max-w-2xl text-sm leading-relaxed text-gray-500">
+                These numbers are displayed above the Guest Reviews carousel as social proof. Enter them manually from each platform.
+              </p>
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div>
+                  <Label htmlFor="trust-booking">Booking.com Rating</Label>
+                  <Input
+                    id="trust-booking"
+                    value={settings.reviewRatings?.booking || ""}
+                    onChange={(e) =>
+                      setSettings({
+                        ...settings,
+                        reviewRatings: { ...settings.reviewRatings, booking: e.target.value },
+                      })
+                    }
+                    className="mt-1.5"
+                    placeholder="9.4 / 10"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="trust-airbnb">Airbnb Rating</Label>
+                  <Input
+                    id="trust-airbnb"
+                    value={settings.reviewRatings?.airbnb || ""}
+                    onChange={(e) =>
+                      setSettings({
+                        ...settings,
+                        reviewRatings: { ...settings.reviewRatings, airbnb: e.target.value },
+                      })
+                    }
+                    className="mt-1.5"
+                    placeholder="4.9 / 5"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="trust-hostelworld">Hostelworld Rating</Label>
+                  <Input
+                    id="trust-hostelworld"
+                    value={settings.reviewRatings?.hostelworld || ""}
+                    onChange={(e) =>
+                      setSettings({
+                        ...settings,
+                        reviewRatings: { ...settings.reviewRatings, hostelworld: e.target.value },
+                      })
+                    }
+                    className="mt-1.5"
+                    placeholder="9.6 / 10"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="trust-tripadvisor">Tripadvisor Rating</Label>
+                  <Input
+                    id="trust-tripadvisor"
+                    value={settings.reviewRatings?.tripadvisor || ""}
+                    onChange={(e) =>
+                      setSettings({
+                        ...settings,
+                        reviewRatings: { ...settings.reviewRatings, tripadvisor: e.target.value },
+                      })
+                    }
+                    className="mt-1.5"
+                    placeholder="5 / 5"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="trust-google">Google Rating</Label>
+                  <Input
+                    id="trust-google"
+                    value={settings.reviewRatings?.google || ""}
+                    onChange={(e) =>
+                      setSettings({
+                        ...settings,
+                        reviewRatings: { ...settings.reviewRatings, google: e.target.value },
+                      })
+                    }
+                    className="mt-1.5"
+                    placeholder="4.8 / 5"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Footer save controls */}
@@ -328,9 +429,9 @@ export default function AdminSettingsPage() {
           <Button onClick={handleSave} disabled={saving} size="default" className="min-w-[120px]">
             {saving ? "Saving..." : "Save Settings"}
           </Button>
-          {activeTab !== "brand" && (
+          {activeTab !== "trust" && (
             <Button variant="outline" size="sm" onClick={() => {
-              const tabs: SettingTabType[] = ["contact", "social", "brand"];
+              const tabs: SettingTabType[] = ["contact", "social", "brand", "trust"];
               const nextIdx = (tabs.indexOf(activeTab) + 1) % tabs.length;
               setActiveTab(tabs[nextIdx]);
             }}>

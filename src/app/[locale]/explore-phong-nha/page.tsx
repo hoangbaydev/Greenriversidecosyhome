@@ -1,5 +1,4 @@
-import { getTours } from "@/lib/data/services";
-import { getPageContent } from "@/lib/data/services";
+import { getTours, getPageContent } from "@/lib/data/services";
 import { resolvePageMeta } from "@/lib/cms/page-meta";
 import { PageCta, PageHero, PageIntro, Section, SectionHeader } from "@/components/ui/section";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -16,10 +15,10 @@ import { SAMPLE_IMAGES } from "@/lib/sample-media";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale, dict } = await getPageContext(params);
-  const p = dict.pages.explore;
+  const page = dict.pages.explore;
   return createLocalizedMetadata(locale, {
-    title: p.title,
-    description: p.subtitle,
+    title: page.title,
+    description: page.subtitle,
     path: "/explore-phong-nha",
   });
 }
@@ -31,11 +30,11 @@ export default async function ExplorePhongNhaPage({
 }) {
   const { locale, dict } = await getPageContext(params);
   const loc = locale as Locale;
-  const p = dict.pages.explore;
+  const pageCopy = dict.pages.explore;
   const [page, toursPage, tours] = await Promise.all([
     getPageContent(loc, "explore-phong-nha"),
-    resolvePageMeta(loc, "tours", "/tours").then((r) => r.page),
-    getTours(),
+    resolvePageMeta(loc, "tours", "/tours").then((result) => result.page),
+    getTours(loc),
   ]);
 
   const experienceTitle =
@@ -53,13 +52,13 @@ export default async function ExplorePhongNhaPage({
         data={breadcrumbSchema(
           localizedBreadcrumb(locale, [
             { name: dict.nav.home, path: "/" },
-            { name: p.title, path: "/explore-phong-nha" },
+            { name: pageCopy.title, path: "/explore-phong-nha" },
           ])
         )}
       />
       <PageHero
-        title={page?.heroTitle || p.title}
-        subtitle={page?.heroSubtitle || p.subtitle}
+        title={page?.heroTitle || pageCopy.title}
+        subtitle={page?.heroSubtitle || pageCopy.subtitle}
         image={page?.heroImage || SAMPLE_IMAGES.mountains}
       />
       {page?.intro ? (

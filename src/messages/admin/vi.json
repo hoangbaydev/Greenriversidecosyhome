@@ -23,7 +23,6 @@
     "logout": "Đăng xuất",
     "closeSidebar": "Đóng menu",
     "openMenu": "Mở menu",
-    "toggleTheme": "Đổi giao diện sáng/tối",
     "firebaseNotConfiguredTitle": "Firebase chưa cấu hình",
     "firebaseNotConfiguredDesc": "Sao chép .env.example thành .env.local và điền thông tin Firebase.",
     "language": "Ngôn ngữ",

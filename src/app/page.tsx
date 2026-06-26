@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect } from "react";
 import Link from "next/link";
 import { defaultLocale, localizedPath } from "@/lib/i18n/config";
 import { Button } from "@/components/ui/button";
@@ -8,12 +5,9 @@ import { Button } from "@/components/ui/button";
 const homePath = localizedPath(defaultLocale, "/");
 
 export default function RootPage() {
-  useEffect(() => {
-    window.location.replace(homePath);
-  }, []);
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-center px-4 text-center">
+      <meta httpEquiv="refresh" content={`0;url=${homePath}`} />
       <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
         Green Riverside Cosy Home
       </p>

@@ -94,13 +94,22 @@ Guest reviews.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| author | string | Reviewer name |
-| rating | number | 1-5 stars |
-| content | string | Review text |
-| source | string | google or tripadvisor |
-| date | string | Review date |
-| avatarUrl | string | Optional avatar |
-| featured | boolean | Show on homepage |
+| guestName | string | Guest display name |
+| country | string | Guest country |
+| countryFlag | string | Country flag text or emoji |
+| avatar | string | Optional avatar image URL |
+| source | string | booking, airbnb, hostelworld, tripadvisor, or google |
+| sourceUrl | string | Platform URL or direct review URL |
+| rating | number | Review score, supports 1-5 or 1-10 |
+| reviewTitle | string | Short review headline |
+| reviewText | string | Review body |
+| reviewDate | string | Review date |
+| roomType | string | Room stayed in |
+| stayDuration | string | e.g. 2 nights |
+| travellerType | string | Solo, Couple, Family, Group |
+| featured | boolean | Show on homepage when rating is high |
+| displayOrder | number | Homepage/list display order |
+| language | string | Review language code |
 
 ### `blog_posts`
 Blog articles.
@@ -146,6 +155,7 @@ Global settings. Document ID: `main`
 | googleMapsUrl | string | Maps link |
 | socialLinks | object | Social media URLs |
 | seo | object | SEO defaults |
+| reviewRatings | object | Manual platform ratings for Reviews social proof |
 
 ### `contact_information`
 Contact page content. Document ID: `main`

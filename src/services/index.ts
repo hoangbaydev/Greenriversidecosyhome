@@ -95,3 +95,11 @@ export {
   savePageContent,
   PAGE_KEYS,
 } from "./page-content.service";
+
+export {
+  emptyAnalyticsSummary,
+  fetchAnalyticsSummary,
+  trackPageView,
+  type AnalyticsSummary,
+  type AnalyticsEvent,
+} from "./analytics.service";

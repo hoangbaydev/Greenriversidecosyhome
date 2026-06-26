@@ -17,6 +17,8 @@ interface Props {
   params: Promise<{ locale: string; slug: string }>;
 }
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const slugs = await getAllRoomSlugs();
   return locales.flatMap((locale) => slugs.map((slug) => ({ locale, slug })));
@@ -50,7 +52,7 @@ export default async function RoomDetailPage({ params }: Props) {
   const capacity = getRoomCapacity(room);
   const priceUnit = room.category?.toLowerCase().includes("dorm") || title.toLowerCase().includes("dorm")
     ? locale === "vi"
-      ? "/ giường"
+      ? "/ gi\u01b0\u1eddng"
       : "/ bed"
     : labels?.perNight;
   const guestsText = labels?.upToGuests?.includes("{count}")

@@ -1,4 +1,4 @@
-/** Subtle motion tokens — max 0.6s, performance-first */
+/** Subtle motion tokens - max 0.6s, performance-first */
 
 export const fadeUp = {
   hidden: { opacity: 0, y: 22 },

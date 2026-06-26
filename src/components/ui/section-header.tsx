@@ -30,10 +30,10 @@ export function SectionHeader({
       viewport={viewportOnce}
       variants={fadeUp}
       transition={defaultTransition}
-      className={cn("mb-9 md:mb-12", centered && "text-center", className)}
+      className={cn("mb-8 md:mb-10", centered && "text-center", className)}
     >
       {eyebrow ? (
-        <p className={cn("text-eyebrow mb-3", light ? "text-white/80" : undefined)}>{eyebrow}</p>
+        <p className={cn("text-eyebrow mb-2.5", light ? "text-white/80" : undefined)}>{eyebrow}</p>
       ) : null}
       <h2 className={cn("text-h2", light ? "text-white" : "text-text")}>{title}</h2>
       {accent ? (
@@ -42,7 +42,7 @@ export function SectionHeader({
       {subtitle ? (
         <p
           className={cn(
-            "mt-5 max-w-2xl text-base leading-[1.75] text-text-muted md:text-[1.08rem]",
+            "mt-4 max-w-xl text-base leading-[1.65] text-text-muted",
             centered && "mx-auto"
           )}
         >

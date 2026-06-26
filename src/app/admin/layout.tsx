@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { useTheme } from "next-themes";
 import {
   LayoutDashboard,
   Bed,
@@ -16,8 +15,6 @@ import {
   Home,
   Settings,
   LogOut,
-  Moon,
-  Sun,
   Menu,
   BookOpen,
   Coffee,
@@ -30,10 +27,8 @@ import { Toaster } from "sonner";
 import { AuthProvider, useAuth } from "@/components/admin/AuthProvider";
 import { AdminI18nProvider, useAdminI18n } from "@/components/admin/AdminI18nProvider";
 import { AdminLanguageSwitcher } from "@/components/admin/AdminLanguageSwitcher";
-import { AdminThemeProvider } from "@/components/providers/AdminThemeProvider";
 import { logoutAdmin } from "@/lib/firebase/auth";
 import { cn } from "@/lib/utils";
-import { AdminPageSkeleton } from "@/components/ui/skeleton";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
@@ -117,24 +112,6 @@ function readAdminPageHash() {
   return window.location.hash.replace("#", "");
 }
 
-function ThemeToggle({ toggleLabel }: { toggleLabel: string }) {
-  const { theme, setTheme } = useTheme();
-  return (
-    <button
-      type="button"
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="rounded-lg p-2 text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-      aria-label={toggleLabel}
-    >
-      {theme === "dark" ? (
-        <Sun className="h-4 w-4" />
-      ) : (
-        <Moon className="h-4 w-4" />
-      )}
-    </button>
-  );
-}
-
 function AdminLayoutInner({ children }: { children: React.ReactNode }) {
   const { user, isAdmin, loading, firebaseConfigured } = useAuth();
   const { dict, locale } = useAdminI18n();
@@ -149,7 +126,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
     if (loading || isLoginPage) return;
     if (!firebaseConfigured) return;
     if (!user || !isAdmin) {
-      router.push("/admin/login");
+      router.replace("/admin/login");
     }
   }, [user, isAdmin, loading, router, isLoginPage, firebaseConfigured]);
 
@@ -163,8 +140,13 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
 
   if (loading || !dict) {
     return (
-      <div className="min-h-screen bg-gray-50 p-8 dark:bg-gray-950">
-        <AdminPageSkeleton />
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 p-6 dark:bg-gray-950">
+        <div className="w-full max-w-sm rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+          <div className="h-3 w-28 rounded-full bg-gray-200 dark:bg-gray-800" />
+          <div className="mt-5 h-8 w-48 rounded bg-gray-200 dark:bg-gray-800" />
+          <div className="mt-3 h-3 w-full rounded-full bg-gray-100 dark:bg-gray-800" />
+          <div className="mt-2 h-3 w-2/3 rounded-full bg-gray-100 dark:bg-gray-800" />
+        </div>
       </div>
     );
   }
@@ -172,7 +154,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
   if (!firebaseConfigured) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50 p-8 dark:bg-gray-950">
-        <div className="max-w-md rounded-2xl border border-red-200 bg-white p-8 text-center dark:border-red-900 dark:bg-gray-900">
+        <div className="max-w-md rounded-lg border border-red-200 bg-white p-8 text-center dark:border-red-900 dark:bg-gray-900">
           <h1 className="font-heading text-xl font-bold text-red-600">
             {dict.layout.firebaseNotConfiguredTitle}
           </h1>
@@ -218,7 +200,6 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
               {dict.layout.productName}
             </span>
           </Link>
-          <ThemeToggle toggleLabel={dict.layout.toggleTheme} />
         </div>
         <nav className="flex-1 space-y-4 overflow-y-auto p-3">
           {adminLinkGroups.map((group) => (
@@ -270,11 +251,10 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
             {dict.layout.website}
             <ExternalLink className="h-3.5 w-3.5" />
           </Link>
-          <AdminLanguageSwitcher className="w-full justify-center" />
           <button
             type="button"
             onClick={() =>
-              logoutAdmin().then(() => router.push("/admin/login"))
+              logoutAdmin().then(() => router.replace("/admin/login"))
             }
             className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 dark:hover:bg-red-950"
           >
@@ -318,7 +298,6 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
           <span className="font-heading font-bold text-primary">{dict.layout.brand}</span>
           <div className="flex items-center gap-1">
             <AdminLanguageSwitcher />
-            <ThemeToggle toggleLabel={dict.layout.toggleTheme} />
           </div>
         </div>
         <div className="p-4 md:p-8">
@@ -343,12 +322,10 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <AdminThemeProvider>
-      <AdminI18nProvider>
-        <AuthProvider>
-          <AdminLayoutInner>{children}</AdminLayoutInner>
-        </AuthProvider>
-      </AdminI18nProvider>
-    </AdminThemeProvider>
+    <AdminI18nProvider>
+      <AuthProvider>
+        <AdminLayoutInner>{children}</AdminLayoutInner>
+      </AuthProvider>
+    </AdminI18nProvider>
   );
 }

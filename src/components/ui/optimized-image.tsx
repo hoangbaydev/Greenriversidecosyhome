@@ -17,6 +17,7 @@ interface OptimizedImageProps {
   priority?: boolean;
   sizes?: string;
   aspectRatio?: string;
+  loading?: "eager" | "lazy";
 }
 
 export function OptimizedImage({
@@ -29,13 +30,14 @@ export function OptimizedImage({
   priority,
   sizes = "(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw",
   aspectRatio,
+  loading,
 }: OptimizedImageProps) {
   const [failedSrc, setFailedSrc] = useState<string | null>(null);
 
   if (!src) return null;
 
   const currentSrc = failedSrc === src ? IMAGE_FALLBACK : src;
-  const isExternal = currentSrc.startsWith("http");
+  const imageLoading = loading ?? (priority ? "eager" : "lazy");
 
   const handleError = () => {
     if (currentSrc !== IMAGE_FALLBACK) setFailedSrc(src);
@@ -50,9 +52,11 @@ export function OptimizedImage({
         className={cn("object-cover", className)}
         sizes={sizes}
         priority={priority}
+        loading={priority ? undefined : imageLoading}
+        decoding="async"
         placeholder="blur"
         blurDataURL={IMAGE_BLUR_PLACEHOLDER}
-        unoptimized={!isExternal && currentSrc.startsWith("/")}
+        unoptimized
         onError={handleError}
       />
     );
@@ -71,8 +75,11 @@ export function OptimizedImage({
         className={cn("h-full w-full object-cover", className)}
         sizes={sizes}
         priority={priority}
+        loading={priority ? undefined : imageLoading}
+        decoding="async"
         placeholder="blur"
         blurDataURL={IMAGE_BLUR_PLACEHOLDER}
+        unoptimized
         onError={handleError}
       />
     </div>

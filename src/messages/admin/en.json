@@ -23,7 +23,6 @@
     "logout": "Logout",
     "closeSidebar": "Close sidebar",
     "openMenu": "Open menu",
-    "toggleTheme": "Toggle theme",
     "firebaseNotConfiguredTitle": "Firebase Not Configured",
     "firebaseNotConfiguredDesc": "Copy .env.example to .env.local and add your Firebase credentials.",
     "language": "Language",

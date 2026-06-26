@@ -5,7 +5,7 @@ export const LOCALE_COOKIE = "gr-locale";
 
 export const localeNames: Record<Locale, string> = {
   en: "English",
-  vi: "Tiếng Việt",
+  vi: "Ti\u1ebfng Vi\u1ec7t",
 };
 
 export function isValidLocale(locale: string): locale is Locale {

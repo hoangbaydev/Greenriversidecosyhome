@@ -22,7 +22,7 @@ export default async function GalleryPage({ params }: { params: Promise<{ locale
   const p = dict.pages.gallery;
   const [page, items] = await Promise.all([
     resolvePageMeta(loc, "gallery", "/gallery").then((r) => r.page),
-    getGalleryItems(),
+    getGalleryItems(loc),
   ]);
 
   const hero = resolvePageHero(page, { title: p.title, subtitle: p.subtitle });

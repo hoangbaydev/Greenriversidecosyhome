@@ -16,26 +16,27 @@ interface OurStoryPreviewProps {
   subtitle?: string;
 }
 
+const copy = {
+  en: {
+    eyebrow: "Meet Linh & Family",
+    title: "Our Story",
+    subtitle: "More than a place to stay, a home shaped by nature, family, and community.",
+    excerpt:
+      "Nestled between rice fields, limestone mountains, and the peaceful Son River, Green Riverside Cosy Home is more than a place to stay. It is where travellers experience Phong Nha through the eyes of a local family.",
+    cta: "Read our story",
+  },
+  vi: {
+    eyebrow: "Gặp gỡ gia đình",
+    title: "Câu chuyện của chúng tôi",
+    subtitle: "Hơn cả một nơi lưu trú, đây là ngôi nhà được nuôi dưỡng bởi thiên nhiên, gia đình và cộng đồng.",
+    excerpt:
+      "Nằm giữa cánh đồng lúa, núi đá vôi và dòng sông Son yên bình, Green Riverside Cosy Home không chỉ là nơi để ở. Đây là nơi du khách cảm nhận vẻ đẹp Phong Nha qua góc nhìn của một gia đình địa phương.",
+    cta: "Đọc câu chuyện",
+  },
+} as const;
+
 export function OurStoryPreview({ story, title, subtitle }: OurStoryPreviewProps) {
   const locale = useLocale();
-
-  const copy = {
-    en: {
-      eyebrow: "Meet Linh & Family",
-      title: "Our Story",
-      subtitle: "More than a place to stay — a home shaped by nature, family, and community.",
-      excerpt: "Nestled between rice fields, limestone mountains, and the peaceful Son River, Green Riverside Cosy Home is more than just a place to stay. It's a place where travelers can experience the beauty of Phong Nha through the eyes of a local family.",
-      cta: "Read our story",
-    },
-    vi: {
-      eyebrow: "Gặp gỡ gia đình",
-      title: "Our Story",
-      subtitle: "More than a place to stay — a home shaped by nature, family, and community.",
-      excerpt: "Giữa cánh đồng lúa, núi đá vôi và dòng sông Son yên bình, Green Riverside Cosy Home không chỉ là nơi lưu trú — mà là nơi bạn trải nghiệm Phong Nha qua góc nhìn của một gia đình địa phương.",
-      cta: "Đọc câu chuyện",
-    }
-  };
-
   const t = locale === "vi" ? copy.vi : copy.en;
   const displayTitle = title || story?.homepagePreviewTitle || t.title;
   const displaySubtitle = subtitle || story?.homepagePreviewSubtitle || t.subtitle;
@@ -76,12 +77,12 @@ export function OurStoryPreview({ story, title, subtitle }: OurStoryPreviewProps
             <header className="md:mb-10 mb-0">
               <p className="text-eyebrow mb-2">{t.eyebrow}</p>
               <h2 className="text-text">{displayTitle}</h2>
-              <p className="mt-3 max-w-2xl text-base leading-relaxed text-text-muted">
+              <p className="mt-3 max-w-xl text-base leading-[1.65] text-text-muted">
                 {displaySubtitle}
               </p>
             </header>
-            
-            <p className="mt-6 max-w-2xl text-base leading-relaxed text-text-muted">
+
+            <p className="mt-5 line-clamp-4 max-w-xl text-base leading-[1.65] text-text-muted">
               {displayExcerpt}
             </p>
 

@@ -165,14 +165,27 @@ export type GalleryCategory =
 
 export interface Review {
   id: string;
+  guestName?: string;
   author: string;
   rating: number;
+  reviewTitle?: string;
+  reviewText?: string;
   content: string;
-  source: "google" | "tripadvisor";
+  source: "booking" | "airbnb" | "hostelworld" | "tripadvisor" | "google";
+  sourceUrl?: string;
   country?: string;
+  countryFlag?: string;
+  avatar?: string;
   date: string;
+  reviewDate?: string;
+  roomType?: string;
+  stayDuration?: string;
+  travellerType?: string;
   avatarUrl?: string;
   featured: boolean;
+  displayOrder?: number;
+  order?: number;
+  language?: string;
 }
 
 export interface BlogPost {
@@ -266,6 +279,13 @@ export interface SiteSettings {
     defaultTitle: string;
     defaultDescription: string;
     ogImage: string;
+  };
+  reviewRatings?: {
+    booking?: string;
+    airbnb?: string;
+    hostelworld?: string;
+    tripadvisor?: string;
+    google?: string;
   };
   updatedAt?: FirestoreTimestamp;
 }

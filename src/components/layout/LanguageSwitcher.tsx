@@ -40,8 +40,9 @@ export function LanguageSwitcher({
   if (variant === "pill") {
     return (
       <div
+        translate="no"
         className={cn(
-          "flex w-full items-center gap-1 rounded-full border border-border bg-soft/50 p-1 shadow-sm",
+          "notranslate flex w-full items-center gap-1 rounded-full border border-border bg-soft/50 p-1 shadow-sm",
           className
         )}
         role="group"
@@ -77,7 +78,7 @@ export function LanguageSwitcher({
   const details = LOCALE_DETAILS[currentLocale];
 
   return (
-    <div ref={containerRef} className={cn("relative inline-block text-left", className)}>
+    <div ref={containerRef} translate="no" className={cn("notranslate relative inline-block text-left", className)}>
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}

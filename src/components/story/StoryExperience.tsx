@@ -14,11 +14,13 @@ export function StoryExperience({ story }: { story: StoryContent }) {
   const roles = getLinhRoles(locale);
   const values = parseStoryValues(story.natureFamilyCommunity, locale);
 
-  const pillars = ["Stay", "Eat", "Explore", "Connect"];
+  const pillars = locale === "vi"
+    ? ["Lưu trú", "Ăn uống", "Khám phá", "Kết nối"]
+    : ["Stay", "Eat", "Explore", "Connect"];
 
   return (
     <>
-      {(story.homepagePreviewExcerpt || story.heroSubtitle) ? (
+      {story.homepagePreviewExcerpt || story.heroSubtitle ? (
         <section className="section-breathe bg-soft">
           <div className="mx-auto max-w-3xl px-5 text-center sm:px-8 lg:px-10">
             <p className="text-eyebrow">{story.heroTitle || (locale === "vi" ? "Câu chuyện" : "Our Story")}</p>
@@ -67,7 +69,7 @@ export function StoryExperience({ story }: { story: StoryContent }) {
           >
             <OptimizedImage
               src={story.heroImage || SAMPLE_IMAGES.homestay}
-              alt="Linh and family"
+              alt={locale === "vi" ? "Linh và gia đình" : "Linh and family"}
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
@@ -112,7 +114,11 @@ export function StoryExperience({ story }: { story: StoryContent }) {
             {titles.philosophy || (locale === "vi" ? "Triết lý" : "Our Philosophy")}
           </h2>
           <div className="quote-block mt-10">
-            <p>Come as our guest, leave as our family.</p>
+            <p>
+              {locale === "vi"
+                ? "Đến như khách, về như người thân."
+                : "Come as our guest, leave as our family."}
+            </p>
           </div>
           <p className="mx-auto mt-8 max-w-2xl text-base leading-relaxed text-text-muted">{story.philosophy}</p>
         </div>
@@ -121,16 +127,16 @@ export function StoryExperience({ story }: { story: StoryContent }) {
       <section className="section-breathe bg-white">
         <div className="mx-auto max-w-[1140px] px-5 sm:px-8 lg:px-10">
           <h2 className="font-heading text-center text-h2 text-text">
-            {titles.natureFamilyCommunity || "Nature · Family · Community"}
+            {titles.natureFamilyCommunity || (locale === "vi" ? "Thiên nhiên · Gia đình · Cộng đồng" : "Nature · Family · Community")}
           </h2>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {values.map((v) => (
-              <article key={v.title} className="experience-card p-8 text-center">
+            {values.map((value) => (
+              <article key={value.title} className="experience-card p-8 text-center">
                 <p className="text-eyebrow" aria-hidden>
-                  {v.marker}
+                  {value.marker}
                 </p>
-                <h3 className="font-heading mt-4 text-h4 text-text">{v.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-text-muted">{v.body}</p>
+                <h3 className="font-heading mt-4 text-h4 text-text">{value.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-text-muted">{value.body}</p>
               </article>
             ))}
           </div>
@@ -140,15 +146,15 @@ export function StoryExperience({ story }: { story: StoryContent }) {
       <section className="section-breathe bg-white">
         <div className="mx-auto max-w-3xl px-5 text-center sm:px-8">
           <h2 className="font-heading text-h2 text-text">
-            {titles.lifeAtGreenRiverside || "Stay · Eat · Explore · Connect"}
+            {titles.lifeAtGreenRiverside || pillars.join(" · ")}
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-text-muted">
             {story.lifeAtGreenRiverside || story.familyJourney}
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            {pillars.map((p) => (
-              <span key={p} className="stat-pill">
-                {p}
+            {pillars.map((pillar) => (
+              <span key={pillar} className="stat-pill">
+                {pillar}
               </span>
             ))}
           </div>

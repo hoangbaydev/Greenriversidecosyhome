@@ -569,6 +569,125 @@ export function getSocialActivitiesIntro(locale: Locale): { lead: string; paragr
 }
 
 export function getFallbackReviews(locale: Locale) {
+  return [
+    {
+      id: "fallback-hostelworld-anonymous",
+      guestName: "Oliver",
+      author: "Oliver",
+      country: "New Zealand",
+      countryFlag: "🇳🇿",
+      rating: 10,
+      roomType: "Double Room with Mountain View",
+      stayDuration: "2 nights · March 2026",
+      travellerType: "Solo traveler",
+      reviewText:
+        "Best hostel I've stayed in Vietnam ! We booked a private room and the owner, Linh free upgraded us to a luxury room. The Hostel has all kind of tour around in Phong Nha, you just need to ask Linh or, shout out to my favourite volunteers during our stayed Jessica and Ian, they will sort it out for you. The family dinner from the restaurant (own by the hostel) every evening is a must, its cheap and the meal was great, has option for vegan or vegetarian too. Will definitely come back next time !",
+      content:
+        "Best hostel I've stayed in Vietnam ! We booked a private room and the owner, Linh free upgraded us to a luxury room. The Hostel has all kind of tour around in Phong Nha, you just need to ask Linh or, shout out to my favourite volunteers during our stayed Jessica and Ian, they will sort it out for you. The family dinner from the restaurant (own by the hostel) every evening is a must, its cheap and the meal was great, has option for vegan or vegetarian too. Will definitely come back next time !",
+      source: "hostelworld" as const,
+      date: "",
+      featured: true,
+      displayOrder: 1,
+    },
+    {
+      id: "fallback-hostelworld-azyv",
+      guestName: "Harsh",
+      author: "Harsh",
+      country: "India",
+      countryFlag: "🇮🇳",
+      rating: 10,
+      roomType: "Bed in 4-Bed Mixed Dormitory Room",
+      stayDuration: "3 nights · March 2026",
+      travellerType: "Solo traveler",
+      reviewText:
+        "Stayed here for 3 nights. Had originally planned to do 2 nights but extended because I really like the area and the accommodation. I rented a scooter to drive around for the few days and the staff were so so helpful in making sure it as comfortable on the bike and upgrading me to a better bike as soon as one became available without me asking for it! I stayed in a dorm room outside of the main accommodation which was a 2 minute walk down the road but it was nice and quiet and the room was big!",
+      content:
+        "Stayed here for 3 nights. Had originally planned to do 2 nights but extended because I really like the area and the accommodation. I rented a scooter to drive around for the few days and the staff were so so helpful in making sure it as comfortable on the bike and upgrading me to a better bike as soon as one became available without me asking for it! I stayed in a dorm room outside of the main accommodation which was a 2 minute walk down the road but it was nice and quiet and the room was big!",
+      source: "hostelworld" as const,
+      date: "",
+      featured: true,
+      displayOrder: 2,
+    },
+    {
+      id: "fallback-booking-mahesh",
+      guestName: "Henry",
+      author: "Henry",
+      country: "Brazil",
+      countryFlag: "🇧🇷",
+      rating: 10,
+      roomType: "Bed in 4-Bed Mixed Dormitory Room",
+      stayDuration: "2 nights · March 2026",
+      travellerType: "Solo traveler",
+      reviewText:
+        "I had a fantastic stay at this hostel run by Linh. She is incredibly kind and hospitable, always ensuring her guests feel welcome and well taken care of. I arrived in Phong Nha around 3 AM, and she even arranged for her staff to pick me up, which was a thoughtful gesture. As for the property, the location is excellent, and the hostel itself is clean, spacious, and—as the name suggests—cosy. The breakfast is delicious, and they serve a family-style dinner around 7 PM, which is a great opportunity to meet and connect with other travelers. I would love to come back here again!",
+      content:
+        "I had a fantastic stay at this hostel run by Linh. She is incredibly kind and hospitable, always ensuring her guests feel welcome and well taken care of. I arrived in Phong Nha around 3 AM, and she even arranged for her staff to pick me up, which was a thoughtful gesture. As for the property, the location is excellent, and the hostel itself is clean, spacious, and—as the name suggests—cosy. The breakfast is delicious, and they serve a family-style dinner around 7 PM, which is a great opportunity to meet and connect with other travelers. I would love to come back here again!",
+      source: "booking" as const,
+      sourceUrl: "https://www.booking.com/hotel/vn/greenriver-guesthouse-and-restaurant.html",
+      date: "",
+      featured: true,
+      displayOrder: 3,
+    },
+    {
+      id: "fallback-hostelworld-amck",
+      guestName: "Kateryna",
+      author: "Kateryna",
+      country: "Sweden",
+      countryFlag: "🇸🇪",
+      rating: 10,
+      roomType: "Deluxe Double or Twin Room with Mountain View",
+      stayDuration: "3 nights · February 2026",
+      travellerType: "Solo traveler",
+      reviewText:
+        "Had an amazing stay here! The staff is very welcoming and kind, the food is really good. The terrace on top offers a great view of the river and the beautiful mountains. They also have a nice pool table where you can play and meet new people. It’s also extremely clean, the floors and the toilet are always spotless 👌🏻",
+      content:
+        "Had an amazing stay here! The staff is very welcoming and kind, the food is really good. The terrace on top offers a great view of the river and the beautiful mountains. They also have a nice pool table where you can play and meet new people. It’s also extremely clean, the floors and the toilet are always spotless 👌🏻",
+      source: "hostelworld" as const,
+      date: "",
+      featured: true,
+      displayOrder: 4,
+    },
+    {
+      id: "fallback-booking-antoine",
+      guestName: "Samir",
+      author: "Samir",
+      country: "France",
+      countryFlag: "🇫🇷",
+      rating: 10,
+      roomType: "Double Room with Mountain View",
+      stayDuration: "4 nights · February 2026",
+      travellerType: "Solo traveler",
+      reviewText:
+        "Many activities available which makes it so easy to socialize, the dorm was really clean and the staff is just so nice and ready to help at all time. I woulf definitely recommend that hostel to anybody who stays in Phong Nha.",
+      content:
+        "Many activities available which makes it so easy to socialize, the dorm was really clean and the staff is just so nice and ready to help at all time. I woulf definitely recommend that hostel to anybody who stays in Phong Nha.",
+      source: "booking" as const,
+      sourceUrl: "https://www.booking.com/hotel/vn/greenriver-guesthouse-and-restaurant.html",
+      date: "",
+      featured: true,
+      displayOrder: 5,
+    },
+    {
+      id: "fallback-hostelworld-germany",
+      guestName: "Michael",
+      author: "Michael",
+      country: "United States",
+      countryFlag: "🇺🇸",
+      rating: 10,
+      roomType: "Deluxe Double or Twin Room with Mountain View",
+      stayDuration: "1 night · January 2026",
+      travellerType: "Couple",
+      reviewText:
+        "This is the best homestay I stayed at during my whole Vietnam trip. It’s beautifully located close to the river and the rooms are very nicely furnished. But most importantly, Linh, the owner of the homestay, is just amazing! She picked me up from the bus station even though my bus arrived late at night and gave me good advice on what cave tour I should book. When I fell sick during my stay she took good care of me and helped me wherever she could. I really felt so comfortable at her homestay!",
+      content:
+        "This is the best homestay I stayed at during my whole Vietnam trip. It’s beautifully located close to the river and the rooms are very nicely furnished. But most importantly, Linh, the owner of the homestay, is just amazing! She picked me up from the bus station even though my bus arrived late at night and gave me good advice on what cave tour I should book. When I fell sick during my stay she took good care of me and helped me wherever she could. I really felt so comfortable at her homestay!",
+      source: "hostelworld" as const,
+      date: "",
+      featured: true,
+      displayOrder: 6,
+    },
+  ];
+
   const vi = locale === "vi";
 
   return [

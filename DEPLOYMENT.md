@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Node.js 18+
+- Node.js 20.9+
 - Firebase CLI (`npm install -g firebase-tools`)
 - A Firebase project with Authentication, Firestore, Storage, and Hosting enabled
 
@@ -85,14 +85,16 @@ npm start
 
 ## 7. Deploy to Firebase Hosting
 
-Firebase Hosting with Web Frameworks supports Next.js:
+This project uses `output: "export"` in `next.config.ts`, so `npm run build`
+creates a fully static site in `out/`. Firebase Hosting serves that folder as
+configured in `firebase.json`.
 
 ```bash
-firebase experiments:enable webframeworks
+npm run build
 firebase deploy
 ```
 
-This builds and deploys the Next.js app with server-side rendering support.
+No Next.js server runtime or SSR adapter is required for the public site.
 
 ### Alternative: Vercel
 

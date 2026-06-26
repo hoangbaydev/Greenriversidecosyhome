@@ -1,6 +1,13 @@
 /** National Classic & Adventure tours from Green Riverside brochure (VND). */
 
-export const CLASSIC_TOURS = [
+import {
+  JUNGLE_BOSS_POLICY_FAQ,
+  JUNGLE_BOSS_PROVIDED,
+  JUNGLE_BOSS_TOURS,
+} from "./jungle-boss-tours.mjs";
+import { DUCK_FARM_CLASSIC_TOURS } from "./duck-farm-classic-tours.mjs";
+
+const LEGACY_CLASSIC_TOURS = [
   {
     id: "phong-nha-cave-half-day",
     slug: "phong-nha-cave-half-day",
@@ -474,96 +481,8 @@ export const CLASSIC_TOURS = [
   }
 ];
 
-export const ADVENTURE_TOURS = [
-  {
-    id: "wildlife-jungle-trek-1d",
-    slug: "wildlife-jungle-trek-1d",
-    title: "Wildlife 1 Day & Jungle Trek",
-    shortDescription: "Easy · Same day · 8:30 AM – 5:00 PM",
-    description: "Introductory jungle trek through primeval forest — ideal first adventure in Phong Nha.",
-    duration: "1 Day",
-    price: 1490000,
-    priceFrom: 1490000,
-    currency: "VND",
-    difficulty: "Easy",
-    order: 10,
-  },
-  {
-    id: "ruc-mon-adventure-1d",
-    slug: "ruc-mon-adventure-1d",
-    title: "Ruc Mon 1 Day Adventure",
-    shortDescription: "Moderate · 8:00 AM – 5:30 PM",
-    description: "Moderate adventure through jungle trails and cave entrances with experienced local guides.",
-    duration: "1 Day",
-    price: 1850000,
-    priceFrom: 1850000,
-    currency: "VND",
-    difficulty: "Moderate",
-    order: 11,
-  },
-  {
-    id: "abandoned-valley-e-cave-1d",
-    slug: "abandoned-valley-e-cave-1d",
-    title: "Abandoned Valley (E Cave)",
-    shortDescription: "Moderate · Full day jungle & cave",
-    description: "Trek through Abandoned Valley to explore E Cave — a favourite among adventure lovers.",
-    duration: "1 Day",
-    price: 1750000,
-    priceFrom: 1750000,
-    currency: "VND",
-    difficulty: "Moderate",
-    order: 12,
-  },
-  {
-    id: "elephant-cave-mada-valley-1d",
-    slug: "elephant-cave-mada-valley-1d",
-    title: "Elephant Cave & Mada Valley Jungle Trek",
-    shortDescription: "Moderate · Full day",
-    description: "Jungle trek through Mada Valley with Elephant Cave exploration.",
-    duration: "1 Day",
-    price: 1950000,
-    priceFrom: 1950000,
-    currency: "VND",
-    difficulty: "Moderate",
-    order: 13,
-  },
-  {
-    id: "hang-pygmy-2d1n",
-    slug: "hang-pygmy-2d1n",
-    title: "Hang Pygmy Exploration",
-    shortDescription: "Strenuous · 2 days 1 night",
-    description: "Multi-day expedition into Hang Pygmy — one of Phong Nha's most demanding cave adventures.",
-    duration: "2 Days 1 Night",
-    price: 7900000,
-    priceFrom: 7900000,
-    currency: "VND",
-    difficulty: "Strenuous",
-    order: 14,
-  },
-  {
-    id: "hung-thoong-3d2n",
-    slug: "hung-thoong-3d2n",
-    title: "Hung Thoong Exploration",
-    shortDescription: "Strenuous · 3 days 2 nights",
-    description: "Extended expedition through Hung Thoong — jungle camping and spectacular underground worlds.",
-    duration: "3 Days 2 Nights",
-    price: 12000000,
-    priceFrom: 12000000,
-    currency: "VND",
-    difficulty: "Strenuous",
-    order: 15,
-  },
-  {
-    id: "kong-collapse-5d4n",
-    slug: "kong-collapse-5d4n",
-    title: "Kong Collapse Top Adventure",
-    shortDescription: "Extremely strenuous · 5 days 4 nights",
-    description: "The ultimate Phong Nha expedition — Kong Collapse for experienced adventurers only.",
-    duration: "5 Days 4 Nights",
-    price: 35000000,
-    priceFrom: 35000000,
-    currency: "VND",
-    difficulty: "Extremely Strenuous",
-    order: 16,
-  },
-];
+export { JUNGLE_BOSS_POLICY_FAQ, JUNGLE_BOSS_PROVIDED };
+
+export const CLASSIC_TOURS = DUCK_FARM_CLASSIC_TOURS;
+
+export const ADVENTURE_TOURS = JUNGLE_BOSS_TOURS;

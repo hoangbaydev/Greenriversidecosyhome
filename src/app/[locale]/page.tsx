@@ -31,11 +31,11 @@ async function HomeContent({ locale }: { locale: Locale }) {
     stayPage,
     reviews,
   ] = await Promise.all([
-    getHomepageContent(),
-    getActivities(),
+    getHomepageContent(locale),
+    getActivities(locale),
     getCafeContent(locale),
     getPageContent(locale, "stay"),
-    getFeaturedReviews(4),
+    getFeaturedReviews(6, locale),
   ]);
 
   const homepage = homepageRaw ? normalizeHomepage(homepageRaw) : null;

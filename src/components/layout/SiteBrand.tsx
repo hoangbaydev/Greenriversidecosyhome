@@ -59,7 +59,8 @@ export function SiteBrand({
   return (
     <Link
       href={localizedPath(locale, "/")}
-      className={cn("flex min-w-0 items-center gap-2 bg-transparent sm:gap-2.5", className)}
+      translate="no"
+      className={cn("notranslate flex min-w-0 items-center gap-2 bg-transparent sm:gap-2.5", className)}
       aria-label={siteName}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}

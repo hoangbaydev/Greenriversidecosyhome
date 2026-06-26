@@ -10,12 +10,19 @@ import type { Review } from "@/types";
 const COL = FIRESTORE_COLLECTIONS.reviews;
 
 export async function fetchReviews(): Promise<Review[]> {
-  return getCollection<Review>(COL);
+  const reviews = await getCollection<Review>(COL);
+  return reviews.sort(
+    (a, b) =>
+      (a.displayOrder ?? a.order ?? 999) - (b.displayOrder ?? b.order ?? 999) ||
+      (b.rating ?? 0) - (a.rating ?? 0)
+  );
 }
 
-export async function fetchFeaturedReviews(count = 4): Promise<Review[]> {
+export async function fetchFeaturedReviews(count = 6): Promise<Review[]> {
   const reviews = await fetchReviews();
-  return reviews.filter((r) => r.featured).slice(0, count);
+  return reviews
+    .filter((r) => r.featured && ((r.rating ?? 0) >= 9 || ((r.rating ?? 0) <= 5 && (r.rating ?? 0) >= 4.5)))
+    .slice(0, count);
 }
 
 export async function countReviews(): Promise<number> {

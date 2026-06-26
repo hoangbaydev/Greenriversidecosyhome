@@ -7,12 +7,13 @@ export function useAdminLoader<T>(fetcher: () => Promise<T>, initial: T) {
   const [data, setData] = useState<T>(initial);
   const [loading, setLoading] = useState(true);
 
-  const reload = useCallback(async () => {
-    setLoading(true);
+  const reload = useCallback(async (options?: { showLoading?: boolean }) => {
+    const showLoading = options?.showLoading ?? false;
+    if (showLoading) setLoading(true);
     try {
       setData(await fetcher());
     } finally {
-      setLoading(false);
+      if (showLoading) setLoading(false);
     }
   }, [fetcher]);
 

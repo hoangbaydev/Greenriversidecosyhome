@@ -9,7 +9,7 @@ export const SITE_URL =
 export const WHATSAPP_NUMBER =
   process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "";
 
-/** Homepage hero/banner — not overwritten by npm run images:fetch */
+/** Homepage hero/banner - not overwritten by npm run images:fetch */
 export const DEFAULT_BANNER_IMAGE = "/images/home-hero.webp";
 export const DEFAULT_BANNER_IMAGE_TABLET = "/images/home-hero-1280.webp";
 export const DEFAULT_BANNER_IMAGE_MOBILE = "/images/home-hero-mobile.webp";

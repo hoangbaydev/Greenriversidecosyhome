@@ -45,7 +45,11 @@ export async function getUserProfile(uid: string): Promise<User | null> {
   return { id: snap.id, ...snap.data() } as User;
 }
 
+export function hasAdminAccess(profile: User | null): boolean {
+  return profile?.role === "admin" || profile?.role === "editor";
+}
+
 export async function isAdminUser(uid: string): Promise<boolean> {
   const profile = await getUserProfile(uid);
-  return profile?.role === "admin" || profile?.role === "editor";
+  return hasAdminAccess(profile);
 }

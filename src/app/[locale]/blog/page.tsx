@@ -22,7 +22,7 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
   const p = dict.pages.blog;
   const [page, posts] = await Promise.all([
     resolvePageMeta(loc, "blog", "/blog").then((r) => r.page),
-    getBlogPosts(),
+    getBlogPosts(loc),
   ]);
 
   const hero = resolvePageHero(page, { title: p.title, subtitle: p.subtitle });

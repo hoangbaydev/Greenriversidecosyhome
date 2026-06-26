@@ -96,10 +96,11 @@ export function SocialActivitiesShowcase({
 
   const featured = activities.filter((a) => a.featured).slice(0, 4);
   const display = featured.length > 0 ? featured : activities.slice(0, 4);
+  const eyebrow = locale === "vi" ? "Kết nối" : "Connect";
 
   return (
     <HomeSection id="activities" background="soft" divider>
-      {title ? <SectionHeader eyebrow="Connect" title={title} subtitle={subtitle} /> : null}
+      {title ? <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} /> : null}
 
       {display.length > 0 ? (
         <MotionStagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

@@ -25,7 +25,18 @@ function splitList(value: string): string[] {
 }
 
 function timelineToText(items: TourTimelineItem[] = []): string {
-  return items.map((item) => `${item.time} | ${item.title}`).join("\n");
+  return items
+    .map((item) => {
+      let line = `${item.time} | ${item.title}`;
+      if (item.description || item.icon) {
+        line += ` | ${item.description || ""}`;
+      }
+      if (item.icon) {
+        line += ` | ${item.icon}`;
+      }
+      return line;
+    })
+    .join("\n");
 }
 
 function parseTimeline(text: string): TourTimelineItem[] {
@@ -34,8 +45,17 @@ function parseTimeline(text: string): TourTimelineItem[] {
     .map((line) => line.trim())
     .filter(Boolean)
     .map((line) => {
-      const [time, ...rest] = line.split("|");
-      return { time: time?.trim() || "", title: rest.join("|").trim() };
+      const parts = line.split("|").map((p) => p.trim());
+      const time = parts[0] || "";
+      const title = parts[1] || "";
+      const description = parts[2] || "";
+      const icon = parts[3] || "";
+      return {
+        time,
+        title,
+        ...(description ? { description } : {}),
+        ...(icon ? { icon } : {}),
+      };
     })
     .filter((item) => item.time && item.title);
 }
@@ -381,12 +401,12 @@ export default function AdminToursPage() {
                 </div>
                 <div className="sm:col-span-2">
                   <div className="flex justify-between items-center mb-1">
-                    <Label htmlFor="tour-timeline">Itinerary List (Format: Time | Title)</Label>
-                    <span className="text-xs text-gray-400">One timeline step per line</span>
+                    <Label htmlFor="tour-timeline">Itinerary List (Format: Time | Title | Description | Icon)</Label>
+                    <span className="text-xs text-gray-400">One timeline step per line. Icon is optional (e.g. map-pin, ship, mountain, leaf, bus, clock).</span>
                   </div>
                   <Textarea
                     id="tour-timeline"
-                    placeholder="2:30 PM | Pick-Up from Accommodation&#10;3:00 PM | Son River Cruise&#10;4:30 PM | Explore Phong Nha Cave"
+                    placeholder="2:30 PM | Pick-Up from Accommodation | Our guide collects you from your accommodation | map-pin&#10;3:00 PM | Dragon Boat Cruise | relaxing journey along the Son River | ship&#10;3:30 PM | Explore Phong Nha Cave | Arrive at Phong Nha Cave and begin exploration | mountain"
                     value={timelineText}
                     onChange={(e) => setTimelineText(e.target.value)}
                     className="mt-1 font-mono text-sm"
@@ -604,7 +624,7 @@ export default function AdminToursPage() {
                       onClick={() => {
                         if (confirm(`Are you sure you want to delete "${getTourTitle(tour)}"?`)) {
                           deleteTour(tour.id)
-                            .then(reload)
+                            .then(() => reload())
                             .then(() => toast.success("Deleted successfully"));
                         }
                       }}

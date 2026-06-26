@@ -181,6 +181,12 @@
     "reviews": {
       "title": "Guest Reviews",
       "subtitle": "Hear from travellers who became family.",
+      "eyebrow": "Guest Reviews",
+      "fallbackTitle": "What People Say About Us",
+      "fiveStarLabel": "Five-star guest rating",
+      "internationalGuest": "International guest",
+      "viewVerified": "View verified review",
+      "goToGroup": "Go to review group {count}",
       "basedOn": "Based on {count} reviews",
       "excellent": "Excellent"
     },
@@ -474,6 +480,8 @@
   "common": {
     "learnMore": "Learn more",
     "viewDetails": "View details",
+    "readMore": "Read more",
+    "showLess": "Show less",
     "skipToContent": "Skip to content",
     "loading": "Loading...",
     "notFound": "Page not found",

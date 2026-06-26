@@ -13,6 +13,8 @@ interface Props {
   params: Promise<{ locale: string; slug: string }>;
 }
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const slugs = await getAllTourSlugs();
   return locales.flatMap((locale) => slugs.map((slug) => ({ locale, slug })));
@@ -20,7 +22,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props) {
   const { slug, locale } = await getPageContext(params);
-  const tour = await getTourBySlug(slug);
+  const tour = await getTourBySlug(slug, locale);
   if (!tour) return {};
   const title = getTourTitle(tour);
   return createMetadata({
@@ -64,7 +66,7 @@ function tourDetailLabels(dict: Awaited<ReturnType<typeof getPageContext>>["dict
 
 export default async function ExploreExperienceDetailPage({ params }: Props) {
   const { slug, locale, dict } = await getPageContext(params);
-  const tour = await getTourBySlug(slug);
+  const tour = await getTourBySlug(slug, locale);
   if (!tour) notFound();
 
   const title = getTourTitle(tour);

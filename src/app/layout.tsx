@@ -1,17 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/constants";
 import "./globals.css";
 
-const inter = Inter({
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin", "vietnamese"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const playfair = Playfair_Display({
-  subsets: ["latin", "vietnamese"],
-  variable: "--font-playfair",
+  variable: "--font-plus-jakarta-sans",
   display: "swap",
 });
 
@@ -23,6 +17,11 @@ export const metadata: Metadata = {
   },
   description:
     "Book a family-run Phong Nha homestay with riverside rooms, cave tours, local transport, rooftop cafe, and direct WhatsApp support.",
+  applicationName: SITE_NAME,
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  category: "travel",
   keywords: [
     "Phong Nha Tours",
     "Phong Nha Accommodation",
@@ -49,6 +48,7 @@ export const metadata: Metadata = {
     languages: {
       en: `${SITE_URL}/en`,
       vi: `${SITE_URL}/vi`,
+      "x-default": `${SITE_URL}/en`,
     },
   },
   openGraph: {
@@ -81,7 +81,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable} h-full`}>
+    <html
+      lang="en"
+      className={`${plusJakartaSans.variable} h-full`}
+      suppressHydrationWarning
+    >
       <body className="min-h-full flex flex-col antialiased">{children}</body>
     </html>
   );

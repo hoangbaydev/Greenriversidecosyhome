@@ -58,7 +58,7 @@ function PremiumTourCard({
           </Link>
         </h3>
         {tour.shortDescription ? (
-          <p className="mt-3 line-clamp-3 flex-1 text-sm leading-[1.7] text-text-muted">
+          <p className="mt-3 line-clamp-2 flex-1 text-sm leading-[1.62] text-text-muted">
             {tour.shortDescription}
           </p>
         ) : null}
@@ -118,13 +118,14 @@ export function ToursPreview({
   viewDetailsLabel?: string;
 }) {
   const locale = useLocale();
+  const eyebrow = locale === "vi" ? "Khám phá" : "Explore";
 
   if (!title && !tours.length) return null;
 
   if (!tours.length) {
     return (
       <HomeSection id="tours" background="white" divider>
-        {title ? <SectionHeader eyebrow="Explore" title={title} subtitle={subtitle} /> : null}
+        {title ? <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} /> : null}
         <EmptyState message={emptyMessage || ""} />
       </HomeSection>
     );
@@ -132,7 +133,7 @@ export function ToursPreview({
 
   return (
     <HomeSection id="tours" background="white" divider>
-      {title ? <SectionHeader eyebrow="Explore" title={title} subtitle={subtitle} /> : null}
+      {title ? <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} /> : null}
 
       <ListingGrid>
         {tours.slice(0, 3).map((tour) => (

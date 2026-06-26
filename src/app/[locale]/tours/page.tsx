@@ -24,7 +24,7 @@ export default async function ToursPage({ params }: { params: Promise<{ locale: 
   const p = dict.pages.tours;
   const [page, tours] = await Promise.all([
     resolvePageMeta(loc, "tours", "/tours").then((r) => r.page),
-    getTours(),
+    getTours(loc),
   ]);
 
   const hero = resolvePageHero(page, { title: p.title, subtitle: p.subtitle });

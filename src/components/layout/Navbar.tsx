@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useDictionary, useLocale } from "@/components/providers/I18nProvider";
@@ -37,6 +37,7 @@ export function Navbar() {
   const [mobileExploreOpen, setMobileExploreOpen] = useState(false);
   const [mobileTransportOpen, setMobileTransportOpen] = useState(false);
   const [mobileUsefulOpen, setMobileUsefulOpen] = useState(false);
+  const scrolledRef = useRef(false);
 
   const siteName = settings?.siteName || dict.meta.siteName;
   const tagline = settings?.tagline || dict.meta.tagline;
@@ -45,10 +46,27 @@ export function Navbar() {
   const isHome = pathWithoutLocale === "/";
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    let frame = 0;
+
+    const syncScrolled = () => {
+      frame = 0;
+      const nextScrolled = window.scrollY > 8;
+      if (scrolledRef.current === nextScrolled) return;
+      scrolledRef.current = nextScrolled;
+      setScrolled(nextScrolled);
+    };
+
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(syncScrolled);
+    };
+
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, []);
 
   useEffect(() => {
@@ -92,14 +110,15 @@ export function Navbar() {
       </a>
 
       <header
+        translate="no"
         className={cn(
-          "fixed inset-x-0 top-0 z-50 border-b bg-white/92 backdrop-blur-xl transition-all duration-300",
+          "notranslate fixed inset-x-0 top-0 z-50 border-b bg-white/92 backdrop-blur-xl transition-all duration-300",
           scrolled ? "border-border/80 shadow-[0_8px_28px_rgba(28,36,18,0.08)]" : "border-border/25"
         )}
       >
         <div className={cn(
-          "relative mx-auto grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 px-4 transition-all duration-300 sm:px-6 lg:px-8 max-w-[112rem]",
-          scrolled ? "h-[4.25rem]" : "h-[5.25rem]"
+          "relative mx-auto grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-3 transition-all duration-300 sm:gap-4 sm:px-6 lg:px-8 max-w-[112rem]",
+          scrolled ? "h-16 sm:h-[4.25rem]" : "h-20 sm:h-[5.25rem]"
         )}>
           {/* Logo Branding (Left Column) */}
           <SiteBrand
@@ -112,7 +131,7 @@ export function Navbar() {
 
           {/* Navigation Links (Center Column) */}
           <nav
-            className="hidden min-w-0 items-center justify-center gap-0.5 2xl:gap-2 xl:flex"
+            className="site-main-nav hidden min-w-0 items-center justify-center gap-0.5 2xl:gap-2 xl:flex"
             aria-label="Main navigation"
           >
             {/* 1. Our Story */}
@@ -320,13 +339,13 @@ export function Navbar() {
           </nav>
 
           {/* Actions Block (Right Column) */}
-          <div className="flex shrink-0 items-center justify-end gap-3 md:gap-4">
+          <div className="site-header-actions flex shrink-0 items-center justify-end gap-3 md:gap-4">
             <LanguageSwitcher variant="dropdown" className="desktop-language-switcher hidden xl:inline-block" />
             <WhatsAppButton
               messageType="book_room"
               label={bookNowLabel}
               showIcon={false}
-              className="hidden 2xl:inline-flex border-none bg-primary px-4 py-2.5 font-sans text-sm font-semibold tracking-normal text-white hover:bg-primary-dark xl:px-6"
+              className="site-book-now hidden 2xl:inline-flex border-none bg-primary px-4 py-2.5 font-sans text-sm font-semibold tracking-normal text-white hover:bg-primary-dark xl:px-6"
             />
             <LanguageSwitcher
               variant="dropdown"
@@ -335,7 +354,7 @@ export function Navbar() {
             <button
               type="button"
               onClick={() => setMobileOpen((o) => !o)}
-              className="mobile-menu-trigger absolute right-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-white text-text shadow-sm transition-colors hover:bg-soft xl:hidden"
+              className="mobile-menu-trigger absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-white text-text shadow-sm transition-colors hover:bg-soft sm:right-5 xl:hidden"
               aria-expanded={mobileOpen}
               aria-label={mobileOpen ? dict.nav.closeMenu : dict.nav.menu}
             >
@@ -344,7 +363,7 @@ export function Navbar() {
           </div>
         </div>
       </header>
-
+ 
       <AnimatePresence>
         {mobileOpen && (
           <>

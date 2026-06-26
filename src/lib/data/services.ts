@@ -31,6 +31,7 @@ import {
   normalizeContactInformation,
   normalizeSiteSettings,
 } from "@/lib/content/site-settings-defaults";
+import { getFallbackReviews } from "@/lib/content/brand";
 import { SAMPLE_IMAGES } from "@/lib/sample-media";
 
 const HOMEPAGE_ID = "main";
@@ -47,6 +48,48 @@ function byOrder<T extends { order?: number }>(a: T, b: T): number {
 
 function byPublishedAtDesc(a: BlogPost, b: BlogPost): number {
   return (b.publishedAt ?? "").localeCompare(a.publishedAt ?? "");
+}
+
+function byReviewPriority(a: Review, b: Review): number {
+  const orderDiff = (a.displayOrder ?? a.order ?? 999) - (b.displayOrder ?? b.order ?? 999);
+  if (orderDiff !== 0) return orderDiff;
+  return (b.rating ?? 0) - (a.rating ?? 0);
+}
+
+function isHighTrustReview(review: Review): boolean {
+  const rating = review.rating ?? 0;
+  return rating >= 9 || (rating <= 5 && rating >= 4.5);
+}
+
+function isModernReview(review: Review): boolean {
+  return Boolean(
+    review.guestName &&
+      review.reviewText &&
+      review.source &&
+      ["booking", "airbnb", "hostelworld", "tripadvisor", "google"].includes(review.source)
+  );
+}
+
+type Translatable<T> = T & {
+  translations?: Partial<Record<Locale, Partial<T>>>;
+};
+
+function localizeEntity<T extends { id?: string; slug?: string }>(
+  entity: T,
+  locale?: Locale
+): T {
+  if (!locale || locale === "en") return entity;
+
+  const localized = (entity as Translatable<T>).translations?.[locale];
+  if (!localized) return entity;
+
+  return {
+    ...entity,
+    ...localized,
+    id: entity.id,
+    slug: entity.slug,
+    translations: (entity as Translatable<T>).translations,
+  };
 }
 
 const TRAVEL_FAQ_EN = [
@@ -413,6 +456,75 @@ const FALLBACK_BLOG_POSTS: BlogPost[] = [
   },
 ];
 
+const FALLBACK_BLOG_VI: Record<string, Partial<BlogPost>> = {
+  "phong-nha-travel-guide": {
+    title: "Hướng dẫn du lịch Phong Nha cho người lần đầu đến",
+    excerpt: "Những điều cần biết trước khi khám phá hang động, sông nước và đường rừng.",
+    content:
+      "Phong Nha là một trong những điểm đến ngoạn mục nhất Việt Nam. Từ các hang động nổi tiếng thế giới đến nhịp sống yên bình bên sông, bài viết này gợi ý cách di chuyển, nơi lưu trú và những trải nghiệm phù hợp cho lần đầu đến Phong Nha.",
+    category: "Hướng dẫn du lịch",
+    tags: ["Phong Nha", "Hướng dẫn du lịch"],
+    seoTitle: "Hướng dẫn du lịch Phong Nha cho người lần đầu đến",
+    seoDescription: "Lên kế hoạch cho chuyến đi Phong Nha đầu tiên với gợi ý về hang động, di chuyển, phòng ở, ẩm thực và trải nghiệm địa phương.",
+  },
+  "best-things-to-do-phong-nha": {
+    title: "7 trải nghiệm nên thử ở Phong Nha",
+    excerpt: "Từ Hang Thiên Đường đến chèo kayak trên sông Son, đây là những trải nghiệm được yêu thích.",
+    content:
+      "Dù bạn chỉ có một ngày hay cả tuần, Phong Nha luôn đáng để đi chậm. Hãy khám phá hang động, đạp xe thung lũng Bong Lai, ngắm hoàng hôn bên sông và tham gia các hoạt động cộng đồng vào buổi tối.",
+    category: "Trải nghiệm",
+    tags: ["Trải nghiệm", "Phong Nha"],
+    seoTitle: "Những trải nghiệm nên thử ở Phong Nha",
+    seoDescription: "Khám phá hang động, đồng quê, hoạt động trên sông, ẩm thực và các buổi giao lưu tại Phong Nha.",
+  },
+  "where-to-stay-phong-nha": {
+    title: "Nên lưu trú ở đâu tại Phong Nha",
+    excerpt: "Vì sao homestay bên sông là điểm dừng thoải mái cho hành trình khám phá hang động.",
+    content:
+      "Ở bên sông Son giúp bạn gần thiên nhiên, quán ăn, tour và nhịp sống giao lưu của Phong Nha. Một homestay gia đình phù hợp với khách muốn được hỗ trợ thực tế và chào đón bằng sự thân tình địa phương.",
+    category: "Lưu trú",
+    tags: ["Lưu trú", "Homestay"],
+    seoTitle: "Nên lưu trú ở đâu tại Phong Nha",
+    seoDescription: "So sánh các lựa chọn lưu trú tại Phong Nha và tìm hiểu vì sao homestay bên sông là điểm dừng tiện lợi.",
+  },
+  "paradise-cave-vs-phong-nha-cave": {
+    title: "Hang Thiên Đường và Động Phong Nha nên đi hang nào trước?",
+    excerpt: "So sánh hai trải nghiệm hang động nổi bật để bạn dễ chọn lịch trình.",
+    content:
+      "Cả hai hang đều đáng đi. Hang Thiên Đường gây ấn tượng bởi quy mô và thạch nhũ hùng vĩ, còn Động Phong Nha kết hợp chuyến thuyền, cảnh sông và câu chuyện địa phương.",
+    category: "Hang động",
+    tags: ["Hang Thiên Đường", "Động Phong Nha"],
+    seoTitle: "Hang Thiên Đường và Động Phong Nha",
+    seoDescription: "So sánh Hang Thiên Đường và Động Phong Nha để chọn tour phù hợp với phong cách du lịch của bạn.",
+  },
+  "phong-nha-food-guide": {
+    title: "Ăn gì ở Phong Nha",
+    excerpt: "Đặc sản địa phương, rooftop cafe và những món Quảng Bình đáng thử.",
+    content:
+      "Ẩm thực Phong Nha gần gũi và dễ chịu. Hãy thử bữa sáng Việt Nam, món địa phương tươi ngon, lựa chọn chay và đồ uống hoàng hôn sau một ngày khám phá.",
+    category: "Ẩm thực",
+    tags: ["Ẩm thực", "Cafe"],
+    seoTitle: "Ăn gì ở Phong Nha",
+    seoDescription: "Hướng dẫn ngắn gọn về món ăn, cafe, lựa chọn chay và đặc sản địa phương ở Phong Nha.",
+  },
+  "best-time-visit-phong-nha": {
+    title: "Thời điểm đẹp nhất để đến Phong Nha",
+    excerpt: "Thời tiết, lượng khách và gợi ý theo mùa để lên kế hoạch chuyến đi.",
+    content:
+      "Mùa khô từ tháng 2 đến tháng 8 thường thuận lợi cho hang động, đạp xe và kayak. Mùa xanh có cảnh quan tươi tốt và ít đông hơn, còn giai đoạn mưa lớn cần lịch trình linh hoạt hơn.",
+    category: "Lên kế hoạch",
+    tags: ["Thời tiết", "Lên kế hoạch"],
+    seoTitle: "Thời điểm đẹp nhất để đến Phong Nha",
+    seoDescription: "Tìm hiểu những tháng phù hợp để đi Phong Nha cho hang động, đạp xe, kayak và cảnh xanh theo mùa.",
+  },
+};
+
+function localizeFallbackBlogPost(post: BlogPost, locale?: Locale): BlogPost {
+  if (locale !== "vi") return post;
+  const localized = FALLBACK_BLOG_VI[post.id];
+  return localized ? { ...post, ...localized, id: post.id, slug: post.slug } : post;
+}
+
 function localizeRoom(room: Room, locale?: Locale): Room {
   if (!locale || locale === "en") return room;
   const localized = room.translations?.[locale];
@@ -467,21 +579,22 @@ export async function fetchRoomsByIds(ids: string[], locale?: Locale): Promise<R
   return ids.map((id) => all.find((r) => r.id === id)).filter((r): r is Room => Boolean(r));
 }
 
-export async function getTours(): Promise<Tour[]> {
+export async function getTours(locale?: Locale): Promise<Tour[]> {
   const tours = await serverGetCollection<Tour>(FIRESTORE_COLLECTIONS.tours, {
     publishedOnly: true,
   });
-  return tours.sort(byOrder);
+  return tours.sort(byOrder).map((tour) => localizeEntity(tour, locale));
 }
 
-export async function getTourBySlug(slug: string): Promise<Tour | null> {
-  return serverGetDocumentBySlug<Tour>(FIRESTORE_COLLECTIONS.tours, slug, {
+export async function getTourBySlug(slug: string, locale?: Locale): Promise<Tour | null> {
+  const tour = await serverGetDocumentBySlug<Tour>(FIRESTORE_COLLECTIONS.tours, slug, {
     publishedOnly: true,
   });
+  return tour ? localizeEntity(tour, locale) : null;
 }
 
-export async function getFeaturedTours(count = 4): Promise<Tour[]> {
-  const tours = await getTours();
+export async function getFeaturedTours(count = 4, locale?: Locale): Promise<Tour[]> {
+  const tours = await getTours(locale);
   return tours.filter((t) => t.featured).slice(0, count);
 }
 
@@ -490,55 +603,69 @@ export async function getAllTourSlugs(): Promise<string[]> {
   return tours.map((t) => t.slug);
 }
 
-export async function fetchToursByIds(ids: string[]): Promise<Tour[]> {
+export async function fetchToursByIds(ids: string[], locale?: Locale): Promise<Tour[]> {
   if (!ids.length) return [];
-  const all = await getTours();
+  const all = await getTours(locale);
   return ids.map((id) => all.find((t) => t.id === id)).filter((t): t is Tour => Boolean(t));
 }
 
-export async function getActivities(): Promise<Activity[]> {
+export async function getActivities(locale?: Locale): Promise<Activity[]> {
   const activities = await serverGetCollection<Activity>(FIRESTORE_COLLECTIONS.activities);
-  return activities.sort(byOrder);
+  return activities.sort(byOrder).map((activity) => localizeEntity(activity, locale));
 }
 
-export async function getTransportation(): Promise<Transportation[]> {
+export async function getTransportation(locale?: Locale): Promise<Transportation[]> {
   const items = await serverGetCollection<Transportation>(FIRESTORE_COLLECTIONS.transportation, {
     publishedOnly: true,
   });
-  return items.sort(byOrder);
+  return items.sort(byOrder).map((item) => localizeEntity(item, locale));
 }
 
-export async function getGalleryItems(): Promise<GalleryItem[]> {
+export async function getGalleryItems(locale?: Locale): Promise<GalleryItem[]> {
   const items = await serverGetCollection<GalleryItem>(FIRESTORE_COLLECTIONS.gallery);
-  return items.sort(byOrder);
+  return items.sort(byOrder).map((item) => localizeEntity(item, locale));
 }
 
-export async function getFeaturedGallery(count = 8): Promise<GalleryItem[]> {
-  const items = await getGalleryItems();
+export async function getFeaturedGallery(count = 8, locale?: Locale): Promise<GalleryItem[]> {
+  const items = await getGalleryItems(locale);
   return items.filter((i) => i.featured).slice(0, count);
 }
 
-export async function getReviews(): Promise<Review[]> {
-  return serverGetCollection<Review>(FIRESTORE_COLLECTIONS.reviews);
+export async function getReviews(locale?: Locale): Promise<Review[]> {
+  const reviews = await serverGetCollection<Review>(FIRESTORE_COLLECTIONS.reviews);
+  return reviews.sort(byReviewPriority).map((review) => localizeEntity(review, locale));
 }
 
-export async function getFeaturedReviews(count = 4): Promise<Review[]> {
-  const reviews = await getReviews();
-  return reviews.filter((r) => r.featured).slice(0, count);
+export async function getFeaturedReviews(count = 4, locale?: Locale): Promise<Review[]> {
+  const reviews = await getReviews(locale);
+  const featured = reviews
+    .filter((r) => r.featured && isHighTrustReview(r) && isModernReview(r))
+    .slice(0, count);
+
+  return featured.length >= Math.min(count, 3)
+    ? featured
+    : getFallbackReviews(locale ?? "en").slice(0, count);
 }
 
-export async function getBlogPosts(): Promise<BlogPost[]> {
+export async function getBlogPosts(locale?: Locale): Promise<BlogPost[]> {
   const posts = await serverGetCollection<BlogPost>(FIRESTORE_COLLECTIONS.blogPosts, {
     statusPublished: true,
   });
-  return (posts.length ? posts : FALLBACK_BLOG_POSTS).sort(byPublishedAtDesc);
+  const source = posts.length
+    ? posts
+    : FALLBACK_BLOG_POSTS.map((post) => localizeFallbackBlogPost(post, locale));
+  return source
+    .sort(byPublishedAtDesc)
+    .map((post) => localizeEntity(post, locale));
 }
 
-export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
+export async function getBlogPostBySlug(slug: string, locale?: Locale): Promise<BlogPost | null> {
   const post = await serverGetDocumentBySlug<BlogPost>(FIRESTORE_COLLECTIONS.blogPosts, slug, {
     statusPublished: true,
   });
-  return post ?? FALLBACK_BLOG_POSTS.find((item) => item.slug === slug) ?? null;
+  const fallback = FALLBACK_BLOG_POSTS.find((item) => item.slug === slug);
+  const found = post ?? (fallback ? localizeFallbackBlogPost(fallback, locale) : null);
+  return found ? localizeEntity(found, locale) : null;
 }
 
 export async function getAllBlogSlugs(): Promise<string[]> {
@@ -546,12 +673,12 @@ export async function getAllBlogSlugs(): Promise<string[]> {
   return posts.map((p) => p.slug);
 }
 
-export async function getHomepageContent(): Promise<HomepageContent | null> {
+export async function getHomepageContent(locale?: Locale): Promise<HomepageContent | null> {
   const doc = await serverGetDocument<HomepageContent>(
     FIRESTORE_COLLECTIONS.homepageContent,
     HOMEPAGE_ID
   );
-  return doc ? normalizeHomepage(doc) : null;
+  return doc ? normalizeHomepage(localizeEntity(doc, locale)) : null;
 }
 
 export async function getSiteSettings(): Promise<SiteSettings> {

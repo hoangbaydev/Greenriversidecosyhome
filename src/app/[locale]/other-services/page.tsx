@@ -24,11 +24,12 @@ import { getPageContent } from "@/lib/data/services";
 import type { Locale } from "@/lib/i18n/config";
 
 function isBulletLine(line: string) {
-  return line.startsWith("•") || line.startsWith("-") || line.startsWith("â€¢");
+  const normalized = line.replace(/^\u00e2\u20ac\u00a2/, "•");
+  return normalized.startsWith("•") || normalized.startsWith("-");
 }
 
 function cleanBulletLine(line: string) {
-  return line.replace(/^(•|-|â€¢)\s*/, "");
+  return line.replace(/^(•|-|\u00e2\u20ac\u00a2)\s*/, "");
 }
 
 function renderDescription(text: string) {

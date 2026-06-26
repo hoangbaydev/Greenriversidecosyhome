@@ -4,7 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { getExploreSections } from "@/lib/content/brand";
-import { useLocale } from "@/components/providers/I18nProvider";
+import { useDictionary, useLocale } from "@/components/providers/I18nProvider";
 import { localizedPath } from "@/lib/i18n/config";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
 import { useWhatsAppNumber } from "@/hooks/use-whatsapp";
@@ -12,6 +12,19 @@ import { HomeSection } from "@/components/ui/home-section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { WhatsAppButton } from "@/components/whatsapp/WhatsAppButton";
 import { fadeUp, staggerContainer, defaultTransition, viewportOnce } from "@/lib/motion";
+
+const exploreCopy = {
+  en: {
+    previewSubtitle: "Bong Lai Valley, classic caves, and adventure tours through local eyes.",
+    adviceCta: "Get tour advice on WhatsApp",
+    chatCta: "Chat on WhatsApp",
+  },
+  vi: {
+    previewSubtitle: "Thung lũng Bong Lai, hang động kinh điển và tour mạo hiểm qua góc nhìn địa phương.",
+    adviceCta: "Tư vấn tour qua WhatsApp",
+    chatCta: "Chat WhatsApp",
+  },
+} as const;
 
 export function ExplorePreview({
   title,
@@ -23,19 +36,16 @@ export function ExplorePreview({
   viewAllLabel?: string;
 }) {
   const locale = useLocale();
+  const dict = useDictionary();
+  const t = locale === "vi" ? exploreCopy.vi : exploreCopy.en;
   const sections = getExploreSections(locale).slice(1, 4);
 
   return (
     <HomeSection id="explore" background="white" divider>
       <SectionHeader
-        eyebrow={locale === "vi" ? "Khám phá" : "Explore"}
-        title={title || (locale === "vi" ? "Khám phá Phong Nha" : "Explore Phong Nha")}
-        subtitle={
-          subtitle ||
-          (locale === "vi"
-            ? "Thung lũng Bong Lai, hang động kinh điển và tour mạo hiểm — qua góc nhìn địa phương."
-            : "Bong Lai Valley, classic caves, and adventure tours — through local eyes.")
-        }
+        eyebrow={dict.nav.explore}
+        title={title || dict.home.tours.title}
+        subtitle={subtitle || t.previewSubtitle}
       />
       <motion.div
         variants={staggerContainer}
@@ -44,36 +54,30 @@ export function ExplorePreview({
         viewport={viewportOnce}
         className="grid gap-6 md:grid-cols-3"
       >
-        {sections.map((section, index) => {
-          return (
-            <motion.article
-              key={section.id}
-              variants={fadeUp}
-              transition={{ ...defaultTransition, delay: index * 0.06 }}
-              className="experience-card flex flex-col p-6 md:p-7"
-            >
-              <p className="text-eyebrow mb-2">
-                {section.subtitle}
-              </p>
-              <h3 className="font-heading mt-2 text-h4 text-text">
-                {section.title}
-              </h3>
-              <p className="mt-3 flex-1 text-sm leading-relaxed text-text-muted whitespace-pre-line">
-                {section.body}
-              </p>
-              
-              {section.ctaHref && section.ctaLabel ? (
-                <Link
-                  href={localizedPath(locale, section.ctaHref)}
-                  className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-all hover:-translate-y-0.5 hover:text-primary-dark"
-                >
-                  {section.ctaLabel}
-                  <ArrowRight className="h-4 w-4" aria-hidden />
-                </Link>
-              ) : null}
-            </motion.article>
-          );
-        })}
+        {sections.map((section, index) => (
+          <motion.article
+            key={section.id}
+            variants={fadeUp}
+            transition={{ ...defaultTransition, delay: index * 0.06 }}
+            className="experience-card flex flex-col p-6 md:p-7"
+          >
+            <p className="text-eyebrow mb-2">{section.subtitle}</p>
+            <h3 className="font-heading mt-2 text-h4 text-text">{section.title}</h3>
+            <p className="mt-3 flex-1 whitespace-pre-line text-sm leading-relaxed text-text-muted">
+              {section.body}
+            </p>
+
+            {section.ctaHref && section.ctaLabel ? (
+              <Link
+                href={localizedPath(locale, section.ctaHref)}
+                className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-all hover:-translate-y-0.5 hover:text-primary-dark"
+              >
+                {section.ctaLabel}
+                <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+            ) : null}
+          </motion.article>
+        ))}
       </motion.div>
       <div className="mt-16 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
         {viewAllLabel ? (
@@ -87,7 +91,7 @@ export function ExplorePreview({
         ) : null}
         <WhatsAppButton
           messageType="book_tour"
-          label={locale === "vi" ? "Tư vấn tour qua WhatsApp" : "Get tour advice on WhatsApp"}
+          label={t.adviceCta}
           size="lg"
           className="min-h-12 px-8 text-sm font-semibold"
         />
@@ -99,6 +103,7 @@ export function ExplorePreview({
 export function ExplorePhongNhaContent() {
   const locale = useLocale();
   const phoneNumber = useWhatsAppNumber();
+  const t = locale === "vi" ? exploreCopy.vi : exploreCopy.en;
   const sections = getExploreSections(locale);
 
   return (
@@ -179,7 +184,7 @@ export function ExplorePhongNhaContent() {
               </Link>
               <WhatsAppButton
                 messageType="book_tour"
-                label={locale === "vi" ? "Chat WhatsApp" : "Chat on WhatsApp"}
+                label={t.chatCta}
                 size="lg"
                 className="min-h-12 px-8 text-sm font-semibold"
               />

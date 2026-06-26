@@ -16,6 +16,8 @@ interface Props {
   params: Promise<{ locale: string; slug: string }>;
 }
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const slugs = await getAllBlogSlugs();
   return locales.flatMap((locale) => slugs.map((slug) => ({ locale, slug })));
@@ -23,7 +25,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props) {
   const { slug, locale } = await getPageContext(params);
-  const post = await getBlogPostBySlug(slug);
+  const post = await getBlogPostBySlug(slug, locale);
   if (!post) return {};
   const image = getBlogImage(post);
   return createMetadata({
@@ -37,7 +39,7 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug, locale, dict } = await getPageContext(params);
-  const post = await getBlogPostBySlug(slug);
+  const post = await getBlogPostBySlug(slug, locale);
   if (!post) notFound();
   const image = getBlogImage(post);
   const b = dict.pages.blog;
@@ -46,7 +48,7 @@ export default async function BlogPostPage({ params }: Props) {
   const readingMins = estimateReadingTime(post.content || post.excerpt);
   const readingTimeLabel = b.readingTime.replace("{count}", String(readingMins));
 
-  const allPosts = await getBlogPosts();
+  const allPosts = await getBlogPosts(loc);
   const related = allPosts
     .filter((p) => p.slug !== slug && p.category === post.category)
     .slice(0, 3);

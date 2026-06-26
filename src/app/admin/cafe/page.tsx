@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { fetchCafeContent, saveCafeContent } from "@/services/content.service";
+import { fetchCafeContent, saveCafeContent, saveCafeImages } from "@/services/content.service";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -116,10 +116,19 @@ export default function AdminCafePage() {
 
   const experienceBlocks = getCafeExperienceBlocks(locale);
 
-  const setExperienceImage = (index: number, image: string) => {
+  const setExperienceImage = async (index: number, image: string) => {
     const images = normalizeCafeImages(content.images);
     images[index] = image;
-    setContent({ ...content, images });
+    const nextContent = { ...content, images };
+    setContent(nextContent);
+
+    try {
+      await saveCafeImages(locale, normalizeCafeImages(nextContent.images));
+      toast.success("Cafe image saved");
+    } catch (error) {
+      console.error("Failed to save cafe image", error);
+      toast.error("Image uploaded, but saving cafe content failed");
+    }
   };
 
   if (loading) return <FormSkeleton />;

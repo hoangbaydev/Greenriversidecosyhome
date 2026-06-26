@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "./constants";
+import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL, WHATSAPP_NUMBER } from "./constants";
 import type { Locale } from "./i18n/config";
 
 interface PageSEO {
@@ -18,7 +18,11 @@ export function createMetadata({
   type = "website",
 }: PageSEO): Metadata {
   const url = `${SITE_URL}${path}`;
-  const ogImage = image || `${SITE_URL}${DEFAULT_OG_IMAGE}`;
+  const ogImage = image
+    ? image.startsWith("http")
+      ? image
+      : `${SITE_URL}${image.startsWith("/") ? image : `/${image}`}`
+    : `${SITE_URL}${DEFAULT_OG_IMAGE}`;
   const alternatePath = path && path !== "/" ? path.replace(/^\/(en|vi)/, "") : "";
 
   return {
@@ -65,20 +69,28 @@ function localizedUrl(locale: Locale | undefined, path = "") {
 export function hotelSchema(locale?: Locale) {
   return {
     "@context": "https://schema.org",
-    "@type": "Hotel",
+    "@type": ["Hotel", "LodgingBusiness"],
     name: SITE_NAME,
     description:
       "Family-run hospitality in Phong Nha, Vietnam. Stay, eat, explore and connect.",
     url: localizedUrl(locale, "/"),
-    telephone: "+84901234567",
+    telephone: WHATSAPP_NUMBER || undefined,
+    image: siteUrl(DEFAULT_OG_IMAGE),
     address: {
       "@type": "PostalAddress",
+      streetAddress: "Phong Nha",
       addressLocality: "Phong Nha",
-      addressRegion: "Quang Binh",
+      addressRegion: "Quang Tri",
       addressCountry: "VN",
     },
     priceRange: "$$",
     starRating: { "@type": "Rating", ratingValue: "4.8" },
+    amenityFeature: [
+      { "@type": "LocationFeatureSpecification", name: "Riverside rooms", value: true },
+      { "@type": "LocationFeatureSpecification", name: "Cave tours", value: true },
+      { "@type": "LocationFeatureSpecification", name: "Airport and train transfers", value: true },
+      { "@type": "LocationFeatureSpecification", name: "Rooftop cafe", value: true },
+    ],
   };
 }
 

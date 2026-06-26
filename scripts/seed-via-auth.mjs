@@ -433,22 +433,34 @@ async function main() {
   // ——— Tours ———
   console.log("Cleaning up old unused/duplicate tour documents...");
   const ALLOWED_TOUR_IDS = [
+    // Classic / National Tours (9)
     "phong-nha-cave-half-day",
     "dark-cave-half-day",
     "botanic-paradise-half-day",
     "phong-nha-paradise-full-day",
     "paradise-dark-full-day",
-    "phong-nha-dark-full-day",
-    "botanic-phong-nha-paradise-full-day",
+    "dark-phong-nha-full-day",
+    "botanic-paradise-phong-nha-full-day",
     "botanic-paradise-dark-full-day",
     "botanic-phong-nha-dark-full-day",
+
+    // Adventure Tours (14)
     "wildlife-jungle-trek-1d",
-    "ruc-mon-adventure-1d",
+    "tra-ang-excursion-1d",
     "abandoned-valley-e-cave-1d",
     "elephant-cave-mada-valley-1d",
+    "ruc-mon-adventure-1d",
+    "abandoned-valley-e-cave-2d1n",
+    "ma-da-valley-jungle-camping-2d1n",
+    "abandoned-valley-dark-cave-exit-2d1n",
+    "ruc-mon-cave-2d1n",
+    "ruc-mon-cave-expedition",
     "hang-pygmy-2d1n",
     "hung-thoong-3d2n",
+    "tiger-cave-series-3d2n",
     "kong-collapse-5d4n",
+
+    // Custom
     "son-river-kayak"
   ];
   const toursCollection = collection(db, "tours");
@@ -523,6 +535,27 @@ async function main() {
   console.log("✓ tours (brochure catalog)");
 
   // ——— Activities ———
+  console.log("Cleaning up old unused/duplicate activity documents...");
+  const ALLOWED_ACTIVITY_IDS = [
+    "daily-family-dinner",
+    "monday-cooking",
+    "tuesday-games",
+    "wednesday-trivia",
+    "thursday-crafts",
+    "friday-do-or-drink",
+    "saturday-karaoke",
+    "sunday-olympics"
+  ];
+  const activitiesCollection = collection(db, "activities");
+  const activitiesSnapshot = await getDocs(activitiesCollection);
+  for (const docSnap of activitiesSnapshot.docs) {
+    if (!ALLOWED_ACTIVITY_IDS.includes(docSnap.id)) {
+      await deleteDoc(doc(db, "activities", docSnap.id));
+      console.log(`Deleted old activity: ${docSnap.id}`);
+    }
+  }
+  console.log("Cleaned up old activity documents.");
+
   const activities = [
     {
       id: "daily-family-dinner",

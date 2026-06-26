@@ -39,12 +39,12 @@ export function WhyChooseSection() {
   return (
     <section id="why-stay" className="home-section section-breathe home-section--soft home-section--divider">
       <div className="mx-auto w-full px-5 sm:px-8 lg:px-10 max-w-[72rem]">
-        <header className="mb-8 md:mb-10 text-center">
+        <header className="mb-8 text-center md:mb-10">
           <p className="text-eyebrow mb-2">
             {locale === "vi" ? "Vì sao chọn chúng tôi" : "Why Guests Love Us"}
           </p>
           <h2 className="text-text">{dict.home.whyStay.title}</h2>
-          <p className="mt-3 max-w-2xl text-base leading-relaxed text-text-muted mx-auto">
+          <p className="mx-auto mt-3 max-w-xl text-base leading-[1.65] text-text-muted">
             {dict.home.whyStay.subtitle}
           </p>
         </header>
@@ -58,13 +58,13 @@ export function WhyChooseSection() {
               viewport={viewportOnce}
               variants={fadeUp}
               transition={{ ...defaultTransition, delay: i * 0.05 }}
-              className="experience-card p-6 md:p-7"
+              className="experience-card p-5 md:p-6"
             >
               <BrandIconBadge icon={item.icon} />
               <h3 className="font-heading mt-4 text-base leading-snug text-text md:text-[1.0625rem]">
                 {item.title}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-text-muted">
+              <p className="mt-2 line-clamp-3 text-sm leading-[1.62] text-text-muted">
                 {item.description}
               </p>
             </motion.article>

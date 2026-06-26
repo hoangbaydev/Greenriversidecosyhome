@@ -84,7 +84,7 @@ function PremiumRoomCard({
           </Link>
         </h3>
         {description ? (
-          <p className="mt-3 line-clamp-3 flex-1 text-sm leading-[1.7] text-text-muted">
+          <p className="mt-3 line-clamp-2 flex-1 text-sm leading-[1.62] text-text-muted">
             {description}
           </p>
         ) : null}

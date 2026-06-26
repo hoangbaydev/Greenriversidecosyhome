@@ -64,7 +64,7 @@ export function CafeSection({
             className="mb-0"
           />
           {content.description ? (
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-text-muted">
+            <p className="mt-5 line-clamp-4 max-w-xl text-base leading-[1.65] text-text-muted">
               {content.description}
             </p>
           ) : null}

@@ -71,13 +71,13 @@ export function SectionHeader({
     <MotionReveal
       as="header"
       className={cn(
-        compact ? "mb-5" : "mb-9 md:mb-12",
+        compact ? "mb-5" : "mb-8 md:mb-10",
         centered && "text-center",
         className
       )}
     >
       {eyebrow ? (
-        <p className={cn("text-eyebrow mb-3", light ? "text-white/80" : undefined)}>{eyebrow}</p>
+        <p className={cn("text-eyebrow mb-2.5", light ? "text-white/80" : undefined)}>{eyebrow}</p>
       ) : null}
       <h2 className={cn("text-h2", light ? "text-white" : "text-text")}>{title}</h2>
       {showAccent ? (
@@ -86,7 +86,7 @@ export function SectionHeader({
       {subtitle ? (
         <p
           className={cn(
-            "mt-5 max-w-2xl text-base leading-[1.75] text-text-muted md:text-[1.08rem]",
+            "mt-4 max-w-xl text-base leading-[1.65] text-text-muted",
             centered && "mx-auto"
           )}
         >
@@ -125,13 +125,15 @@ export function PageHero({
   image?: string;
   eyebrow?: string;
 }) {
+  const heroImage = DEFAULT_BANNER_IMAGE;
+
   return (
-    <div className="relative flex min-h-[38vh] items-center justify-center overflow-hidden bg-primary sm:min-h-[44vh]">
+    <div className="relative flex min-h-[42vh] items-center justify-center overflow-hidden bg-primary sm:min-h-[50vh]">
       <picture className="absolute inset-0">
         <source media="(max-width: 640px)" srcSet={DEFAULT_BANNER_IMAGE_MOBILE} />
         <source media="(max-width: 1280px)" srcSet={DEFAULT_BANNER_IMAGE_TABLET} />
         <img
-          src={DEFAULT_BANNER_IMAGE}
+          src={heroImage}
           alt=""
           className="h-full w-full object-cover"
           loading="eager"
@@ -146,11 +148,11 @@ export function PageHero({
         />
       </picture>
       <div className="page-hero-overlay absolute inset-0" />
-      <MotionMount className="page-hero-content relative z-10 mx-auto max-w-3xl px-5 py-16 text-center sm:px-8 sm:py-20">
-        {eyebrow ? <p className="text-eyebrow text-white/85">{eyebrow}</p> : null}
-        <h1 className={cn("font-heading text-h1 text-white", eyebrow && "mt-2")}>{title}</h1>
+      <MotionMount className="page-hero-content relative z-10 mx-auto max-w-4xl px-5 py-20 text-center sm:px-8 sm:py-24">
+        {eyebrow ? <p className="text-eyebrow text-white/90">{eyebrow}</p> : null}
+        <h1 className={cn("page-hero-title font-heading text-h1 text-white", eyebrow && "mt-2")}>{title}</h1>
         {subtitle ? (
-          <p className="mx-auto mt-5 max-w-xl text-base leading-[1.7] text-white/90 md:text-[1.08rem]">{subtitle}</p>
+          <p className="page-hero-subtitle mx-auto mt-5 max-w-2xl text-base leading-[1.65] text-white/92">{subtitle}</p>
         ) : null}
       </MotionMount>
     </div>

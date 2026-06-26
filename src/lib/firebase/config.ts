@@ -100,4 +100,5 @@ export const FIRESTORE_COLLECTIONS = {
   faqContent: "faq_content",
   faqs: "faqs",
   pageContent: "page_content",
+  analyticsEvents: "analytics_events",
 } as const;
