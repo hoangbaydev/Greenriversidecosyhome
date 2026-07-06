@@ -289,10 +289,10 @@ main h3 + p {
 }
 
 .nav-dropdown-trigger:hover .nav-dropdown-menu {
-  pointer-events: auto;
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateX(-50%) translateY(0) !important;
 }
 
 .nav-dropdown-trigger svg {

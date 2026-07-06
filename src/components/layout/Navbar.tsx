@@ -195,7 +195,7 @@ export function Navbar() {
                 <ChevronDown className="h-4 w-4 opacity-60 transition-transform duration-300" />
               </Link>
               <div
-                className="nav-dropdown-menu absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] rounded-xl border border-border bg-white p-2 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)]"
+                className="nav-dropdown-menu absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] pointer-events-none opacity-0 invisible rounded-xl border border-border bg-white p-2 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)]"
               >
                 {subExploreItems.map((sub) => {
                   const href = localizedPath(locale, sub.href);
@@ -232,7 +232,7 @@ export function Navbar() {
                 <ChevronDown className="h-4 w-4 opacity-60 transition-transform duration-300" />
               </Link>
               <div
-                className="nav-dropdown-menu absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] rounded-xl border border-border bg-white p-2 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)]"
+                className="nav-dropdown-menu absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] pointer-events-none opacity-0 invisible rounded-xl border border-border bg-white p-2 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)]"
               >
                 {subTransportItems.map((sub) => {
                   const href = localizedPath(locale, sub.href);
@@ -290,7 +290,7 @@ export function Navbar() {
                 <ChevronDown className="h-4 w-4 opacity-60 transition-transform duration-300" />
               </Link>
               <div
-                className="nav-dropdown-menu absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] rounded-xl border border-border bg-white p-2 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)]"
+                className="nav-dropdown-menu absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] pointer-events-none opacity-0 invisible rounded-xl border border-border bg-white p-2 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)]"
               >
                 {subUsefulItems.map((sub) => {
                   const href = localizedPath(locale, sub.href);
