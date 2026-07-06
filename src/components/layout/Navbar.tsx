@@ -147,7 +147,7 @@ export function Navbar() {
 
           {/* Navigation Links (Center Column) */}
           <nav
-            className="site-main-nav hidden min-w-0 items-center justify-center gap-0.5 min-[1536px]:flex 2xl:gap-1.5"
+            className="site-main-nav hidden min-w-0 items-center justify-center gap-0.5 xl:flex 2xl:gap-1.5"
             aria-label="Main navigation"
           >
             {/* 1. Our Story */}
@@ -359,7 +359,7 @@ export function Navbar() {
             <LanguageSwitcher
               variant="dropdown"
               inverted
-              className="desktop-language-switcher hidden min-[1536px]:inline-block"
+              className="desktop-language-switcher hidden xl:inline-block"
             />
             <WhatsAppButton
               messageType="book_room"
@@ -370,7 +370,7 @@ export function Navbar() {
             <button
               type="button"
               onClick={() => setMobileOpen((o) => !o)}
-              className="mobile-menu-trigger absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-sm transition-colors hover:bg-white/18 sm:right-5 min-[1536px]:hidden"
+              className="mobile-menu-trigger absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-sm transition-colors hover:bg-white/18 sm:right-5 xl:hidden"
               aria-expanded={mobileOpen}
               aria-label={mobileOpen ? dict.nav.closeMenu : dict.nav.menu}
             >
@@ -387,7 +387,7 @@ export function Navbar() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40 bg-black/35 min-[1536px]:hidden"
+              className="fixed inset-0 z-40 bg-black/35 xl:hidden"
               onClick={() => setMobileOpen(false)}
               aria-hidden
             />
@@ -396,7 +396,7 @@ export function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.25 }}
-              className="fixed inset-y-0 right-0 z-50 flex w-[min(100%,22rem)] flex-col border-l border-border bg-white shadow-xl min-[1536px]:hidden"
+              className="fixed inset-y-0 right-0 z-50 flex w-[min(100%,22rem)] flex-col border-l border-border bg-white shadow-xl xl:hidden"
               aria-label="Mobile navigation"
             >
               <div className="flex h-[4.5rem] items-center justify-between border-b border-border px-4">
