@@ -2,35 +2,9 @@
 
 import { motion } from "framer-motion";
 import { useLocale, useDictionary } from "@/components/providers/I18nProvider";
-import { WhatsAppButton } from "@/components/whatsapp/WhatsAppButton";
 import { fadeUp, defaultTransition, viewportOnce } from "@/lib/motion";
 import { getWhyStayItems } from "@/lib/content/brand";
 import { BrandIconBadge } from "@/components/shared/BrandIconBadge";
-import { cn } from "@/lib/utils";
-
-/* const PILLARS_VI: any[] = [
-  {
-    id: "nature",
-    eyebrow: "Thiên nhiên an lành",
-    title: "Chốn nghỉ bình yên bên dòng sông Son lịch sử",
-    description: "Khác biệt với những khách sạn bê tông ồn ào ở trung tâm thị trấn, Green Riverside hòa mình cùng thiên nhiên thơ mộng. Thức dậy trong làn sương sớm trên sông Son, ngắm nhìn đàn trâu gặm cỏ bên dãy núi đá vôi trùng điệp, và chèo thuyền kayak trực tiếp từ bến gỗ của chúng tôi. Một nhịp sống chậm rãi, bình yên đưa bạn chạm vào linh hồn của Phong Nha.",
-    image: SAMPLE_IMAGES.river,
-  },
-  {
-    id: "family",
-    eyebrow: "Gia đình ấm áp",
-    title: "Hơn cả một nơi lưu trú — ngôi nhà nuôi dưỡng bởi tình thân",
-    description: "Chúng tôi là một gia đình địa phương, không phải một khách sạn thương mại. Được điều hành bởi cô Linh — người đã dành hơn 30 năm chia sẻ tình yêu Phong Nha với tư cách là một giáo viên và hướng dẫn viên bản địa — cùng gia đình, ngôi nhà của chúng tôi được xây dựng từ lòng hiếu khách chân thành nhất. Từ bữa tối gia đình ấm cúng đến những tư vấn lộ trình chân thực, chúng tôi đón tiếp bạn như người thân trở về nhà.",
-    image: SAMPLE_IMAGES.homestay,
-  },
-  {
-    id: "community",
-    eyebrow: "Kết nối cộng đồng",
-    title: "Nơi du khách bốn phương trở thành tri kỷ",
-    description: "Chúng tôi tin rằng hành trình đẹp nhất là hành trình có những người bạn đồng hành. Quán Cozy Cafe Rooftop là không gian kết nối tự nhiên và thư thái. Thưởng thức ly cà phê muối lúc bình minh, nhâm nhi cốc bia thủ công lúc hoàng hôn, hay quây quần bên mâm cơm gia đình. Không ồn ào gượng ép, chỉ có những câu chuyện chân thành và những tình bạn đẹp được nảy nở.",
-    image: SAMPLE_IMAGES.community,
-  },
-]; */
 
 export function WhyChooseSection() {
   const locale = useLocale();
@@ -40,17 +14,21 @@ export function WhyChooseSection() {
   return (
     <section id="why-stay" className="home-section section-breathe home-section--soft home-section--divider">
       <div className="mx-auto w-full px-5 sm:px-8 lg:px-10 max-w-[72rem]">
-        <header className="mb-8 text-center md:mb-10">
-          <p className="text-eyebrow mb-2">
+        {/* Header Block */}
+        <header className="mb-10 text-center md:mb-12">
+          <p className="text-eyebrow text-[#1c3312] dark:text-[#9fbd70] mb-2.5 uppercase tracking-[0.15em] font-bold">
             {locale === "vi" ? "Vì sao chọn chúng tôi" : "Why Guests Love Us"}
           </p>
-          <h2 className="text-text">{dict.home.whyStay.title}</h2>
-          <p className="mx-auto mt-3 max-w-xl text-base leading-[1.65] text-text-muted">
+          <h2 className="font-heading text-3xl font-black text-text sm:text-4xl">
+            {dict.home.whyStay.title}
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-text-muted">
             {dict.home.whyStay.subtitle}
           </p>
         </header>
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Balanced 4-Column Responsive Grid */}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {items.map((item, i) => (
             <motion.article
               key={item.title}
@@ -59,61 +37,26 @@ export function WhyChooseSection() {
               viewport={viewportOnce}
               variants={fadeUp}
               transition={{ ...defaultTransition, delay: i * 0.05 }}
-              className={cn(
-                "p-6 md:p-8 flex flex-col rounded-[24px] border-none shadow-none bg-[#e8f5e3] dark:bg-[#152213] transition-all duration-300 hover:scale-[1.015]",
-                i >= 4 ? "sm:col-span-2 lg:col-span-2" : "col-span-1"
-              )}
+              className="group p-6 md:p-7 flex flex-col rounded-[24px] bg-white border border-primary/5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md dark:bg-[#152213] dark:border-white/5"
             >
-              <div className="text-primary dark:text-[#9fbd70] flex justify-start">
+              {/* Circular Theme Icon Badge */}
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1c3312]/8 text-[#1c3312] transition-transform duration-300 group-hover:scale-105 dark:bg-[#9fbd70]/15 dark:text-[#9fbd70]">
                 <BrandIconBadge
                   icon={item.icon}
-                  className="!bg-transparent !border-none !shadow-none !p-0 !w-8 !h-8 !rounded-none text-primary dark:text-[#9fbd70] justify-start items-start"
+                  className="!bg-transparent !border-none !shadow-none !p-0 !w-6 !h-6 !rounded-none text-current"
                 />
               </div>
-              <h3 className="font-heading mt-5 text-lg font-bold leading-tight text-primary dark:text-[#9fbd70] sm:text-xl">
+
+              {/* Title & Description */}
+              <h3 className="font-heading mt-5 text-lg font-bold leading-tight text-text dark:text-[#f4f7ef]">
                 {item.title}
               </h3>
-              <p className="mt-3 text-sm leading-[1.6] text-text-muted dark:text-[#c4cdbc]">
+              <p className="mt-3 text-sm leading-relaxed text-text-muted dark:text-[#c4cdbc]">
                 {item.description}
               </p>
             </motion.article>
           ))}
         </div>
-      </div>
-    </section>
-  );
-}
-export function FinalCtaSection({ content }: { content: { finalCtaTitle?: string; finalCtaSubtitle?: string; primaryCtaLabel?: string; primaryCtaMessageType?: string } }) {
-  const title = content.finalCtaTitle;
-  const subtitle = content.finalCtaSubtitle;
-  if (!title?.trim()) return null;
-
-  return (
-    <section className="bg-primary py-16 md:py-20">
-      <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
-        <p className="text-eyebrow !text-white/70">Green Riverside Cosy Home</p>
-        <h2 className="font-heading mt-2 text-h1 !text-white">
-          {title}
-        </h2>
-        {subtitle ? (
-          <p className="mx-auto mt-3 max-w-lg text-base leading-relaxed !text-white/85">
-            {subtitle}
-          </p>
-        ) : null}
-        {content.primaryCtaLabel ? (
-          <div className="mt-8 flex justify-center">
-            <WhatsAppButton
-              messageType={
-                (content.primaryCtaMessageType as import("@/lib/whatsapp").WhatsAppMessageType) ||
-                "book_room"
-              }
-              label={content.primaryCtaLabel}
-              size="lg"
-              variant="accent"
-              className="min-h-12 px-7 text-base font-semibold"
-            />
-          </div>
-        ) : null}
       </div>
     </section>
   );
