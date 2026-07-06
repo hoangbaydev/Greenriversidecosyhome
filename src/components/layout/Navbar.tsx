@@ -33,7 +33,6 @@ export function Navbar() {
   const { settings } = useSiteData();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileExploreOpen, setMobileExploreOpen] = useState(false);
   const [mobileTransportOpen, setMobileTransportOpen] = useState(false);
   const [mobileUsefulOpen, setMobileUsefulOpen] = useState(false);
@@ -183,103 +182,77 @@ export function Navbar() {
             </Link>
 
             {/* 5. Explore Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setOpenDropdown("explore")}
-              onMouseLeave={() => setOpenDropdown(null)}
-            >
+            <div className="relative group">
               <Link
                 href={localizedPath(locale, "/explore-phong-nha")}
                 className={cn(
                   navLinkClass(isNavActive(pathWithoutLocale, "/explore-phong-nha")),
                   "flex items-center gap-1 cursor-pointer"
                 )}
-                aria-expanded={openDropdown === "explore"}
                 aria-haspopup="true"
               >
                 {dict.nav.explore}
-                <ChevronDown className={cn("h-4 w-4 opacity-60 transition-transform duration-300", openDropdown === "explore" && "rotate-180")} />
+                <ChevronDown className="h-4 w-4 opacity-60 transition-transform duration-300 group-hover:rotate-180" />
               </Link>
-              <AnimatePresence>
-                {openDropdown === "explore" && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.2, ease: [0.25, 1, 0.5, 1] }}
-                    className="absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] -translate-x-1/2 rounded-xl border border-border bg-white p-2 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)]"
-                  >
-                    {subExploreItems.map((sub) => {
-                      const href = localizedPath(locale, sub.href);
-                      const active = pathname.endsWith(sub.href);
-                      return (
-                        <Link
-                          key={sub.href}
-                          href={href}
-                          className={cn(
-                            "block px-3.5 py-2 text-sm font-medium transition-colors whitespace-nowrap rounded-md",
-                            active
-                              ? "bg-soft text-primary font-semibold"
-                              : "text-[var(--color-body)] hover:bg-soft/60 hover:text-primary"
-                          )}
-                        >
-                          {sub.label}
-                        </Link>
-                      );
-                    })}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <div
+                className="absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] -translate-x-1/2 rounded-xl border border-border bg-white p-2 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)] pointer-events-none opacity-0 invisible translate-y-2 group-hover:pointer-events-auto group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200"
+              >
+                {subExploreItems.map((sub) => {
+                  const href = localizedPath(locale, sub.href);
+                  const active = pathname.endsWith(sub.href);
+                  return (
+                    <Link
+                      key={sub.href}
+                      href={href}
+                      className={cn(
+                        "block px-3.5 py-2 text-sm font-medium transition-colors whitespace-nowrap rounded-md",
+                        active
+                          ? "bg-soft text-primary font-semibold"
+                          : "text-[var(--color-body)] hover:bg-soft/60 hover:text-primary"
+                      )}
+                    >
+                      {sub.label}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
 
             {/* 6. Transport Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setOpenDropdown("transport")}
-              onMouseLeave={() => setOpenDropdown(null)}
-            >
+            <div className="relative group">
               <Link
                 href={localizedPath(locale, "/transportation")}
                 className={cn(
                   navLinkClass(isNavActive(pathWithoutLocale, "/transportation")),
                   "flex items-center gap-1 cursor-pointer"
                 )}
-                aria-expanded={openDropdown === "transport"}
                 aria-haspopup="true"
               >
                 {dict.nav.transport}
-                <ChevronDown className={cn("h-4 w-4 opacity-60 transition-transform duration-300", openDropdown === "transport" && "rotate-180")} />
+                <ChevronDown className="h-4 w-4 opacity-60 transition-transform duration-300 group-hover:rotate-180" />
               </Link>
-              <AnimatePresence>
-                {openDropdown === "transport" && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.2, ease: [0.25, 1, 0.5, 1] }}
-                    className="absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] -translate-x-1/2 rounded-xl border border-border bg-white p-2 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)]"
-                  >
-                    {subTransportItems.map((sub) => {
-                      const href = localizedPath(locale, sub.href);
-                      const active = pathname.endsWith(sub.href);
-                      return (
-                        <Link
-                          key={sub.href}
-                          href={href}
-                          className={cn(
-                            "block px-3.5 py-2 text-sm font-medium transition-colors whitespace-nowrap rounded-md",
-                            active
-                              ? "bg-soft text-primary font-semibold"
-                              : "text-[var(--color-body)] hover:bg-soft/60 hover:text-primary"
-                          )}
-                        >
-                          {sub.label}
-                        </Link>
-                      );
-                    })}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <div
+                className="absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] -translate-x-1/2 rounded-xl border border-border bg-white p-2 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)] pointer-events-none opacity-0 invisible translate-y-2 group-hover:pointer-events-auto group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200"
+              >
+                {subTransportItems.map((sub) => {
+                  const href = localizedPath(locale, sub.href);
+                  const active = pathname.endsWith(sub.href);
+                  return (
+                    <Link
+                      key={sub.href}
+                      href={href}
+                      className={cn(
+                        "block px-3.5 py-2 text-sm font-medium transition-colors whitespace-nowrap rounded-md",
+                        active
+                          ? "bg-soft text-primary font-semibold"
+                          : "text-[var(--color-body)] hover:bg-soft/60 hover:text-primary"
+                      )}
+                    >
+                      {sub.label}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
 
             {/* 7. Other Services */}
@@ -299,11 +272,7 @@ export function Navbar() {
             </Link>
 
             {/* 9. Useful Info Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setOpenDropdown("useful")}
-              onMouseLeave={() => setOpenDropdown(null)}
-            >
+            <div className="relative group">
               <Link
                 href={localizedPath(locale, "/useful-info")}
                 className={cn(
@@ -315,42 +284,33 @@ export function Navbar() {
                   ),
                   "flex items-center gap-1 cursor-pointer"
                 )}
-                aria-expanded={openDropdown === "useful"}
                 aria-haspopup="true"
               >
                 {dict.nav.usefulInfo}
-                <ChevronDown className={cn("h-4 w-4 opacity-60 transition-transform duration-300", openDropdown === "useful" && "rotate-180")} />
+                <ChevronDown className="h-4 w-4 opacity-60 transition-transform duration-300 group-hover:rotate-180" />
               </Link>
-              <AnimatePresence>
-                {openDropdown === "useful" && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.2, ease: [0.25, 1, 0.5, 1] }}
-                    className="absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] -translate-x-1/2 rounded-xl border border-border bg-white p-2 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)]"
-                  >
-                    {subUsefulItems.map((sub) => {
-                      const href = localizedPath(locale, sub.href);
-                      const active = pathWithoutLocale === sub.href;
-                      return (
-                        <Link
-                          key={`${sub.href}-${sub.label}`}
-                          href={href}
-                          className={cn(
-                            "block px-3.5 py-2 text-sm font-medium transition-colors whitespace-nowrap rounded-md",
-                            active
-                              ? "bg-soft text-primary font-semibold"
-                              : "text-[var(--color-body)] hover:bg-soft/60 hover:text-primary"
-                          )}
-                        >
-                          {sub.label}
-                        </Link>
-                      );
-                    })}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <div
+                className="absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] -translate-x-1/2 rounded-xl border border-border bg-white p-2 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)] pointer-events-none opacity-0 invisible translate-y-2 group-hover:pointer-events-auto group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200"
+              >
+                {subUsefulItems.map((sub) => {
+                  const href = localizedPath(locale, sub.href);
+                  const active = pathWithoutLocale === sub.href;
+                  return (
+                    <Link
+                      key={`${sub.href}-${sub.label}`}
+                      href={href}
+                      className={cn(
+                        "block px-3.5 py-2 text-sm font-medium transition-colors whitespace-nowrap rounded-md",
+                        active
+                          ? "bg-soft text-primary font-semibold"
+                          : "text-[var(--color-body)] hover:bg-soft/60 hover:text-primary"
+                      )}
+                    >
+                      {sub.label}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           </nav>
 
