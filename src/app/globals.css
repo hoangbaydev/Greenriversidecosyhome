@@ -270,7 +270,7 @@ main h3 + p {
 }
 
 .site-main-nav {
-  overflow: hidden;
+  overflow: visible;
 }
 
 .site-main-nav > a,
