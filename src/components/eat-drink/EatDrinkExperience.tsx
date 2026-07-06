@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Coffee, Search, Utensils } from "lucide-react";
+import { ChevronDown, Coffee, Search, Utensils } from "lucide-react";
 import type { CafeContent } from "@/types";
 import type { Locale } from "@/lib/i18n/config";
 import { getCafeExperienceBlocks } from "@/lib/content/brand";
@@ -123,6 +123,9 @@ export function EatDrinkExperience({
             return (
               <motion.article
                 key={block.title}
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewportOnce}
                 variants={fadeUp}
                 transition={{ ...defaultTransition, delay: index * 0.04 }}
                 className="experience-card group overflow-hidden"
@@ -306,35 +309,43 @@ export function EatDrinkExperience({
           </p>
         ) : null}
 
-        <div className="mt-10">
-          <SectionHeader
-            title={menuCopy.scansTitle}
-            subtitle={menuCopy.scansSubtitle}
-            centered={false}
-            compact
-          />
-          <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {CAFE_MENU_SCANS.map((image, index) => (
-              <a
-                key={image}
-                href={image}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block overflow-hidden rounded-lg border border-border bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-[var(--shadow-soft)]"
-              >
-                <OptimizedImage
-                  src={image}
-                  alt={`${menuCopy.scansTitle} ${index + 1}`}
-                  width={900}
-                  height={1200}
-                  aspectRatio="3 / 4"
-                  className="object-contain transition duration-300 group-hover:scale-[1.02]"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                />
-              </a>
-            ))}
+        <details className="group mt-10 rounded-lg border border-border bg-white shadow-sm">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 marker:hidden md:px-6">
+            <span>
+              <span className="block font-heading text-xl font-bold text-text">
+                {locale === "vi" ? "Xem ảnh menu gốc" : "View Original Menu"}
+              </span>
+              <span className="mt-1 block text-sm leading-relaxed text-text-muted">
+                {menuCopy.scansSubtitle}
+              </span>
+            </span>
+            <ChevronDown className="h-5 w-5 shrink-0 text-primary transition-transform group-open:rotate-180" aria-hidden />
+          </summary>
+          <div className="border-t border-border px-5 pb-6 pt-5 md:px-6">
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {CAFE_MENU_SCANS.map((image, index) => (
+                <a
+                  key={image}
+                  href={image}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group block overflow-hidden rounded-lg border border-border bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-[var(--shadow-soft)]"
+                >
+                  <OptimizedImage
+                    src={image}
+                    alt={`${menuCopy.scansTitle} ${index + 1}`}
+                    width={900}
+                    height={1200}
+                    aspectRatio="3 / 4"
+                    loading="lazy"
+                    className="object-contain transition duration-300 group-hover:scale-[1.02]"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                  />
+                </a>
+              ))}
+            </div>
           </div>
-        </div>
+        </details>
 
         <div className="mt-10">
           <article className="rounded-lg border border-border bg-surface p-5 shadow-sm md:p-6 lg:max-w-3xl">

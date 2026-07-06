@@ -33,6 +33,7 @@ export function LanguageSwitcher({
         setIsOpen(false);
       }
     };
+
     document.addEventListener("mousedown", handleOutsideClick);
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, []);
@@ -85,7 +86,7 @@ export function LanguageSwitcher({
         className={cn(
           "inline-flex min-h-10 items-center justify-between gap-2 rounded-full border px-3.5 text-sm font-semibold shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow active:translate-y-0",
           inverted
-            ? "border-white/20 bg-white/10 text-white hover:bg-white/25"
+            ? "border-white/20 bg-white/10 text-white hover:bg-white/18"
             : "border-border bg-white/85 text-text hover:border-primary/25 hover:bg-soft"
         )}
         aria-expanded={isOpen}
@@ -97,7 +98,7 @@ export function LanguageSwitcher({
         <span className="language-label font-sans text-sm font-semibold">{details.label}</span>
         <ChevronDown
           className={cn(
-            "h-3.5 w-3.5 opacity-60 transition-transform duration-200",
+            "h-3.5 w-3.5 opacity-70 transition-transform duration-200",
             isOpen && "rotate-180"
           )}
         />
@@ -110,7 +111,7 @@ export function LanguageSwitcher({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.95 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
-            className="absolute right-0 z-50 mt-2 w-48 origin-top-right rounded-xl border border-border bg-white p-1.5 shadow-[0_18px_38px_rgba(28,36,18,0.12)]"
+            className="absolute right-0 z-50 mt-2 w-48 origin-top-right rounded-xl border border-border bg-white p-1.5 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)]"
           >
             {locales.map((loc) => {
               const itemDetails = LOCALE_DETAILS[loc];

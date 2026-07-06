@@ -375,12 +375,11 @@ main h3 + p {
 }
 
 .home-section--soft {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--soft) 72%, #fff) 0%, #f8faf3 100%);
+  background: var(--soft);
 }
 
 .home-section--white {
-  background: #fff;
+  background: var(--soft);
 }
 
 .section-title-accent {
@@ -589,12 +588,11 @@ main h3 + p {
 }
 
 .dark .home-section--soft {
-  background:
-    linear-gradient(180deg, #121a11 0%, #172016 100%);
+  background: var(--soft);
 }
 
 .dark .home-section--white {
-  background: #0f1510;
+  background: var(--soft);
 }
 
 .dark .filter-chip--idle,

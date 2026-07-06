@@ -50,10 +50,10 @@
   "home": {
     "hero": {
       "eyebrow": "PHONG NHA, VIETNAM",
-      "fallbackTitle": "Stay in Nature.\nConnect with People.",
-      "fallbackSubtitle": "Experience authentic local hospitality, community activities and unforgettable adventures in the heart of Phong Nha.",
+      "fallbackTitle": "Green Riverside\nCosy Home",
+      "fallbackSubtitle": "Stay by the Son River, eat on our rooftop, explore Phong Nha, and connect with travellers from around the world.",
       "primaryCta": "Book Your Stay",
-      "secondaryCta": "Explore Experiences",
+      "secondaryCta": "View Rooms",
       "scrollHint": "Discover more",
       "pillars": {
         "stay": "Stay",
@@ -113,9 +113,9 @@
       "rating": "Average Rating"
     },
     "accommodation": {
-      "title": "Best Rooms For You",
-      "subtitle": "Comfortable spaces designed for rest, connection, and the rhythm of riverside life.",
-      "viewAll": "View all rooms",
+      "title": "Stay With Us",
+      "subtitle": "Stay in the heart of nature — comfortable rooms and dorms for solo backpackers, couples, families, and groups.",
+      "viewAll": "View All Rooms",
       "from": "From",
       "perNight": "/ night",
       "details": "Details",
@@ -422,7 +422,7 @@
     },
     "contact": {
       "metaTitle": "Contact | Green Riverside Cosy Home",
-      "metaDescription": "Contact Green Riverside Cosy Home via WhatsApp, phone, or email. Find us in Phong Nha, Quang Binh, Vietnam.",
+      "metaDescription": "Contact Green Riverside Cosy Home via WhatsApp, phone, or email. Find us at ĐT20, Phong Nha, Quảng Trị 311860.",
       "title": "Contact Us",
       "subtitle": "We would love to hear from you.",
       "getInTouch": "Get In Touch",

@@ -110,7 +110,7 @@ async function main() {
     whatsappNumber: whatsapp,
     phone: "+84 77 850 8898",
     email: "greenriverphongnha@gmail.com",
-    address: "Son River, Phong Nha, Quang Binh, Vietnam",
+    address: "ĐT20, Phong Nha, Quảng Trị 311860",
     googleMapsUrl: "https://maps.app.goo.gl/pG4zBELktoPaRYtdA",
     bookNowLabel: "Book Now",
     socialLinks: {
@@ -131,7 +131,7 @@ async function main() {
   await set("contact_information/main", {
     phone: "+84 77 850 8898",
     email: "greenriverphongnha@gmail.com",
-    address: "Son River, Phong Nha, Quang Binh, Vietnam",
+    address: "ĐT20, Phong Nha, Quảng Trị 311860",
     whatsapp,
     googleMapsEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3780.2520336187974!2d106.2917730750519!3d17.585785083321528!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313833777595e1e1%3A0x92f986259021e1d0!2sGreen%20Riverside%20Cosy%20Home!5e0!3m2!1sen!2svn!4v1718533000000!5m2!1sen!2svn",
     googleMapsUrl: "https://maps.app.goo.gl/pG4zBELktoPaRYtdA",

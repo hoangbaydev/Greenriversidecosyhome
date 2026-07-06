@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Bricolage_Grotesque } from "next/font/google";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/constants";
 import "./globals.css";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const bricolageGrotesque = Bricolage_Grotesque({
   subsets: ["latin", "vietnamese"],
-  variable: "--font-plus-jakarta-sans",
+  variable: "--font-bricolage-grotesque",
   display: "swap",
 });
 
@@ -83,7 +83,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${plusJakartaSans.variable} h-full`}
+      className={`${bricolageGrotesque.variable} h-full`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col antialiased">{children}</body>

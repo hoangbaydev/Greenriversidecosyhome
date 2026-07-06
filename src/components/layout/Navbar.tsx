@@ -11,7 +11,7 @@ import { localizedPath, stripLocale } from "@/lib/i18n/config";
 import { cn } from "@/lib/utils";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { SiteBrand } from "@/components/layout/SiteBrand";
-import { WhatsAppButton } from "@/components/whatsapp/WhatsAppButton";
+import { WhatsAppButton, WhatsAppLink } from "@/components/whatsapp/WhatsAppButton";
 
 function isNavActive(path: string, href: string) {
   return path === href || (href !== "/" && path.startsWith(href));
@@ -19,10 +19,10 @@ function isNavActive(path: string, href: string) {
 
 function navLinkClass(active: boolean) {
   return cn(
-    "inline-flex min-h-10 items-center rounded-full px-2 xl:px-2.5 2xl:px-3.5 py-1.5 text-sm font-semibold transition-all duration-200 cursor-pointer whitespace-nowrap tracking-normal font-sans border",
+    "inline-flex min-h-10 items-center rounded-full border px-2.5 py-1.5 font-sans text-[0.82rem] font-semibold tracking-normal transition-all duration-200 cursor-pointer whitespace-nowrap 2xl:px-3",
     active
-      ? "bg-soft text-primary border-primary/20 shadow-sm"
-      : "text-[var(--color-body)] border-transparent hover:-translate-y-0.5 hover:bg-soft/70 hover:text-primary hover:border-primary/10"
+      ? "border-white/30 bg-white/16 text-white shadow-sm"
+      : "border-transparent text-white/88 hover:-translate-y-0.5 hover:border-white/18 hover:bg-white/10 hover:text-white"
   );
 }
 
@@ -112,12 +112,26 @@ export function Navbar() {
       <header
         translate="no"
         className={cn(
-          "notranslate fixed inset-x-0 top-0 z-50 border-b bg-white/92 backdrop-blur-xl transition-all duration-300",
-          scrolled ? "border-border/80 shadow-[0_8px_28px_rgba(28,36,18,0.08)]" : "border-border/25"
+          "notranslate fixed inset-x-0 top-0 z-50 border-b bg-primary/96 text-white shadow-[0_8px_28px_rgba(28,36,18,0.12)] backdrop-blur-xl transition-all duration-300",
+          scrolled ? "border-white/12 bg-primary/98" : "border-white/8"
         )}
       >
+        <WhatsAppLink
+          messageType="general"
+          className="top-booking-bar group flex min-h-8 items-center justify-center bg-[#D96B0B] px-3 py-1.5 text-center text-white shadow-sm transition-colors hover:bg-[#C95F08]"
+        >
+          <span className="hidden text-xs font-semibold tracking-normal sm:inline">
+            Book via WhatsApp for best price & support.
+          </span>
+          <span className="text-xs font-semibold tracking-normal sm:hidden">
+            Book via WhatsApp · Best price
+          </span>
+          <span className="ml-2 text-xs font-black uppercase tracking-[0.08em] underline decoration-white/35 underline-offset-4 transition-colors group-hover:decoration-white">
+            CHAT NOW →
+          </span>
+        </WhatsAppLink>
         <div className={cn(
-          "relative mx-auto grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-3 transition-all duration-300 sm:gap-4 sm:px-6 lg:px-8 max-w-[112rem]",
+          "relative mx-auto grid grid-cols-[minmax(0,auto)_minmax(0,1fr)_auto] items-center gap-3 px-3 transition-all duration-300 sm:gap-4 sm:px-6 lg:px-8 max-w-[112rem]",
           scrolled ? "h-16 sm:h-[4.25rem]" : "h-20 sm:h-[5.25rem]"
         )}>
           {/* Logo Branding (Left Column) */}
@@ -127,11 +141,13 @@ export function Navbar() {
             logoUrl={settings?.logoUrl}
             locale={locale}
             className="site-header-brand flex-none"
+            nameClassName="!text-white"
+            subtitleClassName="!text-white/78"
           />
 
           {/* Navigation Links (Center Column) */}
           <nav
-            className="site-main-nav hidden min-w-0 items-center justify-center gap-0.5 2xl:gap-2 xl:flex"
+            className="site-main-nav hidden min-w-0 items-center justify-center gap-0.5 min-[1536px]:flex 2xl:gap-1.5"
             aria-label="Main navigation"
           >
             {/* 1. Our Story */}
@@ -191,7 +207,7 @@ export function Navbar() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ duration: 0.2, ease: [0.25, 1, 0.5, 1] }}
-                    className="absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] -translate-x-1/2 rounded-xl border border-border bg-white p-2 shadow-[0_18px_38px_rgba(28,36,18,0.12)]"
+                    className="absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] -translate-x-1/2 rounded-xl border border-border bg-white p-2 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)]"
                   >
                     {subExploreItems.map((sub) => {
                       const href = localizedPath(locale, sub.href);
@@ -241,7 +257,7 @@ export function Navbar() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ duration: 0.2, ease: [0.25, 1, 0.5, 1] }}
-                    className="absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] -translate-x-1/2 rounded-xl border border-border bg-white p-2 shadow-[0_18px_38px_rgba(28,36,18,0.12)]"
+                    className="absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] -translate-x-1/2 rounded-xl border border-border bg-white p-2 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)]"
                   >
                     {subTransportItems.map((sub) => {
                       const href = localizedPath(locale, sub.href);
@@ -312,7 +328,7 @@ export function Navbar() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ duration: 0.2, ease: [0.25, 1, 0.5, 1] }}
-                    className="absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] -translate-x-1/2 rounded-xl border border-border bg-white p-2 shadow-[0_18px_38px_rgba(28,36,18,0.12)]"
+                    className="absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] -translate-x-1/2 rounded-xl border border-border bg-white p-2 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)]"
                   >
                     {subUsefulItems.map((sub) => {
                       const href = localizedPath(locale, sub.href);
@@ -340,21 +356,21 @@ export function Navbar() {
 
           {/* Actions Block (Right Column) */}
           <div className="site-header-actions flex shrink-0 items-center justify-end gap-3 md:gap-4">
-            <LanguageSwitcher variant="dropdown" className="desktop-language-switcher hidden xl:inline-block" />
+            <LanguageSwitcher
+              variant="dropdown"
+              inverted
+              className="desktop-language-switcher hidden min-[1536px]:inline-block"
+            />
             <WhatsAppButton
               messageType="book_room"
               label={bookNowLabel}
               showIcon={false}
-              className="site-book-now hidden 2xl:inline-flex border-none bg-primary px-4 py-2.5 font-sans text-sm font-semibold tracking-normal text-white hover:bg-primary-dark xl:px-6"
-            />
-            <LanguageSwitcher
-              variant="dropdown"
-              className="hidden"
+              className="site-book-now hidden border border-white/18 bg-white px-4 py-2.5 font-sans text-sm font-semibold tracking-normal text-primary shadow-sm hover:bg-soft min-[1700px]:inline-flex xl:px-5"
             />
             <button
               type="button"
               onClick={() => setMobileOpen((o) => !o)}
-              className="mobile-menu-trigger absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-white text-text shadow-sm transition-colors hover:bg-soft sm:right-5 xl:hidden"
+              className="mobile-menu-trigger absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-sm transition-colors hover:bg-white/18 sm:right-5 min-[1536px]:hidden"
               aria-expanded={mobileOpen}
               aria-label={mobileOpen ? dict.nav.closeMenu : dict.nav.menu}
             >
@@ -371,7 +387,7 @@ export function Navbar() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40 bg-black/20 xl:hidden"
+              className="fixed inset-0 z-40 bg-black/35 min-[1536px]:hidden"
               onClick={() => setMobileOpen(false)}
               aria-hidden
             />
@@ -380,7 +396,7 @@ export function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.25 }}
-              className="fixed inset-y-0 right-0 z-50 flex w-[min(100%,20rem)] flex-col border-l border-border bg-white shadow-xl xl:hidden"
+              className="fixed inset-y-0 right-0 z-50 flex w-[min(100%,22rem)] flex-col border-l border-border bg-white shadow-xl min-[1536px]:hidden"
               aria-label="Mobile navigation"
             >
               <div className="flex h-[4.5rem] items-center justify-between border-b border-border px-4">
@@ -641,7 +657,7 @@ export function Navbar() {
         )}
       </AnimatePresence>
 
-      {!isHome && <div className="h-[5.25rem]" aria-hidden />}
+      {!isHome && <div className="h-[var(--header-total-h)]" aria-hidden />}
     </>
   );
 }

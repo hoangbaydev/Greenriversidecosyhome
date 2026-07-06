@@ -118,6 +118,7 @@ export function PageCta({ children, className }: { children: React.ReactNode; cl
 export function PageHero({
   title,
   subtitle,
+  image,
   eyebrow,
 }: {
   title: string;
@@ -125,13 +126,17 @@ export function PageHero({
   image?: string;
   eyebrow?: string;
 }) {
-  const heroImage = DEFAULT_BANNER_IMAGE;
+  const heroImage = image || DEFAULT_BANNER_IMAGE;
 
   return (
     <div className="relative flex min-h-[42vh] items-center justify-center overflow-hidden bg-primary sm:min-h-[50vh]">
       <picture className="absolute inset-0">
-        <source media="(max-width: 640px)" srcSet={DEFAULT_BANNER_IMAGE_MOBILE} />
-        <source media="(max-width: 1280px)" srcSet={DEFAULT_BANNER_IMAGE_TABLET} />
+        {!image ? (
+          <>
+            <source media="(max-width: 640px)" srcSet={DEFAULT_BANNER_IMAGE_MOBILE} />
+            <source media="(max-width: 1280px)" srcSet={DEFAULT_BANNER_IMAGE_TABLET} />
+          </>
+        ) : null}
         <img
           src={heroImage}
           alt=""

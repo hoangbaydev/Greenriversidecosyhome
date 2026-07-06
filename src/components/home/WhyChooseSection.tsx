@@ -6,6 +6,7 @@ import { WhatsAppButton } from "@/components/whatsapp/WhatsAppButton";
 import { fadeUp, defaultTransition, viewportOnce } from "@/lib/motion";
 import { getWhyStayItems } from "@/lib/content/brand";
 import { BrandIconBadge } from "@/components/shared/BrandIconBadge";
+import { cn } from "@/lib/utils";
 
 /* const PILLARS_VI: any[] = [
   {
@@ -49,7 +50,7 @@ export function WhyChooseSection() {
           </p>
         </header>
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {items.map((item, i) => (
             <motion.article
               key={item.title}
@@ -58,13 +59,21 @@ export function WhyChooseSection() {
               viewport={viewportOnce}
               variants={fadeUp}
               transition={{ ...defaultTransition, delay: i * 0.05 }}
-              className="experience-card p-5 md:p-6"
+              className={cn(
+                "p-6 md:p-8 flex flex-col rounded-[24px] border-none shadow-none bg-[#e8f5e3] dark:bg-[#152213] transition-all duration-300 hover:scale-[1.015]",
+                i >= 4 ? "sm:col-span-2 lg:col-span-2" : "col-span-1"
+              )}
             >
-              <BrandIconBadge icon={item.icon} />
-              <h3 className="font-heading mt-4 text-base leading-snug text-text md:text-[1.0625rem]">
+              <div className="text-primary dark:text-[#9fbd70] flex justify-start">
+                <BrandIconBadge
+                  icon={item.icon}
+                  className="!bg-transparent !border-none !shadow-none !p-0 !w-8 !h-8 !rounded-none text-primary dark:text-[#9fbd70] justify-start items-start"
+                />
+              </div>
+              <h3 className="font-heading mt-5 text-lg font-bold leading-tight text-primary dark:text-[#9fbd70] sm:text-xl">
                 {item.title}
               </h3>
-              <p className="mt-2 line-clamp-3 text-sm leading-[1.62] text-text-muted">
+              <p className="mt-3 text-sm leading-[1.6] text-text-muted dark:text-[#c4cdbc]">
                 {item.description}
               </p>
             </motion.article>

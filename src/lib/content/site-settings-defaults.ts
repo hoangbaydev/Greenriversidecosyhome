@@ -29,7 +29,7 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "",
   phone: "+84 77 850 8898",
   email: "greenriverphongnha@gmail.com",
-  address: "Son River, Phong Nha, Quang Binh, Vietnam",
+  address: "ĐT20, Phong Nha, Quảng Trị 311860",
   googleMapsUrl: OFFICIAL_GOOGLE_MAPS_URL,
   bookNowLabel: "Book Now",
   socialLinks: OFFICIAL_SOCIAL_LINKS,
@@ -68,10 +68,15 @@ function resolveOfficialUrl(current: string | undefined, official: string): stri
 
 export function normalizeSiteSettings(settings: SiteSettings | null): SiteSettings {
   const base = settings ?? DEFAULT_SITE_SETTINGS;
+  const rawAddress = base.address?.trim();
+  const address = (!rawAddress || rawAddress === "Son River, Phong Nha, Quang Binh, Vietnam")
+    ? "ĐT20, Phong Nha, Quảng Trị 311860"
+    : rawAddress;
 
   return {
     ...DEFAULT_SITE_SETTINGS,
     ...base,
+    address,
     googleMapsUrl: resolveOfficialUrl(base.googleMapsUrl, OFFICIAL_GOOGLE_MAPS_URL),
     socialLinks: {
       ...base.socialLinks,
@@ -96,13 +101,17 @@ export function normalizeContactInformation(
 ): ContactInformation {
   const normalizedSettings = normalizeSiteSettings(settings ?? null);
   const base = contact ?? DEFAULT_CONTACT_INFORMATION;
+  const rawAddress = base.address?.trim();
+  const address = (!rawAddress || rawAddress === "Son River, Phong Nha, Quang Binh, Vietnam")
+    ? normalizedSettings.address
+    : rawAddress;
 
   return {
     ...DEFAULT_CONTACT_INFORMATION,
     ...base,
     phone: base.phone || normalizedSettings.phone,
     email: base.email || normalizedSettings.email,
-    address: base.address || normalizedSettings.address,
+    address,
     whatsapp: base.whatsapp || normalizedSettings.whatsappNumber,
     googleMapsUrl: resolveOfficialUrl(
       base.googleMapsUrl || normalizedSettings.googleMapsUrl,

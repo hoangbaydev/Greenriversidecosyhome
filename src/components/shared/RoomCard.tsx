@@ -1,18 +1,18 @@
 "use client";
 
 import Link from "next/link";
+import { Snowflake, Wifi, Users, ShowerHead, Tv, Refrigerator, Trees, type LucideIcon } from "lucide-react";
 import type { Room } from "@/types";
-import { getRoomTitle, getRoomPrice } from "@/types";
-import { formatPrice } from "@/lib/utils";
+import { getRoomTitle } from "@/types";
+import { cn } from "@/lib/utils";
 import { useLocale } from "@/components/providers/I18nProvider";
 import { localizedPath } from "@/lib/i18n/config";
 import { HomeSection } from "@/components/ui/home-section";
 import { SectionHeader } from "@/components/ui/section-header";
-import { SectionActions } from "@/components/ui/section-actions";
 import { OptimizedImage } from "@/components/ui/optimized-image";
-import { WhatsAppButton } from "@/components/whatsapp/WhatsAppButton";
 import { ListingGrid } from "@/components/motion";
 import { EmptyState } from "@/components/ui/empty-state";
+import { buttonVariants } from "@/components/ui/button";
 
 function getRoomDisplayImages(room: Room): string[] {
   const metadataImages = room.roomImages
@@ -33,10 +33,6 @@ function isDormRoom(room: Room): boolean {
 
 function PremiumRoomCard({
   room,
-  priceFromLabel,
-  perNightLabel,
-  viewDetailsLabel,
-  bookRoomLabel,
 }: {
   room: Room;
   priceFromLabel?: string;
@@ -46,21 +42,86 @@ function PremiumRoomCard({
 }) {
   const locale = useLocale();
   const title = getRoomTitle(room);
-  const price = getRoomPrice(room);
-  const description = room.shortDescription || room.description;
   const images = getRoomDisplayImages(room);
   const cover = images[0];
-  const unitLabel = isDormRoom(room)
-    ? locale === "vi"
-      ? "/ giường"
-      : "/ bed"
-    : perNightLabel || (locale === "vi" ? "/ đêm" : "/ night");
+
+  // Predefined list of featured amenities to highlight dynamically
+  const featuredList = [
+    {
+      key: "ac",
+      keywords: ["ac", "conditioner", "điều hòa"],
+      icon: Snowflake,
+      label: "AC"
+    },
+    {
+      key: "wifi",
+      keywords: ["wifi", "internet"],
+      icon: Wifi,
+      label: "Free WiFi"
+    },
+    {
+      key: "balcony",
+      keywords: ["balcony", "ban công"],
+      icon: Trees,
+      label: locale === "vi" ? "Ban công" : "Balcony"
+    },
+    {
+      key: "ensuite",
+      keywords: ["ensuite", "khép kín", "riêng", "bathroom", "phòng tắm"],
+      icon: ShowerHead,
+      label: locale === "vi" ? "Khép kín" : "Ensuite"
+    },
+    {
+      key: "tv",
+      keywords: ["tv", "television", "truyền hình"],
+      icon: Tv,
+      label: locale === "vi" ? "Smart TV" : "Smart TV"
+    },
+    {
+      key: "minibar",
+      keywords: ["minibar", "tủ lạnh", "refrigerator", "fridge"],
+      icon: Refrigerator,
+      label: locale === "vi" ? "Minibar" : "Minibar"
+    }
+  ];
+
+  const activeFeatures: { icon: LucideIcon; label: string }[] = [];
+  
+  featuredList.forEach((feat) => {
+    const hasFeat = room.amenities?.some((a) =>
+      feat.keywords.some((k) => a.toLowerCase().includes(k))
+    );
+    if (hasFeat) {
+      activeFeatures.push({ icon: feat.icon, label: feat.label });
+    }
+  });
+
+  // Fallbacks if not enough featured amenities are present
+  if (activeFeatures.length < 2) {
+    activeFeatures.push({
+      icon: Users,
+      label: locale === "vi" ? `${room.capacity || 2} khách` : `Up to ${room.capacity || 2}`
+    });
+  }
+
+  const renderedFeatures = activeFeatures.slice(0, 2);
+
+  // Badge text logic for image overlay: show only for Dorm or Single rooms
+  const isDorm = isDormRoom(room);
+  const isSingle = title.toLowerCase().includes("single") || room.category?.toLowerCase().includes("single");
+  const showBadge = isDorm || isSingle;
+  const imageBadge = isDorm
+    ? locale === "vi" ? "Phòng Dorm" : "Best for Solo"
+    : locale === "vi" ? "Phòng Đơn" : "Best for Solo";
+
+  const buttonLabel = locale === "vi" ? "Chi tiết phòng" : "Room Details";
 
   return (
-    <article className="page-card page-card--lift group flex h-full flex-col">
+    <article className="group relative flex h-full flex-col rounded-[24px] border border-border bg-white shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-md dark:bg-[#151d14]">
+      {/* Full-bleed Top Image */}
       <Link
         href={localizedPath(locale, `/stay/${room.slug}`)}
-        className="relative block aspect-[4/3] overflow-hidden bg-soft after:absolute after:inset-0 after:bg-gradient-to-t after:from-black/20 after:via-black/0 after:to-transparent"
+        className="relative block aspect-[4/3] w-full overflow-hidden rounded-t-[24px] bg-soft"
         tabIndex={-1}
         aria-hidden
       >
@@ -70,71 +131,61 @@ function PremiumRoomCard({
             alt={title}
             fill
             sizes="(max-width: 768px) 100vw, 33vw"
-            className="img-hover object-cover"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
-        ) : null}
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-soft text-text-muted">
+            No image
+          </div>
+        )}
+
+        {/* Dynamic Image Overlay Badge */}
+        {showBadge && (
+          <span className="absolute top-4 right-4 inline-flex items-center rounded-full bg-[#0f2910] px-3.5 py-1 text-xs font-bold tracking-wide text-white shadow-sm transition-colors dark:bg-[#1b2518] dark:text-primary-dark">
+            {imageBadge}
+          </span>
+        )}
       </Link>
-      <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <h3 className="font-heading text-[1.28rem] leading-tight text-text sm:text-[1.4rem]">
+
+      {/* Card Content Area */}
+      <div className="flex flex-1 flex-col p-6">
+        {/* Room Title */}
+        <h3 className="font-heading text-lg font-bold leading-tight text-primary sm:text-xl dark:text-[#9fbd70]">
           <Link
             href={localizedPath(locale, `/stay/${room.slug}`)}
-            className="transition-colors hover:text-primary"
+            className="transition-colors hover:text-primary-dark dark:hover:text-white"
           >
             {title}
           </Link>
         </h3>
-        {description ? (
-          <p className="mt-3 line-clamp-2 flex-1 text-sm leading-[1.62] text-text-muted">
-            {description}
-          </p>
-        ) : null}
-        
-        {room.amenities && room.amenities.length > 0 ? (
-          <div className="mt-4 flex flex-wrap gap-2 text-xs text-text-muted">
-            {room.amenities.slice(0, 3).map((amenity) => (
-              <span key={amenity} className="meta-pill">
-                {amenity}
-              </span>
-            ))}
-          </div>
-        ) : null}
 
-        <p className="mt-5 border-t border-border pt-4 text-base font-semibold text-primary sm:text-lg">
-          {price > 0 ? (
-            <>
-              <span className="text-sm font-normal text-text-muted">
-                {priceFromLabel || (locale === "vi" ? "Từ" : "From")}{" "}
+        {/* Quick Info/Features Section (Render exactly 2 inline features) */}
+        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-text-muted">
+          {renderedFeatures.map((feat, idx) => {
+            const Icon = feat.icon;
+            return (
+              <span key={`${feat.label}-${idx}`} className="inline-flex items-center gap-1.5 font-medium">
+                <Icon className="h-4 w-4 text-primary dark:text-[#9fbd70]" />
+                {feat.label}
               </span>
-              {formatPrice(price, room.currency)}
-              <span className="ml-1 text-sm font-normal text-text-muted">
-                {unitLabel}
-              </span>
-            </>
-          ) : (
-            <span className="text-sm font-normal text-text-muted">
-              {locale === "vi" ? "Liên hệ" : "Contact us"}
-            </span>
-          )}
-        </p>
+            );
+          })}
+        </div>
 
-        <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          {viewDetailsLabel ? (
-            <Link
-              href={localizedPath(locale, `/stay/${room.slug}`)}
-              className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-primary/20 bg-white px-5 text-sm font-semibold text-primary shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/35 hover:bg-soft hover:shadow-[var(--shadow-soft)] sm:w-auto"
-            >
-              {viewDetailsLabel}
-            </Link>
-          ) : null}
-          {bookRoomLabel ? (
-            <WhatsAppButton
-              messageType="book_room"
-              customMessage={`Hi Green Riverside! I'd like to book the ${title}. Could you please help me with availability and rates?`}
-              label={bookRoomLabel}
-              size="sm"
-              className="min-h-11 px-5 text-sm font-semibold sm:w-auto"
-            />
-          ) : null}
+        {/* Spacing alignment */}
+        <div className="flex-1 min-h-[1.5rem]" />
+
+        {/* Single Outlined CTA Button */}
+        <div className="mt-5">
+          <Link
+            href={localizedPath(locale, `/stay/${room.slug}`)}
+            className={cn(
+              buttonVariants({ variant: "outline", size: "default" }),
+              "w-full text-sm font-bold rounded-full border-primary text-primary hover:bg-soft transition-all text-center flex items-center justify-center min-h-11 dark:border-primary/60 dark:text-primary-dark dark:hover:bg-[#1b2518]"
+            )}
+          >
+            {buttonLabel}
+          </Link>
         </div>
       </div>
     </article>
@@ -143,10 +194,6 @@ function PremiumRoomCard({
 
 export function RoomCard({
   room,
-  priceFromLabel,
-  perNightLabel,
-  viewDetailsLabel,
-  bookRoomLabel,
 }: {
   room: Room;
   priceFromLabel?: string;
@@ -155,27 +202,15 @@ export function RoomCard({
   bookRoomLabel?: string;
   upToGuestsLabel?: string;
 }) {
-  return (
-    <PremiumRoomCard
-      room={room}
-      priceFromLabel={priceFromLabel}
-      perNightLabel={perNightLabel}
-      viewDetailsLabel={viewDetailsLabel}
-      bookRoomLabel={bookRoomLabel}
-    />
-  );
+  return <PremiumRoomCard room={room} />;
 }
 
 export function AccommodationPreview({
   rooms,
   title,
   subtitle,
-  bookLabel,
   viewAllLabel,
   emptyMessage,
-  priceFromLabel,
-  perNightLabel,
-  viewDetailsLabel,
   rateNote,
 }: {
   rooms: Room[];
@@ -187,6 +222,7 @@ export function AccommodationPreview({
   priceFromLabel?: string;
   perNightLabel?: string;
   viewDetailsLabel?: string;
+  bookRoomLabel?: string;
   rateNote?: string;
 }) {
   const locale = useLocale();
@@ -196,7 +232,11 @@ export function AccommodationPreview({
   if (!rooms.length) {
     return (
       <HomeSection id="stay" background="soft" divider>
-        {title ? <SectionHeader eyebrow="Stay" title={title} subtitle={subtitle} /> : null}
+        <SectionHeader
+          eyebrow={locale === "vi" ? "Lưu trú" : "Stay"}
+          title={title || ""}
+          subtitle={subtitle}
+        />
         {emptyMessage ? <EmptyState message={emptyMessage} /> : null}
       </HomeSection>
     );
@@ -204,29 +244,32 @@ export function AccommodationPreview({
 
   return (
     <HomeSection id="stay" background="soft" divider>
-      {title ? <SectionHeader eyebrow="Stay" title={title} subtitle={subtitle} /> : null}
+      <SectionHeader
+        eyebrow={locale === "vi" ? "Lưu trú" : "Stay"}
+        title={title || ""}
+        subtitle={subtitle}
+      />
+
       {rateNote ? (
-        <p className="-mt-5 mb-10 text-center text-sm italic text-text-muted">{rateNote}</p>
+        <p className="-mt-5 mb-6 text-center text-sm italic text-text-muted">{rateNote}</p>
       ) : null}
+
+      {viewAllLabel && (
+        <div className="text-center -mt-2 mb-10">
+          <Link
+            href={localizedPath(locale, "/stay")}
+            className="inline-flex items-center gap-1.5 text-sm font-bold text-primary hover:text-primary-dark underline underline-offset-4 decoration-primary whitespace-nowrap dark:text-[#9fbd70] dark:decoration-[#9fbd70]"
+          >
+            {viewAllLabel} <span className="text-base">&rarr;</span>
+          </Link>
+        </div>
+      )}
 
       <ListingGrid>
         {rooms.slice(0, 3).map((room) => (
-          <PremiumRoomCard
-            key={room.id}
-            room={room}
-            priceFromLabel={priceFromLabel}
-            perNightLabel={perNightLabel}
-            viewDetailsLabel={viewDetailsLabel}
-          />
+          <PremiumRoomCard key={room.id} room={room} />
         ))}
       </ListingGrid>
-
-      <SectionActions
-        primaryLabel={bookLabel}
-        primaryMessageType="book_room"
-        secondaryLabel={viewAllLabel}
-        secondaryHref={viewAllLabel ? localizedPath(locale, "/stay") : undefined}
-      />
     </HomeSection>
   );
 }

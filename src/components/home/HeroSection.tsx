@@ -37,7 +37,7 @@ export function HeroSection({ content }: HeroSectionProps) {
 
   const secondaryLink = data.secondaryCtaLink?.startsWith("/")
     ? localizedPath(locale, data.secondaryCtaLink)
-    : localizedPath(locale, "/explore-phong-nha");
+    : localizedPath(locale, "/stay");
 
   const bannerUrl =
     failedHeroImage === data.heroImage ? DEFAULT_BANNER_IMAGE : resolveBannerImage(data.heroImage);

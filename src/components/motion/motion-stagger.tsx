@@ -90,6 +90,9 @@ export function ListingGrid({
       {items.map((child, index) => (
         <motion.div
           key={child.key ?? index}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
           variants={fadeUp}
           transition={defaultTransition}
         >

@@ -4,11 +4,11 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import type { GalleryItem } from "@/types";
-import Link from "next/link";
 import { useDictionary, useLocale } from "@/components/providers/I18nProvider";
 import { localizedPath } from "@/lib/i18n/config";
 import { HomeSection } from "@/components/ui/home-section";
 import { SectionHeader } from "@/components/ui/section-header";
+import { SectionLink } from "@/components/ui/section-link";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import { fastTransition } from "@/lib/motion";
 import { MotionStagger, MotionItem } from "@/components/motion";
@@ -34,25 +34,13 @@ export function GalleryPreview({
 
   return (
     <HomeSection id="gallery" background="white" divider>
-      <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
-        {title ? (
-          <SectionHeader
-            eyebrow="Gallery"
-            title={title}
-            subtitle={subtitle}
-            centered={false}
-            className="mb-0"
-          />
-        ) : null}
-        {viewAllLabel ? (
-          <Link
-            href={localizedPath(locale, "/gallery")}
-            className="shrink-0 text-sm font-semibold text-primary hover:text-primary-dark"
-          >
-            {viewAllLabel} →
-          </Link>
-        ) : null}
-      </div>
+      {title ? (
+        <SectionHeader
+          eyebrow="Gallery"
+          title={title}
+          subtitle={subtitle}
+        />
+      ) : null}
 
       <MotionStagger fast className="masonry-gallery mt-12">
         {items.map((item, index) => (
@@ -76,6 +64,14 @@ export function GalleryPreview({
           </MotionItem>
         ))}
       </MotionStagger>
+
+      {viewAllLabel ? (
+        <div className="mt-12 text-center">
+          <SectionLink href={localizedPath(locale, "/gallery")}>
+            {viewAllLabel}
+          </SectionLink>
+        </div>
+      ) : null}
 
       <AnimatePresence>
         {selected && (

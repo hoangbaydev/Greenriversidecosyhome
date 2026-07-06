@@ -63,8 +63,8 @@ export function ExplorePreview({
           >
             <p className="text-eyebrow mb-2">{section.subtitle}</p>
             <h3 className="font-heading mt-2 text-h4 text-text">{section.title}</h3>
-            <p className="mt-3 flex-1 whitespace-pre-line text-sm leading-relaxed text-text-muted">
-              {section.body}
+            <p className="mt-3 line-clamp-5 flex-1 text-sm leading-relaxed text-text-muted">
+              {section.body.split("\n\n")[0]}
             </p>
 
             {section.ctaHref && section.ctaLabel ? (

@@ -50,13 +50,13 @@
   "home": {
     "hero": {
       "eyebrow": "PHONG NHA, VIỆT NAM",
-      "fallbackTitle": "Hòa mình cùng thiên nhiên.\nKết nối cùng mọi người.",
-      "fallbackSubtitle": "Trải nghiệm lòng hiếu khách bản địa chân thành, các hoạt động cộng đồng và những chuyến phiêu lưu khó quên tại trái tim Phong Nha.",
+      "fallbackTitle": "Green Riverside\nCosy Home",
+      "fallbackSubtitle": "Lưu trú bên sông Son, thưởng thức ẩm thực trên tầng thượng, khám phá Phong Nha và kết nối với bạn bè thế giới.",
       "primaryCta": "Đặt phòng ngay",
-      "secondaryCta": "Khám phá trải nghiệm",
+      "secondaryCta": "Xem phòng lưu trú",
       "scrollHint": "Khám phá thêm",
       "pillars": {
-        "stay": "Nghỉ dưỡng",
+        "stay": "Lưu trú",
         "eat": "Ẩm thực",
         "explore": "Khám phá",
         "connect": "Kết nối"
@@ -113,8 +113,8 @@
       "rating": "Đánh giá trung bình"
     },
     "accommodation": {
-      "title": "Phòng dành cho bạn",
-      "subtitle": "Không gian thoải mái để nghỉ ngơi, kết nối và tận hưởng nhịp sống bên sông.",
+      "title": "Lưu trú cùng chúng tôi",
+      "subtitle": "Lưu trú giữa lòng thiên nhiên — phòng riêng và dorm thoải mái cho khách đi một mình, cặp đôi, gia đình và nhóm bạn.",
       "viewAll": "Xem tất cả phòng",
       "from": "Từ",
       "perNight": "/ đêm",
