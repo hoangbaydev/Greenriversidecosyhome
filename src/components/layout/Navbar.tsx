@@ -182,7 +182,7 @@ export function Navbar() {
             </Link>
 
             {/* 5. Explore Dropdown */}
-            <div className="relative group">
+            <div className="relative nav-dropdown-trigger">
               <Link
                 href={localizedPath(locale, "/explore-phong-nha")}
                 className={cn(
@@ -192,10 +192,10 @@ export function Navbar() {
                 aria-haspopup="true"
               >
                 {dict.nav.explore}
-                <ChevronDown className="h-4 w-4 opacity-60 transition-transform duration-300 group-hover:rotate-180" />
+                <ChevronDown className="h-4 w-4 opacity-60 transition-transform duration-300" />
               </Link>
               <div
-                className="absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] -translate-x-1/2 rounded-xl border border-border bg-white p-2 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)] pointer-events-none opacity-0 invisible translate-y-2 group-hover:pointer-events-auto group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200"
+                className="nav-dropdown-menu absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] -translate-x-1/2 rounded-xl border border-border bg-white p-2 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)] pointer-events-none opacity-0 invisible transition-all duration-200"
               >
                 {subExploreItems.map((sub) => {
                   const href = localizedPath(locale, sub.href);
@@ -219,7 +219,7 @@ export function Navbar() {
             </div>
 
             {/* 6. Transport Dropdown */}
-            <div className="relative group">
+            <div className="relative nav-dropdown-trigger">
               <Link
                 href={localizedPath(locale, "/transportation")}
                 className={cn(
@@ -229,10 +229,10 @@ export function Navbar() {
                 aria-haspopup="true"
               >
                 {dict.nav.transport}
-                <ChevronDown className="h-4 w-4 opacity-60 transition-transform duration-300 group-hover:rotate-180" />
+                <ChevronDown className="h-4 w-4 opacity-60 transition-transform duration-300" />
               </Link>
               <div
-                className="absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] -translate-x-1/2 rounded-xl border border-border bg-white p-2 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)] pointer-events-none opacity-0 invisible translate-y-2 group-hover:pointer-events-auto group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200"
+                className="nav-dropdown-menu absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] -translate-x-1/2 rounded-xl border border-border bg-white p-2 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)] pointer-events-none opacity-0 invisible transition-all duration-200"
               >
                 {subTransportItems.map((sub) => {
                   const href = localizedPath(locale, sub.href);
@@ -272,7 +272,7 @@ export function Navbar() {
             </Link>
 
             {/* 9. Useful Info Dropdown */}
-            <div className="relative group">
+            <div className="relative nav-dropdown-trigger">
               <Link
                 href={localizedPath(locale, "/useful-info")}
                 className={cn(
@@ -287,10 +287,10 @@ export function Navbar() {
                 aria-haspopup="true"
               >
                 {dict.nav.usefulInfo}
-                <ChevronDown className="h-4 w-4 opacity-60 transition-transform duration-300 group-hover:rotate-180" />
+                <ChevronDown className="h-4 w-4 opacity-60 transition-transform duration-300" />
               </Link>
               <div
-                className="absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] -translate-x-1/2 rounded-xl border border-border bg-white p-2 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)] pointer-events-none opacity-0 invisible translate-y-2 group-hover:pointer-events-auto group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200"
+                className="nav-dropdown-menu absolute top-full left-1/2 z-50 mt-2 w-max min-w-[15rem] -translate-x-1/2 rounded-xl border border-border bg-white p-2 text-text shadow-[0_18px_38px_rgba(28,36,18,0.12)] pointer-events-none opacity-0 invisible transition-all duration-200"
               >
                 {subUsefulItems.map((sub) => {
                   const href = localizedPath(locale, sub.href);
