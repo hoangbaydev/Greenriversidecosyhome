@@ -12,6 +12,8 @@ import { HomeSection } from "@/components/ui/home-section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { WhatsAppButton } from "@/components/whatsapp/WhatsAppButton";
 import { fadeUp, staggerContainer, defaultTransition, viewportOnce } from "@/lib/motion";
+import { SAMPLE_IMAGES } from "@/lib/sample-media";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 
 const exploreCopy = {
   en: {
@@ -25,6 +27,18 @@ const exploreCopy = {
     chatCta: "Chat WhatsApp",
   },
 } as const;
+
+const sectionImages: Record<string, string> = {
+  "bong-lai": SAMPLE_IMAGES.river,
+  "motorbike-adventures": SAMPLE_IMAGES.mountains,
+  "classic-cave-tours": SAMPLE_IMAGES.cave,
+};
+
+const categoryTags: Record<string, string> = {
+  "bong-lai": "Countryside",
+  "motorbike-adventures": "Scenic Loop",
+  "classic-cave-tours": "Must-See Caves",
+};
 
 export function ExplorePreview({
   title,
@@ -41,7 +55,7 @@ export function ExplorePreview({
   const sections = getExploreSections(locale).slice(1, 4);
 
   return (
-    <HomeSection id="explore" background="white" divider>
+    <HomeSection id="explore" background="soft" divider>
       <SectionHeader
         eyebrow={dict.nav.explore}
         title={title || dict.home.tours.title}
@@ -59,23 +73,44 @@ export function ExplorePreview({
             key={section.id}
             variants={fadeUp}
             transition={{ ...defaultTransition, delay: index * 0.06 }}
-            className="experience-card flex flex-col p-6 md:p-7"
+            className="group flex h-full flex-col rounded-[28px] bg-white p-5 border border-primary/5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:bg-[#152213] dark:border-white/5"
           >
-            <p className="text-eyebrow mb-2">{section.subtitle}</p>
-            <h3 className="font-heading mt-2 text-h4 text-text">{section.title}</h3>
-            <p className="mt-3 line-clamp-5 flex-1 text-sm leading-relaxed text-text-muted">
-              {section.body.split("\n\n")[0]}
-            </p>
+            {/* Visual Image Header */}
+            <div className="relative h-[200px] w-full overflow-hidden rounded-[20px] mb-5">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10 pointer-events-none" />
+              <OptimizedImage
+                src={sectionImages[section.id] || SAMPLE_IMAGES.river}
+                alt={section.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <span className="absolute left-4 top-4 z-20 rounded-full bg-white/95 backdrop-blur-sm px-3.5 py-1.5 text-[10px] font-black uppercase tracking-[0.12em] text-[#1c3312] shadow-sm dark:bg-[#152213]/95 dark:text-[#9fbd70]">
+                {categoryTags[section.id] || "Tours"}
+              </span>
+            </div>
 
-            {section.ctaHref && section.ctaLabel ? (
-              <Link
-                href={localizedPath(locale, section.ctaHref)}
-                className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-all hover:-translate-y-0.5 hover:text-primary-dark"
-              >
-                {section.ctaLabel}
-                <ArrowRight className="h-4 w-4" aria-hidden />
-              </Link>
-            ) : null}
+            {/* Content Details */}
+            <div className="flex flex-1 flex-col px-1">
+              <h3 className="font-heading text-lg font-bold text-text group-hover:text-primary transition-colors duration-300 sm:text-xl">
+                {section.title}
+              </h3>
+              <p className="mt-3 flex-1 text-[13.5px] leading-relaxed text-text-muted dark:text-[#c4cdbc] line-clamp-3">
+                {section.body.split("\n\n")[0]}
+              </p>
+
+              {section.ctaHref && section.ctaLabel ? (
+                <Link
+                  href={localizedPath(locale, section.ctaHref)}
+                  className="mt-5 inline-flex items-center justify-between text-sm font-bold text-primary group/link hover:text-primary-dark border-t border-border/40 pt-4 dark:border-white/5"
+                >
+                  <span>{section.ctaLabel}</span>
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/8 text-primary transition-all duration-300 group-hover/link:bg-primary group-hover/link:text-white group-hover/link:translate-x-1 dark:bg-[#9fbd70]/10 dark:text-[#9fbd70] dark:group-hover/link:bg-[#9fbd70] dark:group-hover/link:text-[#152213]">
+                    <ArrowRight className="h-4 w-4" aria-hidden />
+                  </span>
+                </Link>
+              ) : null}
+            </div>
           </motion.article>
         ))}
       </motion.div>
